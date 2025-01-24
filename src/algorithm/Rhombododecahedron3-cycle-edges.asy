@@ -1,0 +1,31 @@
+include "algorithm.asyhdr";
+include "../data/Rhombododecahedron3.dat";
+
+setView(45, 35.2, 0);
+
+figureBegin();
+Rhombododecahedron3();
+label("$\times 2$", 0.95*(X-Y));
+highline(DAB--CBA--EBA--GBAAB);
+highline(DBA--CAB--EAB--GABBA);
+highline(DBA--CAB--EAF--GAFBD);
+highline(DDF--CFD--EFA--GFADB);
+highline(DAB--FAB--GBAAB);
+highline(DBA--FBA--GABBA);
+highline(DBA--FBD--GAFBD);
+highline(DDF--FDB--GFADB);
+makeChange(DAB--CBA--EBA--GBAAB, DBA--CAB--EAB--GABBA, 0.6*(-Y-Z));
+makeChange(DAB--FAB--GBAAB, DBA--FBA--GABBA, 0.6*(-Y-Z));
+makeChange(DBA--CAB--EAF--GAFBD, DDF--CFD--EFA--GFADB, 0.6*(X-Z));
+makeChange(DBA--FBD--GAFBD, DDF--FDB--GFADB, 0.6*(X-Z));
+makeChange(DDF--CFD--EFE--GFEDH, DAB--CBA--EBC--GBCAE, 0.75*(X-Y)-0.6*Z);
+makeChange(DDF--FDH--GFEDH, DAB--FAE--GBCAE, 0.65*(X-Y)-0.75*Z);
+figureLine();
+Rhombododecahedron3();
+makeMove(5*(-Y-Z)/12, 180, 0.75);
+label("$L$", 0.95*(X-Y));
+figureNext();
+Rhombododecahedron3();
+makeMove(5*(X-Z)/12, 180, 0.75);
+label("$R$", 0.95*(X-Y));
+figureEnd();

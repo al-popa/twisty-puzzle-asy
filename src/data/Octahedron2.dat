@@ -1,0 +1,82 @@
+triple AA, AB, AC, AD, AE, AF,
+BAC, BAD, BAE, BAF, BBC, BBD, BBE, BBF, BCE, BCF, BDE, BDF;
+
+void init()
+{
+	AA = X;
+	AB = -X;
+	AC = Y;
+	AD = -Y;
+	AE = Z;
+	AF = -Z;
+
+	BAC = (AA+AC)/2;
+	BAD = (AA+AD)/2;
+	BAE = (AA+AE)/2;
+	BAF = (AA+AF)/2;
+	BBC = (AB+AC)/2;
+	BBD = (AB+AD)/2;
+	BBE = (AB+AE)/2;
+	BBF = (AB+AF)/2;
+	BCE = (AC+AE)/2;
+	BCF = (AC+AF)/2;
+	BDE = (AD+AE)/2;
+	BDF = (AD+AF)/2;
+}
+
+void Octahedron2()
+{
+	init();
+	transform3 t = rotate(one, -X-Y-Z);
+
+	//stick(AA--AC--AE, Blue);
+	stick(AA--BAC--BAE, Blue, t);
+	stick(AC--BAC--BCE, Blue, t);
+	stick(AE--BAE--BCE, Blue, t);
+	stick(BAC--BAE--BCE, Blue, t);
+
+	//stick(AA--AC--AF, Grey);
+	stick(AA--BAC--BAF, Grey, t);
+	stick(AC--BAC--BCF, Grey, t);
+	stick(AF--BAF--BCF, Grey);
+	stick(BAC--BAF--BCF, Grey, t);
+
+	//stick(AA--AD--AE, White);
+	stick(AA--BAD--BAE, White, t);
+	stick(AD--BAD--BDE, White);
+	stick(AE--BAE--BDE, White, t);
+	stick(BAD--BAE--BDE, White, t);
+
+	//stick(AA--AD--AF, Green);
+	stick(AA--BAD--BAF, Green, t);
+	stick(AD--BAD--BDF, Green);
+	stick(AF--BAF--BDF, Green);
+	stick(BAD--BAF--BDF, Green);
+
+	//stick(AB--AC--AE, Orange);
+	stick(AB--BBC--BBE, Orange);
+	stick(AC--BBC--BCE, Orange, t);
+	stick(AE--BBE--BCE, Orange, t);
+	stick(BBC--BBE--BCE, Orange, t);
+
+	//stick(AB--AC--AF, Yellow);
+	stick(AB--BBC--BBF, Yellow);
+	stick(AC--BBC--BCF, Yellow, t);
+	stick(AF--BBF--BCF, Yellow);
+	stick(BBC--BBF--BCF, Yellow);
+
+	//stick(AB--AD--AE, Violet);
+	stick(AB--BBD--BBE, Violet);
+	stick(AD--BBD--BDE, Violet);
+	stick(AE--BBE--BDE, Violet, t);
+	stick(BBD--BBE--BDE, Violet);
+
+	//stick(AB--AD--AF, Red);
+	stick(AB--BBD--BBF, Red);
+	stick(AD--BBD--BDF, Red);
+	stick(AF--BBF--BDF, Red);
+	stick(BBD--BBF--BDF, Red);
+
+	polygon(BAD--BAF--BCF--BBC--BBE--BDE, Background);
+	polygon(BAD--BAF--BCF--BBC--BBE--BDE, Background, t);
+}

@@ -1,0 +1,132 @@
+triple AA, AB, AC, AD,
+BAB, BAC, BAD, BBA, BBC, BBD, BCA, BCB, BCD, BDA, BDB, BDC,
+BA2B, BA2C, BA2D, BB2C, BB2D, BC2D,
+CABC, CABD, CACD, CBAC, CBAD, CBCD, CCAB, CCAD, CCBD, CDAB, CDAC, CDBC;
+
+void init()
+{
+	AA = -X-Y-Z;
+	AB = X+Y-Z;
+	AC = X-Y+Z;
+	AD = -X+Y+Z;
+
+	BAB = (3*AA+AB)/4;
+	BAC = (3*AA+AC)/4;
+	BAD = (3*AA+AD)/4;
+	BBA = (3*AB+AA)/4;
+	BBC = (3*AB+AC)/4;
+	BBD = (3*AB+AD)/4;
+	BCA = (3*AC+AA)/4;
+	BCB = (3*AC+AB)/4;
+	BCD = (3*AC+AD)/4;
+	BDA = (3*AD+AA)/4;
+	BDB = (3*AD+AB)/4;
+	BDC = (3*AD+AC)/4;
+
+	BA2B = (AA+AB)/2;
+	BA2C = (AA+AC)/2;
+	BA2D = (AA+AD)/2;
+	BB2C = (AB+AC)/2;
+	BB2D = (AB+AD)/2;
+	BC2D = (AC+AD)/2;
+
+	CABC = (2*AA+AB+AC)/4;
+	CABD = (2*AA+AB+AD)/4;
+	CACD = (2*AA+AC+AD)/4;
+	CBAC = (2*AB+AA+AC)/4;
+	CBAD = (2*AB+AA+AD)/4;
+	CBCD = (2*AB+AC+AD)/4;
+	CCAB = (2*AC+AA+AB)/4;
+	CCAD = (2*AC+AA+AD)/4;
+	CCBD = (2*AC+AB+AD)/4;
+	CDAB = (2*AD+AA+AB)/4;
+	CDAC = (2*AD+AA+AC)/4;
+	CDBC = (2*AD+AB+AC)/4;
+}
+
+void Pyraminx4()
+{
+	init();
+	transform3 p = rotate(two, X+Y+Z);
+	transform3 q = rotate(one, X+Y+Z);
+	transform3 t = rotate(back, X+Y+Z);
+
+	//stick(AA--AB--AC, Blue);
+	stick(AA--BAB--BAC, Blue, p);
+	stick(AB--BBA--BBC, Blue, t);
+	stick(AC--BCA--BCB, Blue, t);
+	stick(BAB--BAC--CABC, Blue, q);
+	stick(BBA--BBC--CBAC, Blue, t);
+	stick(BCA--BCB--CCAB, Blue, t);
+	stick(BA2B--BAB--CABC, Blue, q);
+	stick(BA2B--BBA--CBAC, Blue);
+	stick(BA2C--BAC--CABC, Blue, q);
+	stick(BA2C--BCA--CCAB, Blue);
+	stick(BB2C--BBC--CBAC, Blue, t);
+	stick(BB2C--BCB--CCAB, Blue, t);
+	stick(BA2B--CABC--CBAC, Blue);
+	stick(BA2C--CABC--CCAB, Blue);
+	stick(BB2C--CBAC--CCAB, Blue, t);
+	stick(CABC--CBAC--CCAB, Blue);
+
+	//stick(AA--AB--AD, Green);
+	stick(AA--BAB--BAD, Green, p);
+	stick(AB--BBA--BBD, Green, t);
+	stick(AD--BDA--BDB, Green, t);
+	stick(BAB--BAD--CABD, Green, q);
+	stick(BBA--BBD--CBAD, Green, t);
+	stick(BDA--BDB--CDAB, Green, t);
+	stick(BA2B--BAB--CABD, Green, q);
+	stick(BA2B--BBA--CBAD, Green);
+	stick(BA2D--BAD--CABD, Green, q);
+	stick(BA2D--BDA--CDAB, Green);
+	stick(BB2D--BBD--CBAD, Green, t);
+	stick(BB2D--BDB--CDAB, Green, t);
+	stick(BA2B--CABD--CBAD, Green);
+	stick(BA2D--CABD--CDAB, Green);
+	stick(BB2D--CBAD--CDAB, Green, t);
+	stick(CABD--CBAD--CDAB, Green);
+
+	//stick(AA--AC--AD, Yellow);
+	stick(AA--BAC--BAD, Yellow, p);
+	stick(AC--BCA--BCD, Yellow, t);
+	stick(AD--BDA--BDC, Yellow, t);
+	stick(BAC--BAD--CACD, Yellow, q);
+	stick(BCA--BCD--CCAD, Yellow, t);
+	stick(BDA--BDC--CDAC, Yellow, t);
+	stick(BA2C--BAC--CACD, Yellow, q);
+	stick(BA2C--BCA--CCAD, Yellow);
+	stick(BA2D--BAD--CACD, Yellow, q);
+	stick(BA2D--BDA--CDAC, Yellow);
+	stick(BC2D--BCD--CCAD, Yellow, t);
+	stick(BC2D--BDC--CDAC, Yellow, t);
+	stick(BA2C--CACD--CCAD, Yellow);
+	stick(BA2D--CACD--CDAC, Yellow);
+	stick(BC2D--CCAD--CDAC, Yellow, t);
+	stick(CACD--CCAD--CDAC, Yellow);
+
+	//stick(AB--AC--AD, Red);
+	stick(AB--BBC--BBD, Red, t);
+	stick(AC--BCB--BCD, Red, t);
+	stick(AD--BDB--BDC, Red, t);
+	stick(BBC--BBD--CBCD, Red, t);
+	stick(BCB--BCD--CCBD, Red, t);
+	stick(BDB--BDC--CDBC, Red, t);
+	stick(BB2C--BBC--CBCD, Red, t);
+	stick(BB2C--BCB--CCBD, Red, t);
+	stick(BB2D--BBD--CBCD, Red, t);
+	stick(BB2D--BDB--CDBC, Red, t);
+	stick(BC2D--BCD--CCBD, Red, t);
+	stick(BC2D--BDC--CDBC, Red, t);
+	stick(BB2C--CBCD--CCBD, Red, t);
+	stick(BB2D--CBCD--CDBC, Red, t);
+	stick(BC2D--CCBD--CDBC, Red, t);
+	stick(CBCD--CCBD--CDBC, Red, t);
+
+	polygon(BA2B--BA2C--BA2D, Background);
+	polygon(BA2B--BA2C--BA2D, Background, q);
+	polygon(BAB--BAC--BAD, Background, q);
+	polygon(BAB--BAC--BAD, Background, p);
+	polygon(BBA--BCA--BDA, Background);
+	polygon(BBA--BCA--BDA, Background, t);
+}

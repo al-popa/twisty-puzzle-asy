@@ -1,0 +1,176 @@
+triple AA, AB, AC, AD, AE, AF,
+BAC, BAD, BAE, BAF, BBC, BBD, BBE, BBF, BCA, BCB, BCE, BCF,
+BDA, BDB, BDE, BDF, BEA, BEB, BEC, BED, BFA, BFB, BFC, BFD,
+CACE, CACF, CADE, CADF, CBCE, CBCF, CBDE, CBDF;
+
+void init()
+{
+	AA = X;
+	AB = -X;
+	AC = Y;
+	AD = -Y;
+	AE = Z;
+	AF = -Z;
+
+	BAC = (2*AA+AC)/3;
+	BAD = (2*AA+AD)/3;
+	BAE = (2*AA+AE)/3;
+	BAF = (2*AA+AF)/3;
+	BBC = (2*AB+AC)/3;
+	BBD = (2*AB+AD)/3;
+	BBE = (2*AB+AE)/3;
+	BBF = (2*AB+AF)/3;
+	BCA = (2*AC+AA)/3;
+	BCB = (2*AC+AB)/3;
+	BCE = (2*AC+AE)/3;
+	BCF = (2*AC+AF)/3;
+	BDA = (2*AD+AA)/3;
+	BDB = (2*AD+AB)/3;
+	BDE = (2*AD+AE)/3;
+	BDF = (2*AD+AF)/3;
+	BEA = (2*AE+AA)/3;
+	BEB = (2*AE+AB)/3;
+	BEC = (2*AE+AC)/3;
+	BED = (2*AE+AD)/3;
+	BFA = (2*AF+AA)/3;
+	BFB = (2*AF+AB)/3;
+	BFC = (2*AF+AC)/3;
+	BFD = (2*AF+AD)/3;
+
+	CACE = (AA+AC+AE)/3;
+	CACF = (AA+AC+AF)/3;
+	CADE = (AA+AD+AE)/3;
+	CADF = (AA+AD+AF)/3;
+	CBCE = (AB+AC+AE)/3;
+	CBCF = (AB+AC+AF)/3;
+	CBDE = (AB+AD+AE)/3;
+	CBDF = (AB+AD+AF)/3;
+}
+
+void OctahedronInvariant()
+{
+	init();
+	transform3 t = rotate(one, -X-Y-Z);
+
+	polygon(AA--AC--AE, LightBlue, t);
+
+	polygon(AA--BAF--BCF--AC, Pink, t);
+	polygon(AF--BAF--BCF, Pink);
+
+	polygon(AA--BAD--BED--AE, Pink, t);
+	polygon(AD--BAD--BED, Pink);
+
+	polygon(AC--BCB--BEB--AE, Pink, t);
+	polygon(AB--BCB--BEB, Pink);
+
+	polygon(AA--BAD--BAF, LightBlue, t);
+	polygon(AD--BAD--BAF--AF, LightBlue);
+
+	polygon(AC--BCB--BCF, LightBlue, t);
+	polygon(AB--BCB--BCF--AF, LightBlue);
+
+	polygon(AE--BEB--BED, LightBlue, t);
+	polygon(AB--BEB--BED--AD, LightBlue);
+
+	polygon(AB--AD--AF, Pink);
+
+	polygon(BAD--BAF--BCF--BCB--BEB--BED, Background);
+	polygon(BAD--BAF--BCF--BCB--BEB--BED, Background, t);
+}
+
+void Octahedron3()
+{
+	init();
+	transform3 t = rotate(one, -X-Y-Z);
+
+	//stick(AA--AC--AE, Blue);
+	stick(AA--BAC--BAE, Blue, t);
+	stick(AC--BCA--BCE, Blue, t);
+	stick(AE--BEA--BEC, Blue, t);
+	stick(BAC--BCA--CACE, Blue, t);
+	stick(BAE--BEA--CACE, Blue, t);
+	stick(BCE--BEC--CACE, Blue, t);
+	stick(BAC--BAE--CACE, Blue, t);
+	stick(BCA--BCE--CACE, Blue, t);
+	stick(BEA--BEC--CACE, Blue, t);
+
+	//stick(AA--AC--AF, Grey);
+	stick(AA--BAC--BAF, Grey, t);
+	stick(AC--BCA--BCF, Grey, t);
+	stick(AF--BFA--BFC, Grey);
+	stick(BAC--BCA--CACF, Grey, t);
+	stick(BAF--BFA--CACF, Grey);
+	stick(BCF--BFC--CACF, Grey);
+	stick(BAC--BAF--CACF, Grey, t);
+	stick(BCA--BCF--CACF, Grey, t);
+	stick(BFA--BFC--CACF, Grey);
+
+	//stick(AA--AD--AE, White);
+	stick(AA--BAD--BAE, White, t);
+	stick(AD--BDA--BDE, White);
+	stick(AE--BEA--BED, White, t);
+	stick(BAD--BDA--CADE, White);
+	stick(BAE--BEA--CADE, White, t);
+	stick(BDE--BED--CADE, White);
+	stick(BAD--BAE--CADE, White, t);
+	stick(BDA--BDE--CADE, White);
+	stick(BEA--BED--CADE, White, t);
+
+	//stick(AA--AD--AF, Green);
+	stick(AA--BAD--BAF, Green, t);
+	stick(AD--BDA--BDF, Green);
+	stick(AF--BFA--BFD, Green);
+	stick(BAD--BDA--CADF, Green);
+	stick(BAF--BFA--CADF, Green);
+	stick(BDF--BFD--CADF, Green);
+	stick(BAD--BAF--CADF, Green);
+	stick(BDA--BDF--CADF, Green);
+	stick(BFA--BFD--CADF, Green);
+
+	//stick(AB--AC--AE, Orange);
+	stick(AB--BBC--BBE, Orange);
+	stick(AC--BCB--BCE, Orange, t);
+	stick(AE--BEB--BEC, Orange, t);
+	stick(BBC--BCB--CBCE, Orange);
+	stick(BBE--BEB--CBCE, Orange);
+	stick(BCE--BEC--CBCE, Orange, t);
+	stick(BBC--BBE--CBCE, Orange);
+	stick(BCB--BCE--CBCE, Orange, t);
+	stick(BEB--BEC--CBCE, Orange, t);
+
+	//stick(AB--AC--AF, Yellow);
+	stick(AB--BBC--BBF, Yellow);
+	stick(AC--BCB--BCF, Yellow, t);
+	stick(AF--BFB--BFC, Yellow);
+	stick(BBC--BCB--CBCF, Yellow);
+	stick(BBF--BFB--CBCF, Yellow);
+	stick(BCF--BFC--CBCF, Yellow);
+	stick(BBC--BBF--CBCF, Yellow);
+	stick(BCB--BCF--CBCF, Yellow);
+	stick(BFB--BFC--CBCF, Yellow);
+
+	//stick(AB--AD--AE, Violet);
+	stick(AB--BBD--BBE, Violet);
+	stick(AD--BDB--BDE, Violet);
+	stick(AE--BEB--BED, Violet, t);
+	stick(BBD--BDB--CBDE, Violet);
+	stick(BBE--BEB--CBDE, Violet);
+	stick(BDE--BED--CBDE, Violet);
+	stick(BBD--BBE--CBDE, Violet);
+	stick(BDB--BDE--CBDE, Violet);
+	stick(BEB--BED--CBDE, Violet);
+
+	//stick(AB--AD--AF, Red);
+	stick(AB--BBD--BBF, Red);
+	stick(AD--BDB--BDF, Red);
+	stick(AF--BFB--BFD, Red);
+	stick(BBD--BDB--CBDF, Red);
+	stick(BBF--BFB--CBDF, Red);
+	stick(BDF--BFD--CBDF, Red);
+	stick(BBD--BBF--CBDF, Red);
+	stick(BDB--BDF--CBDF, Red);
+	stick(BFB--BFD--CBDF, Red);
+
+	polygon(BAD--BAF--BCF--BCB--BEB--BED, Background);
+	polygon(BAD--BAF--BCF--BCB--BEB--BED, Background, t);
+}

@@ -1,0 +1,34 @@
+include "algorithm.asyhdr";
+include "../data/Rhombododecahedron3.dat";
+
+setView(45, 35.2, 0);
+
+figureBegin();
+Rhombododecahedron3();
+highline(BF--DFB--FFB--DFF);
+highline(BB--DBB--FBF--DBF);
+highline(BB--DBA--FBD--DBF);
+highline(BB--DBA--FBA--DBB);
+highline(BA--DAA--FAB--DAB);
+makeChange(BA--DAA--FAB--DAB, BB--DBA--FBA--DBB, -0.6*Z-0.55*Y);
+makeChange(BB--DBB--FBF--DBF, BF--DFB--FFB--DFF, 0.6*X-0.55*Y);
+makeChange(BF--DFB--FFE--DFD, BA--DAB--FAE--DAC, 0.32*(Z-X-Y)-0.5*Y);
+figureLine();
+Rhombododecahedron3();
+makeMove(5*(-Y-Z)/12, 180, 0.75);
+makeMove(5*(X-Z)/12, 180, 0.75);
+label("$G$", 0.95*(X-Y));
+figureNext();
+Rhombododecahedron3();
+makeMove(5*(X-Y)/12, -180, 0.75);
+label("$U^{-1}$", 0.95*(X-Y));
+figureNext();
+Rhombododecahedron3();
+makeMove(5*(-Y-Z)/12, -180, 0.75);
+makeMove(5*(X-Z)/12, -180, 0.75);
+label("$G^{-1}$", 0.95*(X-Y));
+figureNext();
+Rhombododecahedron3();
+makeMove(5*(X-Y)/12, 180, 0.75);
+label("$U$", 0.95*(X-Y));
+figureEnd();

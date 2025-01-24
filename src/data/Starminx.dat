@@ -1,0 +1,271 @@
+triple
+AA, AB, AC, AD, AE, AF, AG, AH, AI, AJ, AK, AL, AM, AN, AO, AP, AQ, AR, AS, AT,
+BA, BB, BC, BD, BE, CA, CB, CC, CD, CE, DA, DB, DC, DD, DE,
+EA, EB, EC, ED, EE, FA, FB, FC, FD, FE, GA, GB, GC, GD, GE,
+HA, HB, HC, HD, HE, IA, IB, IC, ID, IE, JA, JB, JC, JD, JE,
+KA, KB, KC, KD, KE, LA, LB, LC, LD, LE, MA, MB, MC, MD, ME;
+
+void init()
+{
+	real u = (sqrt(5)+1)/2;
+	real v = u-1;
+	real s = sqrt(3);
+
+	AA = (u*X+v*Y)/s;
+	AB = (u*X-v*Y)/s;
+	AC = (-u*X+v*Y)/s;
+	AD = (-u*X-v*Y)/s;
+	AE = (u*Y+v*Z)/s;
+	AF = (u*Y-v*Z)/s;
+	AG = (-u*Y+v*Z)/s;
+	AH = (-u*Y-v*Z)/s;
+	AI = (v*X+u*Z)/s;
+	AJ = (-v*X+u*Z)/s;
+	AK = (v*X-u*Z)/s;
+	AL = (-v*X-u*Z)/s;
+	AM = (X+Y+Z)/s;
+	AN = (X+Y-Z)/s;
+	AO = (X-Y+Z)/s;
+	AP = (X-Y-Z)/s;
+	AQ = (-X+Y+Z)/s;
+	AR = (-X+Y-Z)/s;
+	AS = (-X-Y+Z)/s;
+	AT = (-X-Y-Z)/s;
+
+	BA = AC*v+AL*(1-v);
+	BB = AR*v+AT*(1-v);
+	BC = AL*v+AD*(1-v);
+	BD = AT*v+AC*(1-v);
+	BE = AD*v+AR*(1-v);
+
+	CA = AC*v+AJ*(1-v);
+	CB = AQ*v+AS*(1-v);
+	CC = AJ*v+AD*(1-v);
+	CD = AS*v+AC*(1-v);
+	CE = AD*v+AQ*(1-v);
+
+	DA = AE*v+AC*(1-v);
+	DB = AQ*v+AR*(1-v);
+	DC = AC*v+AF*(1-v);
+	DD = AR*v+AE*(1-v);
+	DE = AF*v+AQ*(1-v);
+
+	EA = AK*v+AF*(1-v);
+	EB = AN*v+AR*(1-v);
+	EC = AF*v+AL*(1-v);
+	ED = AR*v+AK*(1-v);
+	EE = AL*v+AN*(1-v);
+
+	FA = AK*v+AH*(1-v);
+	FB = AP*v+AT*(1-v);
+	FC = AH*v+AL*(1-v);
+	FD = AT*v+AK*(1-v);
+	FE = AL*v+AP*(1-v);
+
+	GA = AG*v+AD*(1-v);
+	GB = AS*v+AT*(1-v);
+	GC = AD*v+AH*(1-v);
+	GD = AT*v+AG*(1-v);
+	GE = AH*v+AS*(1-v);
+
+	HA = AI*v+AG*(1-v);
+	HB = AO*v+AS*(1-v);
+	HC = AG*v+AJ*(1-v);
+	HD = AS*v+AI*(1-v);
+	HE = AJ*v+AO*(1-v);
+
+	IA = AG*v+AB*(1-v);
+	IB = AO*v+AP*(1-v);
+	IC = AB*v+AH*(1-v);
+	ID = AP*v+AG*(1-v);
+	IE = AH*v+AO*(1-v);
+
+	JA = AB*v+AK*(1-v);
+	JB = AP*v+AN*(1-v);
+	JC = AK*v+AA*(1-v);
+	JD = AN*v+AB*(1-v);
+	JE = AA*v+AP*(1-v);
+
+	KA = AE*v+AA*(1-v);
+	KB = AM*v+AN*(1-v);
+	KC = AA*v+AF*(1-v);
+	KD = AN*v+AE*(1-v);
+	KE = AF*v+AM*(1-v);
+
+	LA = AI*v+AE*(1-v);
+	LB = AM*v+AQ*(1-v);
+	LC = AE*v+AJ*(1-v);
+	LD = AQ*v+AI*(1-v);
+	LE = AJ*v+AM*(1-v);
+
+	MA = AB*v+AI*(1-v);
+	MB = AO*v+AM*(1-v);
+	MC = AI*v+AA*(1-v);
+	MD = AM*v+AB*(1-v);
+	ME = AA*v+AO*(1-v);
+}
+
+void Starminx()
+{
+	init();
+	transform3 t = rotate(one, -(AC+AR+AL+AT+AD));
+
+	//stick(AC--AR--AL--AT--AD, Grey);
+	stick(BA--BB--BC--BD--BE, Grey, t);
+	stick(AC--BE--BA, Grey, t);
+	stick(AR--BA--BB, Grey, t);
+	stick(AL--BB--BC, Grey, t);
+	stick(AT--BC--BD, Grey, t);
+	stick(AD--BD--BE, Grey, t);
+	stick(AC--AR--BA, Grey, t);
+	stick(AR--AL--BB, Grey, t);
+	stick(AL--AT--BC, Grey, t);
+	stick(AT--AD--BD, Grey, t);
+	stick(AD--AC--BE, Grey, t);
+
+	//stick(AC--AQ--AJ--AS--AD, LightBlue);
+	stick(CA--CB--CC--CD--CE, LightBlue, t);
+	stick(AC--CE--CA, LightBlue, t);
+	stick(AQ--CA--CB, LightBlue, t);
+	stick(AJ--CB--CC, LightBlue);
+	stick(AS--CC--CD, LightBlue, t);
+	stick(AD--CD--CE, LightBlue, t);
+	stick(AC--AQ--CA, LightBlue, t);
+	stick(AQ--AJ--CB, LightBlue);
+	stick(AJ--AS--CC, LightBlue);
+	stick(AS--AD--CD, LightBlue, t);
+	stick(AD--AC--CE, LightBlue, t);
+
+	//stick(AE--AQ--AC--AR--AF, Orange);
+	stick(DA--DB--DC--DD--DE, Orange, t);
+	stick(AE--DE--DA, Orange);
+	stick(AQ--DA--DB, Orange, t);
+	stick(AC--DB--DC, Orange, t);
+	stick(AR--DC--DD, Orange, t);
+	stick(AF--DD--DE, Orange, t);
+	stick(AE--AQ--DA, Orange);
+	stick(AQ--AC--DB, Orange, t);
+	stick(AC--AR--DC, Orange, t);
+	stick(AR--AF--DD, Orange, t);
+	stick(AF--AE--DE, Orange);
+
+	//stick(AK--AN--AF--AR--AL, LightGreen);
+	stick(EA--EB--EC--ED--EE, LightGreen, t);
+	stick(AK--EE--EA, LightGreen, t);
+	stick(AN--EA--EB, LightGreen);
+	stick(AF--EB--EC, LightGreen, t);
+	stick(AR--EC--ED, LightGreen, t);
+	stick(AL--ED--EE, LightGreen, t);
+	stick(AK--AN--EA, LightGreen);
+	stick(AN--AF--EB, LightGreen);
+	stick(AF--AR--EC, LightGreen, t);
+	stick(AR--AL--ED, LightGreen, t);
+	stick(AL--AK--EE, LightGreen, t);
+
+	//stick(AK--AP--AH--AT--AL, Pink);
+	stick(FA--FB--FC--FD--FE, Pink, t);
+	stick(AK--FE--FA, Pink, t);
+	stick(AP--FA--FB, Pink);
+	stick(AH--FB--FC, Pink, t);
+	stick(AT--FC--FD, Pink, t);
+	stick(AL--FD--FE, Pink, t);
+	stick(AK--AP--FA, Pink);
+	stick(AP--AH--FB, Pink);
+	stick(AH--AT--FC, Pink, t);
+	stick(AT--AL--FD, Pink, t);
+	stick(AL--AK--FE, Pink, t);
+
+	//stick(AG--AS--AD--AT--AH, Lime);
+	stick(GA--GB--GC--GD--GE, Lime, t);
+	stick(AG--GE--GA, Lime);
+	stick(AS--GA--GB, Lime, t);
+	stick(AD--GB--GC, Lime, t);
+	stick(AT--GC--GD, Lime, t);
+	stick(AH--GD--GE, Lime, t);
+	stick(AG--AS--GA, Lime);
+	stick(AS--AD--GB, Lime, t);
+	stick(AD--AT--GC, Lime, t);
+	stick(AT--AH--GD, Lime, t);
+	stick(AH--AG--GE, Lime);
+
+	//stick(AI--AO--AG--AS--AJ, Green);
+	stick(HA--HB--HC--HD--HE, Green);
+	stick(AI--HE--HA, Green);
+	stick(AO--HA--HB, Green);
+	stick(AG--HB--HC, Green);
+	stick(AS--HC--HD, Green);
+	stick(AJ--HD--HE, Green);
+	stick(AI--AO--HA, Green);
+	stick(AO--AG--HB, Green);
+	stick(AG--AS--HC, Green);
+	stick(AS--AJ--HD, Green);
+	stick(AJ--AI--HE, Green);
+
+	//stick(AG--AO--AB--AP--AH, Red);
+	stick(IA--IB--IC--ID--IE, Red);
+	stick(AG--IE--IA, Red);
+	stick(AO--IA--IB, Red);
+	stick(AB--IB--IC, Red);
+	stick(AP--IC--ID, Red);
+	stick(AH--ID--IE, Red);
+	stick(AG--AO--IA, Red);
+	stick(AO--AB--IB, Red);
+	stick(AB--AP--IC, Red);
+	stick(AP--AH--ID, Red);
+	stick(AH--AG--IE, Red);
+
+	//stick(AB--AP--AK--AN--AA, Blue);
+	stick(JA--JB--JC--JD--JE, Blue);
+	stick(AB--JE--JA, Blue);
+	stick(AP--JA--JB, Blue);
+	stick(AK--JB--JC, Blue);
+	stick(AN--JC--JD, Blue);
+	stick(AA--JD--JE, Blue);
+	stick(AB--AP--JA, Blue);
+	stick(AP--AK--JB, Blue);
+	stick(AK--AN--JC, Blue);
+	stick(AN--AA--JD, Blue);
+	stick(AA--AB--JE, Blue);
+
+	//stick(AE--AM--AA--AN--AF, Yellow);
+	stick(KA--KB--KC--KD--KE, Yellow);
+	stick(AE--KE--KA, Yellow);
+	stick(AM--KA--KB, Yellow);
+	stick(AA--KB--KC, Yellow);
+	stick(AN--KC--KD, Yellow);
+	stick(AF--KD--KE, Yellow);
+	stick(AE--AM--KA, Yellow);
+	stick(AM--AA--KB, Yellow);
+	stick(AA--AN--KC, Yellow);
+	stick(AN--AF--KD, Yellow);
+	stick(AF--AE--KE, Yellow);
+
+	//stick(AI--AM--AE--AQ--AJ, Violet);
+	stick(LA--LB--LC--LD--LE, Violet);
+	stick(AI--LE--LA, Violet);
+	stick(AM--LA--LB, Violet);
+	stick(AE--LB--LC, Violet);
+	stick(AQ--LC--LD, Violet);
+	stick(AJ--LD--LE, Violet);
+	stick(AI--AM--LA, Violet);
+	stick(AM--AE--LB, Violet);
+	stick(AE--AQ--LC, Violet);
+	stick(AQ--AJ--LD, Violet);
+	stick(AJ--AI--LE, Violet);
+
+	//stick(AB--AO--AI--AM--AA, White);
+	stick(MA--MB--MC--MD--ME, White);
+	stick(AB--ME--MA, White);
+	stick(AO--MA--MB, White);
+	stick(AI--MB--MC, White);
+	stick(AM--MC--MD, White);
+	stick(AA--MD--ME, White);
+	stick(AB--AO--MA, White);
+	stick(AO--AI--MB, White);
+	stick(AI--AM--MC, White);
+	stick(AM--AA--MD, White);
+	stick(AA--AB--ME, White);
+
+	polygon(AQ--AF--AK--AH--AS, Background);
+	polygon(AQ--AF--AK--AH--AS, Background, t);
+}

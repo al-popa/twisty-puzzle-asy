@@ -1,0 +1,264 @@
+triple
+AA, AB, AC, AD, AE, AF, AG, AH, AI, AJ, AK, AL, AM, AN, AO, AP, AQ, AR, AS, AT,
+BA, BB, BC, BD, BE, BF, BG, BH, BI, BJ, BK, BL,
+CAB, CAM, CAN, CBA, CBO, CBP, CCD, CCQ, CCR, CDC, CDS, CDT,
+CEF, CEM, CEQ, CFE, CFN, CFR, CGH, CGO, CGS, CHG, CHP, CHT,
+CIJ, CIM, CIO, CJI, CJQ, CJS, CKL, CKN, CKP, CLK, CLR, CLT,
+CMA, CME, CMI, CNA, CNF, CNK, COB, COG, COI, CPB, CPH, CPK,
+CQC, CQE, CQJ, CRC, CRF, CRL, CSD, CSG, CSJ, CTD, CTH, CTL;
+
+void init()
+{
+	real u = (sqrt(5)+1)/2;
+	real v = u-1;
+	real p = u/sqrt(5);
+	real s = sqrt(3);
+
+	AA = (u*X+v*Y)/s;
+	AB = (u*X-v*Y)/s;
+	AC = (-u*X+v*Y)/s;
+	AD = (-u*X-v*Y)/s;
+	AE = (u*Y+v*Z)/s;
+	AF = (u*Y-v*Z)/s;
+	AG = (-u*Y+v*Z)/s;
+	AH = (-u*Y-v*Z)/s;
+	AI = (v*X+u*Z)/s;
+	AJ = (-v*X+u*Z)/s;
+	AK = (v*X-u*Z)/s;
+	AL = (-v*X-u*Z)/s;
+	AM = (X+Y+Z)/s;
+	AN = (X+Y-Z)/s;
+	AO = (X-Y+Z)/s;
+	AP = (X-Y-Z)/s;
+	AQ = (-X+Y+Z)/s;
+	AR = (-X+Y-Z)/s;
+	AS = (-X-Y+Z)/s;
+	AT = (-X-Y-Z)/s;
+
+	BA = (AC+AR+AL+AT+AD)/5;
+	BB = (AC+AQ+AJ+AS+AD)/5;
+	BC = (AE+AQ+AC+AR+AF)/5;
+	BD = (AK+AN+AF+AR+AL)/5;
+	BE = (AK+AP+AH+AT+AL)/5;
+	BF = (AG+AS+AD+AT+AH)/5;
+	BG = (AI+AO+AG+AS+AJ)/5;
+	BH = (AG+AO+AB+AP+AH)/5;
+	BI = (AB+AP+AK+AN+AA)/5;
+	BJ = (AE+AM+AA+AN+AF)/5;
+	BK = (AI+AM+AE+AQ+AJ)/5;
+	BL = (AB+AO+AI+AM+AA)/5;
+
+	CAB = AA*p+AB*(1-p);
+	CAM = AA*p+AM*(1-p);
+	CAN = AA*p+AN*(1-p);
+	CBA = AB*p+AA*(1-p);
+	CBO = AB*p+AO*(1-p);
+	CBP = AB*p+AP*(1-p);
+	CCD = AC*p+AD*(1-p);
+	CCQ = AC*p+AQ*(1-p);
+	CCR = AC*p+AR*(1-p);
+	CDC = AD*p+AC*(1-p);
+	CDS = AD*p+AS*(1-p);
+	CDT = AD*p+AT*(1-p);
+	CEF = AE*p+AF*(1-p);
+	CEM = AE*p+AM*(1-p);
+	CEQ = AE*p+AQ*(1-p);
+	CFE = AF*p+AE*(1-p);
+	CFN = AF*p+AN*(1-p);
+	CFR = AF*p+AR*(1-p);
+	CGH = AG*p+AH*(1-p);
+	CGO = AG*p+AO*(1-p);
+	CGS = AG*p+AS*(1-p);
+	CHG = AH*p+AG*(1-p);
+	CHP = AH*p+AP*(1-p);
+	CHT = AH*p+AT*(1-p);
+	CIJ = AI*p+AJ*(1-p);
+	CIM = AI*p+AM*(1-p);
+	CIO = AI*p+AO*(1-p);
+	CJI = AJ*p+AI*(1-p);
+	CJQ = AJ*p+AQ*(1-p);
+	CJS = AJ*p+AS*(1-p);
+	CKL = AK*p+AL*(1-p);
+	CKN = AK*p+AN*(1-p);
+	CKP = AK*p+AP*(1-p);
+	CLK = AL*p+AK*(1-p);
+	CLR = AL*p+AR*(1-p);
+	CLT = AL*p+AT*(1-p);
+	CMA = AM*p+AA*(1-p);
+	CME = AM*p+AE*(1-p);
+	CMI = AM*p+AI*(1-p);
+	CNA = AN*p+AA*(1-p);
+	CNF = AN*p+AF*(1-p);
+	CNK = AN*p+AK*(1-p);
+	COB = AO*p+AB*(1-p);
+	COG = AO*p+AG*(1-p);
+	COI = AO*p+AI*(1-p);
+	CPB = AP*p+AB*(1-p);
+	CPH = AP*p+AH*(1-p);
+	CPK = AP*p+AK*(1-p);
+	CQC = AQ*p+AC*(1-p);
+	CQE = AQ*p+AE*(1-p);
+	CQJ = AQ*p+AJ*(1-p);
+	CRC = AR*p+AC*(1-p);
+	CRF = AR*p+AF*(1-p);
+	CRL = AR*p+AL*(1-p);
+	CSD = AS*p+AD*(1-p);
+	CSG = AS*p+AG*(1-p);
+	CSJ = AS*p+AJ*(1-p);
+	CTD = AT*p+AD*(1-p);
+	CTH = AT*p+AH*(1-p);
+	CTL = AT*p+AL*(1-p);
+}
+
+void PyraminxCrystal()
+{
+	init();
+	transform3 t = rotate(one, -BA);
+
+	//stick(AC--AR--AL--AT--AD, Grey);
+	stick(BA--CRC--AR--CRL, Grey, t);
+	stick(BA--CCR--CRC, Grey, t);
+	stick(BA--CCD--AC--CCR, Grey, t);
+	stick(BA--CCD--CDC, Grey, t);
+	stick(BA--CDC--AD--CDT, Grey, t);
+	stick(BA--CDT--CTD, Grey, t);
+	stick(BA--CTD--AT--CTL, Grey, t);
+	stick(BA--CTL--CLT, Grey, t);
+	stick(BA--CLT--AL--CLR, Grey, t);
+	stick(BA--CLR--CRL, Grey, t);
+
+	//stick(AC--AQ--AJ--AS--AD, LightBlue);
+	stick(BB--CQC--AQ--CQJ, LightBlue);
+	stick(BB--CCQ--CQC, LightBlue, t);
+	stick(BB--CCD--AC--CCQ, LightBlue, t);
+	stick(BB--CCD--CDC, LightBlue, t);
+	stick(BB--CDC--AD--CDS, LightBlue, t);
+	stick(BB--CDS--CSD, LightBlue, t);
+	stick(BB--CSD--AS--CSJ, LightBlue);
+	stick(BB--CSJ--CJS, LightBlue);
+	stick(BB--CJS--AJ--CJQ, LightBlue);
+	stick(BB--CJQ--CQJ, LightBlue);
+
+	//stick(AE--AQ--AC--AR--AF, Orange);
+	stick(BC--CRC--AR--CRF, Orange, t);
+	stick(BC--CCR--CRC, Orange, t);
+	stick(BC--CCQ--AC--CCR, Orange, t);
+	stick(BC--CCQ--CQC, Orange, t);
+	stick(BC--CQC--AQ--CQE, Orange);
+	stick(BC--CQE--CEQ, Orange);
+	stick(BC--CEQ--AE--CEF, Orange);
+	stick(BC--CEF--CFE, Orange);
+	stick(BC--CFE--AF--CFR, Orange);
+	stick(BC--CFR--CRF, Orange, t);
+
+	//stick(AK--AN--AF--AR--AL, LightGreen);
+	stick(BD--CLK--AL--CLR, LightGreen, t);
+	stick(BD--CKL--CLK, LightGreen, t);
+	stick(BD--CKN--AK--CKL, LightGreen);
+	stick(BD--CNK--CKN, LightGreen);
+	stick(BD--CNF--AN--CNK, LightGreen);
+	stick(BD--CFN--CNF, LightGreen);
+	stick(BD--CFR--AF--CFN, LightGreen);
+	stick(BD--CFR--CRF, LightGreen, t);
+	stick(BD--CRF--AR--CRL, LightGreen, t);
+	stick(BD--CRL--CLR, LightGreen, t);
+
+	//stick(AK--AP--AH--AT--AL, Pink);
+	stick(BE--CTH--AT--CTL, Pink, t);
+	stick(BE--CHT--CTH, Pink, t);
+	stick(BE--CHP--AH--CHT, Pink);
+	stick(BE--CHP--CPH, Pink);
+	stick(BE--CPH--AP--CPK, Pink);
+	stick(BE--CPK--CKP, Pink);
+	stick(BE--CKP--AK--CKL, Pink);
+	stick(BE--CKL--CLK, Pink, t);
+	stick(BE--CLK--AL--CLT, Pink, t);
+	stick(BE--CLT--CTL, Pink, t);
+
+	//stick(AG--AS--AD--AT--AH, Lime);
+	stick(BF--CHG--AH--CHT, Lime);
+	stick(BF--CGH--CHG, Lime);
+	stick(BF--CGS--AG--CGH, Lime);
+	stick(BF--CSG--CGS, Lime);
+	stick(BF--CSD--AS--CSG, Lime);
+	stick(BF--CDS--CSD, Lime, t);
+	stick(BF--CDT--AD--CDS, Lime, t);
+	stick(BF--CDT--CTD, Lime, t);
+	stick(BF--CTD--AT--CTH, Lime, t);
+	stick(BF--CTH--CHT, Lime, t);
+
+	//stick(AI--AO--AG--AS--AJ, Green);
+	stick(BG--CJI--AJ--CJS, Green);
+	stick(BG--CIJ--CJI, Green);
+	stick(BG--CIO--AI--CIJ, Green);
+	stick(BG--COI--CIO, Green);
+	stick(BG--COG--AO--COI, Green);
+	stick(BG--CGO--COG, Green);
+	stick(BG--CGS--AG--CGO, Green);
+	stick(BG--CGS--CSG, Green);
+	stick(BG--CSG--AS--CSJ, Green);
+	stick(BG--CSJ--CJS, Green);
+
+	//stick(AG--AO--AB--AP--AH, Red);
+	stick(BH--CPB--AP--CPH, Red);
+	stick(BH--CBP--CPB, Red);
+	stick(BH--CBO--AB--CBP, Red);
+	stick(BH--CBO--COB, Red);
+	stick(BH--COB--AO--COG, Red);
+	stick(BH--CGO--COG, Red);
+	stick(BH--CGH--AG--CGO, Red);
+	stick(BH--CGH--CHG, Red);
+	stick(BH--CHG--AH--CHP, Red);
+	stick(BH--CHP--CPH, Red);
+
+	//stick(AB--AP--AK--AN--AA, Blue);
+	stick(BI--CNA--AN--CNK, Blue);
+	stick(BI--CAN--CNA, Blue);
+	stick(BI--CAB--AA--CAN, Blue);
+	stick(BI--CAB--CBA, Blue);
+	stick(BI--CBA--AB--CBP, Blue);
+	stick(BI--CBP--CPB, Blue);
+	stick(BI--CPB--AP--CPK, Blue);
+	stick(BI--CPK--CKP, Blue);
+	stick(BI--CKP--AK--CKN, Blue);
+	stick(BI--CKN--CNK, Blue);
+
+	//stick(AE--AM--AA--AN--AF, Yellow);
+	stick(BJ--CNA--AN--CNF, Yellow);
+	stick(BJ--CAN--CNA, Yellow);
+	stick(BJ--CAM--AA--CAN, Yellow);
+	stick(BJ--CAM--CMA, Yellow);
+	stick(BJ--CMA--AM--CME, Yellow);
+	stick(BJ--CEM--CME, Yellow);
+	stick(BJ--CEF--AE--CEM, Yellow);
+	stick(BJ--CEF--CFE, Yellow);
+	stick(BJ--CFE--AF--CFN, Yellow);
+	stick(BJ--CFN--CNF, Yellow);
+
+	//stick(AI--AM--AE--AQ--AJ, Violet);
+	stick(BK--CJI--AJ--CJQ, Violet);
+	stick(BK--CIJ--CJI, Violet);
+	stick(BK--CIM--AI--CIJ, Violet);
+	stick(BK--CMI--CIM, Violet);
+	stick(BK--CME--AM--CMI, Violet);
+	stick(BK--CEM--CME, Violet);
+	stick(BK--CEQ--AE--CEM, Violet);
+	stick(BK--CEQ--CQE, Violet);
+	stick(BK--CQE--AQ--CQJ, Violet);
+	stick(BK--CQJ--CJQ, Violet);
+
+	//stick(AB--AO--AI--AM--AA, White);
+	stick(BL--CMA--AM--CMI, White);
+	stick(BL--CAM--CMA, White);
+	stick(BL--CAB--AA--CAM, White);
+	stick(BL--CAB--CBA, White);
+	stick(BL--CBA--AB--CBO, White);
+	stick(BL--CBO--COB, White);
+	stick(BL--COB--AO--COI, White);
+	stick(BL--COI--CIO, White);
+	stick(BL--CIO--AI--CIM, White);
+	stick(BL--CMI--CIM, White);
+
+	polygon(CQC--CFR--CKL--CHT--CSD, Background);
+	polygon(CQC--CFR--CKL--CHT--CSD, Background, t);
+}

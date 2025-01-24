@@ -1,0 +1,155 @@
+real u = 0.2;
+real v = 0.6;
+real w = 1;
+
+void Gem2()
+{
+	transform3 p = rotate(one, -Z);
+	transform3 t = rotate(one, Y+Z);
+
+	stick(u*X+u*Y-w*Z--u*X-u*Y-w*Z--(-u*X-u*Y-w*Z)--(-u*X+u*Y-w*Z), Grey);
+	stick(u*X+u*Y-w*Z--u*X+v*Y-w*Z--(-u*X+v*Y-w*Z)--(-u*X+u*Y-w*Z), Grey);
+	stick(u*X-u*Y-w*Z--u*X-v*Y-w*Z--(-u*X-v*Y-w*Z)--(-u*X-u*Y-w*Z), Grey, t);
+	stick(u*X+u*Y-w*Z--v*X+u*Y-w*Z--v*X-u*Y-w*Z--u*X-u*Y-w*Z, Grey);
+	stick(-u*X+u*Y-w*Z--(-v*X+u*Y-w*Z)--(-v*X-u*Y-w*Z)--(-u*X-u*Y-w*Z), Grey);
+	stick(u*X+u*Y-w*Z--u*X+v*Y-w*Z--v*X+u*Y-w*Z, Grey);
+	stick(u*X-u*Y-w*Z--u*X-v*Y-w*Z--v*X-u*Y-w*Z, Grey, t);
+	stick(-u*X+u*Y-w*Z--(-u*X+v*Y-w*Z)--(-v*X+u*Y-w*Z), Grey);
+	stick(-u*X-u*Y-w*Z--(-u*X-v*Y-w*Z)--(-v*X-u*Y-w*Z), Grey, t);
+	stick(u*X+v*Y-w*Z--(-u*X+v*Y-w*Z)--(u+v)*Y-w*Z, Grey);
+	stick(u*X-v*Y-w*Z--(-u*X-v*Y-w*Z)--(-u-v)*Y-w*Z, Grey, t);
+	stick(v*X+u*Y-w*Z--v*X-u*Y-w*Z--(u+v)*X-w*Z, Grey);
+	stick(-v*X+u*Y-w*Z--(-v*X-u*Y-w*Z)--(-u-v)*X-w*Z, Grey);
+
+	stick(u*X+u*Y+w*Z--u*X-u*Y+w*Z--(-u*X-u*Y+w*Z)--(-u*X+u*Y+w*Z), White, p);
+	stick(u*X+u*Y+w*Z--u*X+v*Y+w*Z--(-u*X+v*Y+w*Z)--(-u*X+u*Y+w*Z), White, p);
+	stick(u*X-u*Y+w*Z--u*X-v*Y+w*Z--(-u*X-v*Y+w*Z)--(-u*X-u*Y+w*Z), White, p);
+	stick(u*X+u*Y+w*Z--v*X+u*Y+w*Z--v*X-u*Y+w*Z--u*X-u*Y+w*Z, White, p);
+	stick(-u*X+u*Y+w*Z--(-v*X+u*Y+w*Z)--(-v*X-u*Y+w*Z)--(-u*X-u*Y+w*Z), White, p);
+	stick(u*X+u*Y+w*Z--u*X+v*Y+w*Z--v*X+u*Y+w*Z, White, p);
+	stick(u*X-u*Y+w*Z--u*X-v*Y+w*Z--v*X-u*Y+w*Z, White, p);
+	stick(-u*X+u*Y+w*Z--(-u*X+v*Y+w*Z)--(-v*X+u*Y+w*Z), White, p);
+	stick(-u*X-u*Y+w*Z--(-u*X-v*Y+w*Z)--(-v*X-u*Y+w*Z), White, p);
+	stick(u*X+v*Y+w*Z--(-u*X+v*Y+w*Z)--(u+v)*Y+w*Z, White, p);
+	stick(u*X-v*Y+w*Z--(-u*X-v*Y+w*Z)--(-u-v)*Y+w*Z, White, p);
+	stick(v*X+u*Y+w*Z--v*X-u*Y+w*Z--(u+v)*X+w*Z, White, p);
+	stick(-v*X+u*Y+w*Z--(-v*X-u*Y+w*Z)--(-u-v)*X+w*Z, White, p);
+
+	stick(u*X-w*Y+u*Z--u*X-w*Y-u*Z--(-u*X-w*Y-u*Z)--(-u*X-w*Y+u*Z), Brown);
+	stick(u*X-w*Y+u*Z--u*X-w*Y+v*Z--(-u*X-w*Y+v*Z)--(-u*X-w*Y+u*Z), Brown);
+	stick(u*X-w*Y-u*Z--u*X-w*Y-v*Z--(-u*X-w*Y-v*Z)--(-u*X-w*Y-u*Z), Brown, t);
+	stick(u*X-w*Y+u*Z--v*X-w*Y+u*Z--v*X-w*Y-u*Z--u*X-w*Y-u*Z, Brown);
+	stick(-u*X-w*Y+u*Z--(-v*X-w*Y+u*Z)--(-v*X-w*Y-u*Z)--(-u*X-w*Y-u*Z), Brown);
+	stick(u*X-w*Y+u*Z--u*X-w*Y+v*Z--v*X-w*Y+u*Z, Brown);
+	stick(u*X-w*Y-u*Z--u*X-w*Y-v*Z--v*X-w*Y-u*Z, Brown, t);
+	stick(-u*X-w*Y+u*Z--(-u*X-w*Y+v*Z)--(-v*X-w*Y+u*Z), Brown);
+	stick(-u*X-w*Y-u*Z--(-u*X-w*Y-v*Z)--(-v*X-w*Y-u*Z), Brown, t);
+	stick(u*X-w*Y-v*Z--(-u*X-w*Y-v*Z)--(-w*Y-(u+v)*Z), Brown, t);
+	stick(u*X-w*Y+v*Z--(-u*X-w*Y+v*Z)--(-w*Y+(u+v)*Z), Brown, p);
+	stick(v*X-w*Y+u*Z--v*X-w*Y-u*Z--(u+v)*X-w*Y, Brown);
+	stick(-v*X-w*Y+u*Z--(-v*X-w*Y-u*Z)--(-u-v)*X-w*Y, Brown);
+
+	stick(u*X+w*Y+u*Z--u*X+w*Y-u*Z--(-u*X+w*Y-u*Z)--(-u*X+w*Y+u*Z), Tan);
+	stick(u*X+w*Y+u*Z--u*X+w*Y+v*Z--(-u*X+w*Y+v*Z)--(-u*X+w*Y+u*Z), Tan);
+	stick(u*X+w*Y-u*Z--u*X+w*Y-v*Z--(-u*X+w*Y-v*Z)--(-u*X+w*Y-u*Z), Tan);
+	stick(u*X+w*Y+u*Z--v*X+w*Y+u*Z--v*X+w*Y-u*Z--u*X+w*Y-u*Z, Tan);
+	stick(-u*X+w*Y+u*Z--(-v*X+w*Y+u*Z)--(-v*X+w*Y-u*Z)--(-u*X+w*Y-u*Z), Tan);
+	stick(u*X+w*Y+u*Z--u*X+w*Y+v*Z--v*X+w*Y+u*Z, Tan);
+	stick(u*X+w*Y-u*Z--u*X+w*Y-v*Z--v*X+w*Y-u*Z, Tan);
+	stick(-u*X+w*Y+u*Z--(-u*X+w*Y+v*Z)--(-v*X+w*Y+u*Z), Tan);
+	stick(-u*X+w*Y-u*Z--(-u*X+w*Y-v*Z)--(-v*X+w*Y-u*Z), Tan);
+	stick(u*X+w*Y-v*Z--(-u*X+w*Y-v*Z)--w*Y-(u+v)*Z, Tan);
+	stick(u*X+w*Y+v*Z--(-u*X+w*Y+v*Z)--w*Y+(u+v)*Z, Tan, p);
+	stick(v*X+w*Y+u*Z--v*X+w*Y-u*Z--(u+v)*X+w*Y, Tan);
+	stick(-v*X+w*Y+u*Z--(-v*X+w*Y-u*Z)--(-u-v)*X+w*Y, Tan);
+
+	stick(-w*X+u*Y+u*Z--(-w*X+u*Y-u*Z)--(-w*X-u*Y-u*Z)--(-w*X-u*Y+u*Z), Violet);
+	stick(-w*X+u*Y+u*Z--(-w*X+u*Y+v*Z)--(-w*X-u*Y+v*Z)--(-w*X-u*Y+u*Z), Violet);
+	stick(-w*X+u*Y-u*Z--(-w*X+u*Y-v*Z)--(-w*X-u*Y-v*Z)--(-w*X-u*Y-u*Z), Violet);
+	stick(-w*X+u*Y+u*Z--(-w*X+v*Y+u*Z)--(-w*X+v*Y-u*Z)--(-w*X+u*Y-u*Z), Violet);
+	stick(-w*X-u*Y+u*Z--(-w*X-v*Y+u*Z)--(-w*X-v*Y-u*Z)--(-w*X-u*Y-u*Z), Violet);
+	stick(-w*X+u*Y+u*Z--(-w*X+u*Y+v*Z)--(-w*X+v*Y+u*Z), Violet);
+	stick(-w*X+u*Y-u*Z--(-w*X+u*Y-v*Z)--(-w*X+v*Y-u*Z), Violet);
+	stick(-w*X-u*Y+u*Z--(-w*X-u*Y+v*Z)--(-w*X-v*Y+u*Z), Violet);
+	stick(-w*X-u*Y-u*Z--(-w*X-u*Y-v*Z)--(-w*X-v*Y-u*Z), Violet);
+	stick(-w*X+u*Y+v*Z--(-w*X-u*Y+v*Z)--(-w*X+(u+v)*Z), Violet, p);
+	stick(-w*X+u*Y-v*Z--(-w*X-u*Y-v*Z)--(-w*X-(u+v)*Z), Violet);
+	stick(-w*X+v*Y+u*Z--(-w*X+v*Y-u*Z)--(-w*X+(u+v)*Y), Violet);
+	stick(-w*X-v*Y+u*Z--(-w*X-v*Y-u*Z)--(-w*X-(u+v)*Y), Violet);
+
+	stick(w*X+u*Y+u*Z--w*X+u*Y-u*Z--w*X-u*Y-u*Z--w*X-u*Y+u*Z, Lilac);
+	stick(w*X+u*Y+u*Z--w*X+u*Y+v*Z--w*X-u*Y+v*Z--w*X-u*Y+u*Z, Lilac);
+	stick(w*X+u*Y-u*Z--w*X+u*Y-v*Z--w*X-u*Y-v*Z--w*X-u*Y-u*Z, Lilac);
+	stick(w*X+u*Y+u*Z--w*X+v*Y+u*Z--w*X+v*Y-u*Z--w*X+u*Y-u*Z, Lilac);
+	stick(w*X-u*Y+u*Z--w*X-v*Y+u*Z--w*X-v*Y-u*Z--w*X-u*Y-u*Z, Lilac);
+	stick(w*X+u*Y+u*Z--w*X+u*Y+v*Z--w*X+v*Y+u*Z, Lilac);
+	stick(w*X+u*Y-u*Z--w*X+u*Y-v*Z--w*X+v*Y-u*Z, Lilac);
+	stick(w*X-u*Y+u*Z--w*X-u*Y+v*Z--w*X-v*Y+u*Z, Lilac);
+	stick(w*X-u*Y-u*Z--w*X-u*Y-v*Z--w*X-v*Y-u*Z, Lilac);
+	stick(w*X+u*Y+v*Z--w*X-u*Y+v*Z--w*X+(u+v)*Z, Lilac, p);
+	stick(w*X+u*Y-v*Z--w*X-u*Y-v*Z--w*X-(u+v)*Z, Lilac);
+	stick(w*X+v*Y+u*Z--w*X+v*Y-u*Z--w*X+(u+v)*Y, Lilac);
+	stick(w*X-v*Y+u*Z--w*X-v*Y-u*Z--w*X-(u+v)*Y, Lilac);
+
+	stick(v*X+v*Y-v*Z--u*X+v*Y-w*Z--(u+v)*Y-w*Z--w*Y-(u+v)*Z--u*X+w*Y-v*Z, Red);
+	stick(v*X+v*Y-v*Z--v*X+u*Y-w*Z--(u+v)*X-w*Z--w*X-(u+v)*Z--w*X+u*Y-v*Z, Red);
+	stick(v*X+v*Y-v*Z--v*X+w*Y-u*Z--(u+v)*X+w*Y--w*X+(u+v)*Y--w*X+v*Y-u*Z, Red);
+	stick(v*X+v*Y-v*Z--u*X+v*Y-w*Z--v*X+u*Y-w*Z, Red);
+	stick(v*X+v*Y-v*Z--u*X+w*Y-v*Z--v*X+w*Y-u*Z, Red);
+	stick(v*X+v*Y-v*Z--w*X+u*Y-v*Z--w*X+v*Y-u*Z, Red);
+
+	stick(v*X-v*Y-v*Z--u*X-v*Y-w*Z--(-u-v)*Y-w*Z--(-w*Y-(u+v)*Z)--u*X-w*Y-v*Z, Yellow, t);
+	stick(v*X-v*Y-v*Z--v*X-u*Y-w*Z--(u+v)*X-w*Z--w*X-(u+v)*Z--w*X-u*Y-v*Z, Yellow);
+	stick(v*X-v*Y-v*Z--v*X-w*Y-u*Z--(u+v)*X-w*Y--w*X-(u+v)*Y--w*X-v*Y-u*Z, Yellow);
+	stick(v*X-v*Y-v*Z--u*X-v*Y-w*Z--v*X-u*Y-w*Z, Yellow, t);
+	stick(v*X-v*Y-v*Z--u*X-w*Y-v*Z--v*X-w*Y-u*Z, Yellow, t);
+	stick(v*X-v*Y-v*Z--w*X-u*Y-v*Z--w*X-v*Y-u*Z, Yellow);
+
+	stick(-v*X+v*Y-v*Z--(-u*X+v*Y-w*Z)--(u+v)*Y-w*Z--w*Y-(u+v)*Z--(-u*X+w*Y-v*Z), LightGreen);
+	stick(-v*X+v*Y-v*Z--(-v*X+u*Y-w*Z)--(-u-v)*X-w*Z--(-w*X-(u+v)*Z)--(-w*X+u*Y-v*Z), LightGreen);
+	stick(-v*X+v*Y-v*Z--(-v*X+w*Y-u*Z)--(-u-v)*X+w*Y--(-w*X+(u+v)*Y)--(-w*X+v*Y-u*Z), LightGreen);
+	stick(-v*X+v*Y-v*Z--(-u*X+v*Y-w*Z)--(-v*X+u*Y-w*Z), LightGreen);
+	stick(-v*X+v*Y-v*Z--(-u*X+w*Y-v*Z)--(-v*X+w*Y-u*Z), LightGreen);
+	stick(-v*X+v*Y-v*Z--(-w*X+u*Y-v*Z)--(-w*X+v*Y-u*Z), LightGreen);
+
+	stick(-v*X-v*Y-v*Z--(-u*X-v*Y-w*Z)--(-u-v)*Y-w*Z--(-w*Y-(u+v)*Z)--(-u*X-w*Y-v*Z), Blue, t);
+	stick(-v*X-v*Y-v*Z--(-v*X-u*Y-w*Z)--(-u-v)*X-w*Z--(-w*X-(u+v)*Z)--(-w*X-u*Y-v*Z), Blue);
+	stick(-v*X-v*Y-v*Z--(-v*X-w*Y-u*Z)--(-u-v)*X-w*Y--(-w*X-(u+v)*Y)--(-w*X-v*Y-u*Z), Blue);
+	stick(-v*X-v*Y-v*Z--(-u*X-v*Y-w*Z)--(-v*X-u*Y-w*Z), Blue, t);
+	stick(-v*X-v*Y-v*Z--(-u*X-w*Y-v*Z)--(-v*X-w*Y-u*Z), Blue, t);
+	stick(-v*X-v*Y-v*Z--(-w*X-u*Y-v*Z)--(-w*X-v*Y-u*Z), Blue);
+
+	stick(v*X+v*Y+v*Z--u*X+v*Y+w*Z--(u+v)*Y+w*Z--w*Y+(u+v)*Z--u*X+w*Y+v*Z, LightBlue, p);
+	stick(v*X+v*Y+v*Z--v*X+u*Y+w*Z--(u+v)*X+w*Z--w*X+(u+v)*Z--w*X+u*Y+v*Z, LightBlue, p);
+	stick(v*X+v*Y+v*Z--v*X+w*Y+u*Z--(u+v)*X+w*Y--w*X+(u+v)*Y--w*X+v*Y+u*Z, LightBlue);
+	stick(v*X+v*Y+v*Z--u*X+v*Y+w*Z--v*X+u*Y+w*Z, LightBlue, p);
+	stick(v*X+v*Y+v*Z--u*X+w*Y+v*Z--v*X+w*Y+u*Z, LightBlue);
+	stick(v*X+v*Y+v*Z--w*X+u*Y+v*Z--w*X+v*Y+u*Z, LightBlue);
+
+	stick(v*X-v*Y+v*Z--u*X-v*Y+w*Z--(-u-v)*Y+w*Z--(-w*Y+(u+v)*Z)--u*X-w*Y+v*Z, Green, p);
+	stick(v*X-v*Y+v*Z--v*X-u*Y+w*Z--(u+v)*X+w*Z--w*X+(u+v)*Z--w*X-u*Y+v*Z, Green, p);
+	stick(v*X-v*Y+v*Z--v*X-w*Y+u*Z--(u+v)*X-w*Y--w*X-(u+v)*Y--w*X-v*Y+u*Z, Green);
+	stick(v*X-v*Y+v*Z--u*X-v*Y+w*Z--v*X-u*Y+w*Z, Green, p);
+	stick(v*X-v*Y+v*Z--u*X-w*Y+v*Z--v*X-w*Y+u*Z, Green);
+	stick(v*X-v*Y+v*Z--w*X-u*Y+v*Z--w*X-v*Y+u*Z, Green);
+
+	stick(-v*X+v*Y+v*Z--(-u*X+v*Y+w*Z)--(u+v)*Y+w*Z--w*Y+(u+v)*Z--(-u*X+w*Y+v*Z), Orange, p);
+	stick(-v*X+v*Y+v*Z--(-v*X+u*Y+w*Z)--(-u-v)*X+w*Z--(-w*X+(u+v)*Z)--(-w*X+u*Y+v*Z), Orange, p);
+	stick(-v*X+v*Y+v*Z--(-v*X+w*Y+u*Z)--(-u-v)*X+w*Y--(-w*X+(u+v)*Y)--(-w*X+v*Y+u*Z), Orange);
+	stick(-v*X+v*Y+v*Z--(-u*X+v*Y+w*Z)--(-v*X+u*Y+w*Z), Orange, p);
+	stick(-v*X+v*Y+v*Z--(-u*X+w*Y+v*Z)--(-v*X+w*Y+u*Z), Orange);
+	stick(-v*X+v*Y+v*Z--(-w*X+u*Y+v*Z)--(-w*X+v*Y+u*Z), Orange);
+
+	stick(-v*X-v*Y+v*Z--(-u*X-v*Y+w*Z)--(-u-v)*Y+w*Z--(-w*Y+(u+v)*Z)--(-u*X-w*Y+v*Z), Pink, p);
+	stick(-v*X-v*Y+v*Z--(-v*X-u*Y+w*Z)--(-u-v)*X+w*Z--(-w*X+(u+v)*Z)--(-w*X-u*Y+v*Z), Pink, p);
+	stick(-v*X-v*Y+v*Z--(-v*X-w*Y+u*Z)--(-u-v)*X-w*Y--(-w*X-(u+v)*Y)--(-w*X-v*Y+u*Z), Pink);
+	stick(-v*X-v*Y+v*Z--(-u*X-v*Y+w*Z)--(-v*X-u*Y+w*Z), Pink, p);
+	stick(-v*X-v*Y+v*Z--(-u*X-w*Y+v*Z)--(-v*X-w*Y+u*Z), Pink);
+	stick(-v*X-v*Y+v*Z--(-w*X-u*Y+v*Z)--(-w*X-v*Y+u*Z), Pink);
+
+	polygon((-u*X+w*Y+v*Z)--u*X+w*Y+v*Z--w*X+u*Y+v*Z--w*X-u*Y+v*Z--u*X-w*Y+v*Z--(-u*X-w*Y+v*Z)--(-w*X-u*Y+v*Z)--(-w*X+u*Y+v*Z), Background);
+	polygon((-u*X+w*Y+v*Z)--u*X+w*Y+v*Z--w*X+u*Y+v*Z--w*X-u*Y+v*Z--u*X-w*Y+v*Z--(-u*X-w*Y+v*Z)--(-w*X-u*Y+v*Z)--(-w*X+u*Y+v*Z), Background, p);
+
+	polygon(v*X-u*Y-w*Z--(-v*X-u*Y-w*Z)--(-v*X-w*Y-u*Z)--v*X-w*Y-u*Z, Background);
+	polygon(v*X-u*Y-w*Z--(-v*X-u*Y-w*Z)--(-v*X-w*Y-u*Z)--v*X-w*Y-u*Z, Background, t);
+}

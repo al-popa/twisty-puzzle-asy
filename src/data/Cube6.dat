@@ -1,0 +1,506 @@
+triple AA, AB, AC, AD, AE, AF, AG, AH,
+
+BA6B, BA6C, BA6E, BB6A, BB6D, BB6F, BC6A, BC6D, BC6G, BD6B, BD6C, BD6H,
+BE6A, BE6F, BE6G, BF6B, BF6E, BF6H, BG6C, BG6E, BG6H, BH6D, BH6F, BH6G,
+
+BA3B, BA3C, BA3E, BB3A, BB3D, BB3F, BC3A, BC3D, BC3G, BD3B, BD3C, BD3H,
+BE3A, BE3F, BE3G, BF3B, BF3E, BF3H, BG3C, BG3E, BG3H, BH3D, BH3F, BH3G,
+
+BA2B, BA2C, BA2E, BB2D, BB2F, BC2D, BC2G, BD2H, BE2F, BE2G, BF2H, BG2H,
+
+CA6BC, CA6BE, CA6CE, CB6AD, CB6AF, CB6DF, CC6AD, CC6AG, CC6DG, CD6BC, CD6BH, CD6CH,
+CE6AF, CE6AG, CE6FG, CF6BE, CF6BH, CF6EH, CG6CE, CG6CH, CG6EH, CH6DF, CH6DG, CH6FG,
+
+CA6B2C, CA6B2E, CA6C2B, CA6C2E, CA6E2B, CA6E2C, CB6A2D, CB6A2F,
+CB6D2A, CB6D2F, CB6F2A, CB6F2D, CC6A2D, CC6A2G, CC6D2A, CC6D2G,
+CC6G2A, CC6G2D, CD6B2C, CD6B2H, CD6C2B, CD6C2H, CD6H2B, CD6H2C,
+CE6A2F, CE6A2G, CE6F2A, CE6F2G, CE6G2A, CE6G2F, CF6B2E, CF6B2H,
+CF6E2B, CF6E2H, CF6H2B, CF6H2E, CG6C2E, CG6C2H, CG6E2C, CG6E2H,
+CG6H2C, CG6H2E, CH6D2F, CH6D2G, CH6F2D, CH6F2G, CH6G2D, CH6G2F,
+
+CA3BC, CA3BE, CA3CE, CB3AD, CB3AF, CB3DF, CC3AD, CC3AG, CC3DG, CD3BC, CD3BH, CD3CH,
+CE3AF, CE3AG, CE3FG, CF3BE, CF3BH, CF3EH, CG3CE, CG3CH, CG3EH, CH3DF, CH3DG, CH3FG,
+
+CA2B6CD, CA2C6BD, CB2D6AC, CC2D6AB, CA2B6EF, CA2E6BF, CB2F6AE, CE2F6AB,
+CA2C6EG, CA2E6CG, CC2G6AE, CE2G6AC, CB2D6FH, CB2F6DH, CD2H6BF, CF2H6BD,
+CC2D6GH, CC2G6DH, CD2H6CG, CG2H6CD, CE2F6GH, CE2G6FH, CF2H6EG, CG2H6EF,
+
+CA2B3CD, CA2C3BD, CB2D3AC, CC2D3AB, CA2B3EF, CA2E3BF, CB2F3AE, CE2F3AB,
+CA2C3EG, CA2E3CG, CC2G3AE, CE2G3AC, CB2D3FH, CB2F3DH, CD2H3BF, CF2H3BD,
+CC2D3GH, CC2G3DH, CD2H3CG, CG2H3CD, CE2F3GH, CE2G3FH, CF2H3EG, CG2H3EF,
+
+CABCD, CABEF, CACEG, CBDFH, CCDGH, CEFGH;
+
+void init()
+{
+	AA = X+Y+Z;
+	AB = X+Y-Z;
+	AC = X-Y+Z;
+	AD = X-Y-Z;
+	AE = -X+Y+Z;
+	AF = -X+Y-Z;
+	AG = -X-Y+Z;
+	AH = -X-Y-Z;
+
+	BA6B = (5*AA+AB)/6;
+	BA6C = (5*AA+AC)/6;
+	BA6E = (5*AA+AE)/6;
+	BB6A = (5*AB+AA)/6;
+	BB6D = (5*AB+AD)/6;
+	BB6F = (5*AB+AF)/6;
+	BC6A = (5*AC+AA)/6;
+	BC6D = (5*AC+AD)/6;
+	BC6G = (5*AC+AG)/6;
+	BD6B = (5*AD+AB)/6;
+	BD6C = (5*AD+AC)/6;
+	BD6H = (5*AD+AH)/6;
+	BE6A = (5*AE+AA)/6;
+	BE6F = (5*AE+AF)/6;
+	BE6G = (5*AE+AG)/6;
+	BF6B = (5*AF+AB)/6;
+	BF6E = (5*AF+AE)/6;
+	BF6H = (5*AF+AH)/6;
+	BG6C = (5*AG+AC)/6;
+	BG6E = (5*AG+AE)/6;
+	BG6H = (5*AG+AH)/6;
+	BH6D = (5*AH+AD)/6;
+	BH6F = (5*AH+AF)/6;
+	BH6G = (5*AH+AG)/6;
+
+	BA3B = (2*AA+AB)/3;
+	BA3C = (2*AA+AC)/3;
+	BA3E = (2*AA+AE)/3;
+	BB3A = (2*AB+AA)/3;
+	BB3D = (2*AB+AD)/3;
+	BB3F = (2*AB+AF)/3;
+	BC3A = (2*AC+AA)/3;
+	BC3D = (2*AC+AD)/3;
+	BC3G = (2*AC+AG)/3;
+	BD3B = (2*AD+AB)/3;
+	BD3C = (2*AD+AC)/3;
+	BD3H = (2*AD+AH)/3;
+	BE3A = (2*AE+AA)/3;
+	BE3F = (2*AE+AF)/3;
+	BE3G = (2*AE+AG)/3;
+	BF3B = (2*AF+AB)/3;
+	BF3E = (2*AF+AE)/3;
+	BF3H = (2*AF+AH)/3;
+	BG3C = (2*AG+AC)/3;
+	BG3E = (2*AG+AE)/3;
+	BG3H = (2*AG+AH)/3;
+	BH3D = (2*AH+AD)/3;
+	BH3F = (2*AH+AF)/3;
+	BH3G = (2*AH+AG)/3;
+
+	BA2B = (AA+AB)/2;
+	BA2C = (AA+AC)/2;
+	BA2E = (AA+AE)/2;
+	BB2D = (AB+AD)/2;
+	BB2F = (AB+AF)/2;
+	BC2D = (AC+AD)/2;
+	BC2G = (AC+AG)/2;
+	BD2H = (AD+AH)/2;
+	BE2F = (AE+AF)/2;
+	BE2G = (AE+AG)/2;
+	BF2H = (AF+AH)/2;
+	BG2H = (AG+AH)/2;
+
+	CA6BC = (4*AA+AB+AC)/6;
+	CA6BE = (4*AA+AB+AE)/6;
+	CA6CE = (4*AA+AC+AE)/6;
+	CB6AD = (4*AB+AA+AD)/6;
+	CB6AF = (4*AB+AA+AF)/6;
+	CB6DF = (4*AB+AD+AF)/6;
+	CC6AD = (4*AC+AA+AD)/6;
+	CC6AG = (4*AC+AA+AG)/6;
+	CC6DG = (4*AC+AD+AG)/6;
+	CD6BC = (4*AD+AB+AC)/6;
+	CD6BH = (4*AD+AB+AH)/6;
+	CD6CH = (4*AD+AC+AH)/6;
+	CE6AF = (4*AE+AA+AF)/6;
+	CE6AG = (4*AE+AA+AG)/6;
+	CE6FG = (4*AE+AF+AG)/6;
+	CF6BE = (4*AF+AB+AE)/6;
+	CF6BH = (4*AF+AB+AH)/6;
+	CF6EH = (4*AF+AE+AH)/6;
+	CG6CE = (4*AG+AC+AE)/6;
+	CG6CH = (4*AG+AC+AH)/6;
+	CG6EH = (4*AG+AE+AH)/6;
+	CH6DF = (4*AH+AD+AF)/6;
+	CH6DG = (4*AH+AD+AG)/6;
+	CH6FG = (4*AH+AF+AG)/6;
+
+	CA6B2C = (3*AA+2*AB+AC)/6;
+	CA6B2E = (3*AA+2*AB+AE)/6;
+	CA6C2B = (3*AA+2*AC+AB)/6;
+	CA6C2E = (3*AA+2*AC+AE)/6;
+	CA6E2B = (3*AA+2*AE+AB)/6;
+	CA6E2C = (3*AA+2*AE+AC)/6;
+	CB6A2D = (3*AB+2*AA+AD)/6;
+	CB6A2F = (3*AB+2*AA+AF)/6;
+	CB6D2A = (3*AB+2*AD+AA)/6;
+	CB6D2F = (3*AB+2*AD+AF)/6;
+	CB6F2A = (3*AB+2*AF+AA)/6;
+	CB6F2D = (3*AB+2*AF+AD)/6;
+	CC6A2D = (3*AC+2*AA+AD)/6;
+	CC6A2G = (3*AC+2*AA+AG)/6;
+	CC6D2A = (3*AC+2*AD+AA)/6;
+	CC6D2G = (3*AC+2*AD+AG)/6;
+	CC6G2A = (3*AC+2*AG+AA)/6;
+	CC6G2D = (3*AC+2*AG+AD)/6;
+	CD6B2C = (3*AD+2*AB+AC)/6;
+	CD6B2H = (3*AD+2*AB+AH)/6;
+	CD6C2B = (3*AD+2*AC+AB)/6;
+	CD6C2H = (3*AD+2*AC+AH)/6;
+	CD6H2B = (3*AD+2*AH+AB)/6;
+	CD6H2C = (3*AD+2*AH+AC)/6;
+	CE6A2F = (3*AE+2*AA+AF)/6;
+	CE6A2G = (3*AE+2*AA+AG)/6;
+	CE6F2A = (3*AE+2*AF+AA)/6;
+	CE6F2G = (3*AE+2*AF+AG)/6;
+	CE6G2A = (3*AE+2*AG+AA)/6;
+	CE6G2F = (3*AE+2*AG+AF)/6;
+	CF6B2E = (3*AF+2*AB+AE)/6;
+	CF6B2H = (3*AF+2*AB+AH)/6;
+	CF6E2B = (3*AF+2*AE+AB)/6;
+	CF6E2H = (3*AF+2*AE+AH)/6;
+	CF6H2B = (3*AF+2*AH+AB)/6;
+	CF6H2E = (3*AF+2*AH+AE)/6;
+	CG6C2E = (3*AG+2*AC+AE)/6;
+	CG6C2H = (3*AG+2*AC+AH)/6;
+	CG6E2C = (3*AG+2*AE+AC)/6;
+	CG6E2H = (3*AG+2*AE+AH)/6;
+	CG6H2C = (3*AG+2*AH+AC)/6;
+	CG6H2E = (3*AG+2*AH+AE)/6;
+	CH6D2F = (3*AH+2*AD+AF)/6;
+	CH6D2G = (3*AH+2*AD+AG)/6;
+	CH6F2D = (3*AH+2*AF+AD)/6;
+	CH6F2G = (3*AH+2*AF+AG)/6;
+	CH6G2D = (3*AH+2*AG+AD)/6;
+	CH6G2F = (3*AH+2*AG+AF)/6;
+
+	CA3BC = (AA+AB+AC)/3;
+	CA3BE = (AA+AB+AE)/3;
+	CA3CE = (AA+AC+AE)/3;
+	CB3AD = (AB+AA+AD)/3;
+	CB3AF = (AB+AA+AF)/3;
+	CB3DF = (AB+AD+AF)/3;
+	CC3AD = (AC+AA+AD)/3;
+	CC3AG = (AC+AA+AG)/3;
+	CC3DG = (AC+AD+AG)/3;
+	CD3BC = (AD+AB+AC)/3;
+	CD3BH = (AD+AB+AH)/3;
+	CD3CH = (AD+AC+AH)/3;
+	CE3AF = (AE+AA+AF)/3;
+	CE3AG = (AE+AA+AG)/3;
+	CE3FG = (AE+AF+AG)/3;
+	CF3BE = (AF+AB+AE)/3;
+	CF3BH = (AF+AB+AH)/3;
+	CF3EH = (AF+AE+AH)/3;
+	CG3CE = (AG+AC+AE)/3;
+	CG3CH = (AG+AC+AH)/3;
+	CG3EH = (AG+AE+AH)/3;
+	CH3DF = (AH+AD+AF)/3;
+	CH3DG = (AH+AD+AG)/3;
+	CH3FG = (AH+AF+AG)/3;
+
+	CA2B6CD = (5*(AA+AB)+AC+AD)/12;
+	CA2C6BD = (5*(AA+AC)+AB+AD)/12;
+	CB2D6AC = (5*(AB+AD)+AA+AC)/12;
+	CC2D6AB = (5*(AC+AD)+AA+AB)/12;
+	CA2B6EF = (5*(AA+AB)+AE+AF)/12;
+	CA2E6BF = (5*(AA+AE)+AB+AF)/12;
+	CB2F6AE = (5*(AB+AF)+AA+AE)/12;
+	CE2F6AB = (5*(AE+AF)+AA+AB)/12;
+	CA2C6EG = (5*(AA+AC)+AE+AG)/12;
+	CA2E6CG = (5*(AA+AE)+AC+AG)/12;
+	CC2G6AE = (5*(AC+AG)+AA+AE)/12;
+	CE2G6AC = (5*(AE+AG)+AA+AC)/12;
+	CB2D6FH = (5*(AB+AD)+AF+AH)/12;
+	CB2F6DH = (5*(AB+AF)+AD+AH)/12;
+	CD2H6BF = (5*(AD+AH)+AB+AF)/12;
+	CF2H6BD = (5*(AF+AH)+AB+AD)/12;
+	CC2D6GH = (5*(AC+AD)+AG+AH)/12;
+	CC2G6DH = (5*(AC+AG)+AD+AH)/12;
+	CD2H6CG = (5*(AD+AH)+AC+AG)/12;
+	CG2H6CD = (5*(AG+AH)+AC+AD)/12;
+	CE2F6GH = (5*(AE+AF)+AG+AH)/12;
+	CE2G6FH = (5*(AE+AG)+AF+AH)/12;
+	CF2H6EG = (5*(AF+AH)+AE+AG)/12;
+	CG2H6EF = (5*(AG+AH)+AE+AF)/12;
+
+	CA2B3CD = (2*(AA+AB)+AC+AD)/6;
+	CA2C3BD = (2*(AA+AC)+AB+AD)/6;
+	CB2D3AC = (2*(AB+AD)+AA+AC)/6;
+	CC2D3AB = (2*(AC+AD)+AA+AB)/6;
+	CA2B3EF = (2*(AA+AB)+AE+AF)/6;
+	CA2E3BF = (2*(AA+AE)+AB+AF)/6;
+	CB2F3AE = (2*(AB+AF)+AA+AE)/6;
+	CE2F3AB = (2*(AE+AF)+AA+AB)/6;
+	CA2C3EG = (2*(AA+AC)+AE+AG)/6;
+	CA2E3CG = (2*(AA+AE)+AC+AG)/6;
+	CC2G3AE = (2*(AC+AG)+AA+AE)/6;
+	CE2G3AC = (2*(AE+AG)+AA+AC)/6;
+	CB2D3FH = (2*(AB+AD)+AF+AH)/6;
+	CB2F3DH = (2*(AB+AF)+AD+AH)/6;
+	CD2H3BF = (2*(AD+AH)+AB+AF)/6;
+	CF2H3BD = (2*(AF+AH)+AB+AD)/6;
+	CC2D3GH = (2*(AC+AD)+AG+AH)/6;
+	CC2G3DH = (2*(AC+AG)+AD+AH)/6;
+	CD2H3CG = (2*(AD+AH)+AC+AG)/6;
+	CG2H3CD = (2*(AG+AH)+AC+AD)/6;
+	CE2F3GH = (2*(AE+AF)+AG+AH)/6;
+	CE2G3FH = (2*(AE+AG)+AF+AH)/6;
+	CF2H3EG = (2*(AF+AH)+AE+AG)/6;
+	CG2H3EF = (2*(AG+AH)+AE+AF)/6;
+
+	CABCD = (AA+AB+AC+AD)/4;
+	CABEF = (AA+AB+AE+AF)/4;
+	CACEG = (AA+AC+AE+AG)/4;
+	CBDFH = (AB+AD+AF+AH)/4;
+	CCDGH = (AC+AD+AG+AH)/4;
+	CEFGH = (AE+AF+AG+AH)/4;
+}
+
+void Cube6()
+{
+	init();
+	transform3 t = rotate(thre, -Z);
+	transform3 q = rotate(two, -Z);
+	transform3 p = rotate(one, -Z);
+
+	//stick(AA--AB--AD--AC, Blue);
+	stick(AA--BA6B--CA6BC--BA6C, Blue, t);
+	stick(AB--BB6A--CB6AD--BB6D, Blue);
+	stick(AC--BC6A--CC6AD--BC6D, Blue, t);
+	stick(AD--BD6B--CD6BC--BD6C, Blue);
+	stick(BA6B--BA3B--CA6B2C--CA6BC, Blue, q);
+	stick(BA6C--BA3C--CA6C2B--CA6BC, Blue, t);
+	stick(BB6A--BB3A--CB6A2D--CB6AD, Blue);
+	stick(BB6D--BB3D--CB6D2A--CB6AD, Blue);
+	stick(BC6A--BC3A--CC6A2D--CC6AD, Blue, t);
+	stick(BC6D--BC3D--CC6D2A--CC6AD, Blue, q);
+	stick(BD6B--BD3B--CD6B2C--CD6BC, Blue);
+	stick(BD6C--BD3C--CD6C2B--CD6BC, Blue);
+	stick(CA6BC--CA6B2C--CA3BC--CA6C2B, Blue, q);
+	stick(CB6AD--CB6A2D--CB3AD--CB6D2A, Blue);
+	stick(CC6AD--CC6A2D--CC3AD--CC6D2A, Blue, q);
+	stick(CD6BC--CD6B2C--CD3BC--CD6C2B, Blue);
+	stick(BA2B--BA3B--CA6B2C--CA2B6CD, Blue, p);
+	stick(BA2B--BB3A--CB6A2D--CA2B6CD, Blue);
+	stick(BA2C--BA3C--CA6C2B--CA2C6BD, Blue, t);
+	stick(BA2C--BC3A--CC6A2D--CA2C6BD, Blue, t);
+	stick(BB2D--BB3D--CB6D2A--CB2D6AC, Blue);
+	stick(BB2D--BD3B--CD6B2C--CB2D6AC, Blue);
+	stick(BC2D--BC3D--CC6D2A--CC2D6AB, Blue, p);
+	stick(BC2D--BD3C--CD6C2B--CC2D6AB, Blue);
+	stick(CA6B2C--CA3BC--CA2B3CD--CA2B6CD, Blue, p);
+	stick(CA6C2B--CA3BC--CA2C3BD--CA2C6BD, Blue, q);
+	stick(CB6A2D--CB3AD--CA2B3CD--CA2B6CD, Blue);
+	stick(CB6D2A--CB3AD--CB2D3AC--CB2D6AC, Blue);
+	stick(CC6A2D--CC3AD--CA2C3BD--CA2C6BD, Blue, q);
+	stick(CC6D2A--CC3AD--CC2D3AB--CC2D6AB, Blue, p);
+	stick(CD6B2C--CD3BC--CB2D3AC--CB2D6AC, Blue);
+	stick(CD6C2B--CD3BC--CC2D3AB--CC2D6AB, Blue);
+	stick(CA3BC--CA2B3CD--CABCD--CA2C3BD, Blue, p);
+	stick(CB3AD--CA2B3CD--CABCD--CB2D3AC, Blue);
+	stick(CC3AD--CA2C3BD--CABCD--CC2D3AB, Blue, p);
+	stick(CD3BC--CB2D3AC--CABCD--CC2D3AB, Blue);
+
+	//stick(AA--AB--AF--AE, Orange);
+	stick(AA--BA6B--CA6BE--BA6E, Orange, t);
+	stick(AB--BB6A--CB6AF--BB6F, Orange);
+	stick(AE--BE6A--CE6AF--BE6F, Orange, t);
+	stick(AF--BF6B--CF6BE--BF6E, Orange);
+	stick(BA6B--BA3B--CA6B2E--CA6BE, Orange, q);
+	stick(BA6E--BA3E--CA6E2B--CA6BE, Orange, t);
+	stick(BB6A--BB3A--CB6A2F--CB6AF, Orange);
+	stick(BB6F--BB3F--CB6F2A--CB6AF, Orange);
+	stick(BE6A--BE3A--CE6A2F--CE6AF, Orange, t);
+	stick(BE6F--BE3F--CE6F2A--CE6AF, Orange, q);
+	stick(BF6B--BF3B--CF6B2E--CF6BE, Orange);
+	stick(BF6E--BF3E--CF6E2B--CF6BE, Orange);
+	stick(CA6BE--CA6B2E--CA3BE--CA6E2B, Orange, q);
+	stick(CB6AF--CB6A2F--CB3AF--CB6F2A, Orange);
+	stick(CE6AF--CE6A2F--CE3AF--CE6F2A, Orange, q);
+	stick(CF6BE--CF6B2E--CF3BE--CF6E2B, Orange);
+	stick(BA2B--BA3B--CA6B2E--CA2B6EF, Orange, p);
+	stick(BA2B--BB3A--CB6A2F--CA2B6EF, Orange);
+	stick(BA2E--BA3E--CA6E2B--CA2E6BF, Orange, t);
+	stick(BA2E--BE3A--CE6A2F--CA2E6BF, Orange, t);
+	stick(BB2F--BB3F--CB6F2A--CB2F6AE, Orange);
+	stick(BB2F--BF3B--CF6B2E--CB2F6AE, Orange);
+	stick(BE2F--BE3F--CE6F2A--CE2F6AB, Orange, p);
+	stick(BE2F--BF3E--CF6E2B--CE2F6AB, Orange);
+	stick(CA6B2E--CA3BE--CA2B3EF--CA2B6EF, Orange, p);
+	stick(CA6E2B--CA3BE--CA2E3BF--CA2E6BF, Orange, q);
+	stick(CB6A2F--CB3AF--CA2B3EF--CA2B6EF, Orange);
+	stick(CB6F2A--CB3AF--CB2F3AE--CB2F6AE, Orange);
+	stick(CE6A2F--CE3AF--CA2E3BF--CA2E6BF, Orange, q);
+	stick(CE6F2A--CE3AF--CE2F3AB--CE2F6AB, Orange, p);
+	stick(CF6B2E--CF3BE--CB2F3AE--CB2F6AE, Orange);
+	stick(CF6E2B--CF3BE--CE2F3AB--CE2F6AB, Orange);
+	stick(CA3BE--CA2B3EF--CABEF--CA2E3BF, Orange, p);
+	stick(CB3AF--CA2B3EF--CABEF--CB2F3AE, Orange);
+	stick(CE3AF--CA2E3BF--CABEF--CE2F3AB, Orange, p);
+	stick(CF3BE--CB2F3AE--CABEF--CE2F3AB, Orange);
+
+	//stick(AA--AC--AG--AE, White);
+	stick(AA--BA6C--CA6CE--BA6E, White, t);
+	stick(AC--BC6A--CC6AG--BC6G, White, t);
+	stick(AE--BE6A--CE6AG--BE6G, White, t);
+	stick(AG--BG6C--CG6CE--BG6E, White, t);
+	stick(BA6C--BA3C--CA6C2E--CA6CE, White, t);
+	stick(BA6E--BA3E--CA6E2C--CA6CE, White, t);
+	stick(BC6A--BC3A--CC6A2G--CC6AG, White, t);
+	stick(BC6G--BC3G--CC6G2A--CC6AG, White, t);
+	stick(BE6A--BE3A--CE6A2G--CE6AG, White, t);
+	stick(BE6G--BE3G--CE6G2A--CE6AG, White, t);
+	stick(BG6C--BG3C--CG6C2E--CG6CE, White, t);
+	stick(BG6E--BG3E--CG6E2C--CG6CE, White, t);
+	stick(CA6CE--CA6C2E--CA3CE--CA6E2C, White, t);
+	stick(CC6AG--CC6A2G--CC3AG--CC6G2A, White, t);
+	stick(CE6AG--CE6A2G--CE3AG--CE6G2A, White, t);
+	stick(CG6CE--CG6C2E--CG3CE--CG6E2C, White, t);
+	stick(BA2C--BA3C--CA6C2E--CA2C6EG, White, t);
+	stick(BA2C--BC3A--CC6A2G--CA2C6EG, White, t);
+	stick(BA2E--BA3E--CA6E2C--CA2E6CG, White, t);
+	stick(BA2E--BE3A--CE6A2G--CA2E6CG, White, t);
+	stick(BC2G--BC3G--CC6G2A--CC2G6AE, White, t);
+	stick(BC2G--BG3C--CG6C2E--CC2G6AE, White, t);
+	stick(BE2G--BE3G--CE6G2A--CE2G6AC, White, t);
+	stick(BE2G--BG3E--CG6E2C--CE2G6AC, White, t);
+	stick(CA6C2E--CA3CE--CA2C3EG--CA2C6EG, White, t);
+	stick(CA6E2C--CA3CE--CA2E3CG--CA2E6CG, White, t);
+	stick(CC6A2G--CC3AG--CA2C3EG--CA2C6EG, White, t);
+	stick(CC6G2A--CC3AG--CC2G3AE--CC2G6AE, White, t);
+	stick(CE6A2G--CE3AG--CA2E3CG--CA2E6CG, White, t);
+	stick(CE6G2A--CE3AG--CE2G3AC--CE2G6AC, White, t);
+	stick(CG6C2E--CG3CE--CC2G3AE--CC2G6AE, White, t);
+	stick(CG6E2C--CG3CE--CE2G3AC--CE2G6AC, White, t);
+	stick(CA3CE--CA2C3EG--CACEG--CA2E3CG, White, t);
+	stick(CC3AG--CA2C3EG--CACEG--CC2G3AE, White, t);
+	stick(CE3AG--CA2E3CG--CACEG--CE2G3AC, White, t);
+	stick(CG3CE--CC2G3AE--CACEG--CE2G3AC, White, t);
+
+	//stick(AB--AD--AH--AF, Yellow);
+	stick(AB--BB6D--CB6DF--BB6F, Yellow);
+	stick(AD--BD6B--CD6BH--BD6H, Yellow);
+	stick(AF--BF6B--CF6BH--BF6H, Yellow);
+	stick(AH--BH6D--CH6DF--BH6F, Yellow);
+	stick(BB6D--BB3D--CB6D2F--CB6DF, Yellow);
+	stick(BB6F--BB3F--CB6F2D--CB6DF, Yellow);
+	stick(BD6B--BD3B--CD6B2H--CD6BH, Yellow);
+	stick(BD6H--BD3H--CD6H2B--CD6BH, Yellow);
+	stick(BF6B--BF3B--CF6B2H--CF6BH, Yellow);
+	stick(BF6H--BF3H--CF6H2B--CF6BH, Yellow);
+	stick(BH6D--BH3D--CH6D2F--CH6DF, Yellow);
+	stick(BH6F--BH3F--CH6F2D--CH6DF, Yellow);
+	stick(CB6DF--CB6D2F--CB3DF--CB6F2D, Yellow);
+	stick(CD6BH--CD6B2H--CD3BH--CD6H2B, Yellow);
+	stick(CF6BH--CF6B2H--CF3BH--CF6H2B, Yellow);
+	stick(CH6DF--CH6D2F--CH3DF--CH6F2D, Yellow);
+	stick(BB2D--BB3D--CB6D2F--CB2D6FH, Yellow);
+	stick(BB2D--BD3B--CD6B2H--CB2D6FH, Yellow);
+	stick(BB2F--BB3F--CB6F2D--CB2F6DH, Yellow);
+	stick(BB2F--BF3B--CF6B2H--CB2F6DH, Yellow);
+	stick(BD2H--BD3H--CD6H2B--CD2H6BF, Yellow);
+	stick(BD2H--BH3D--CH6D2F--CD2H6BF, Yellow);
+	stick(BF2H--BF3H--CF6H2B--CF2H6BD, Yellow);
+	stick(BF2H--BH3F--CH6F2D--CF2H6BD, Yellow);
+	stick(CB6D2F--CB3DF--CB2D3FH--CB2D6FH, Yellow);
+	stick(CB6F2D--CB3DF--CB2F3DH--CB2F6DH, Yellow);
+	stick(CD6B2H--CD3BH--CB2D3FH--CB2D6FH, Yellow);
+	stick(CD6H2B--CD3BH--CD2H3BF--CD2H6BF, Yellow);
+	stick(CF6B2H--CF3BH--CB2F3DH--CB2F6DH, Yellow);
+	stick(CF6H2B--CF3BH--CF2H3BD--CF2H6BD, Yellow);
+	stick(CH6D2F--CH3DF--CD2H3BF--CD2H6BF, Yellow);
+	stick(CH6F2D--CH3DF--CF2H3BD--CF2H6BD, Yellow);
+	stick(CB3DF--CB2D3FH--CBDFH--CB2F3DH, Yellow);
+	stick(CD3BH--CB2D3FH--CBDFH--CD2H3BF, Yellow);
+	stick(CF3BH--CB2F3DH--CBDFH--CF2H3BD, Yellow);
+	stick(CH3DF--CD2H3BF--CBDFH--CF2H3BD, Yellow);
+
+	//stick(AC--AD--AH--AG, Red);
+	stick(AC--BC6D--CC6DG--BC6G, Red, t);
+	stick(AD--BD6C--CD6CH--BD6H, Red);
+	stick(AG--BG6C--CG6CH--BG6H, Red, t);
+	stick(AH--BH6D--CH6DG--BH6G, Red);
+	stick(BC6D--BC3D--CC6D2G--CC6DG, Red, q);
+	stick(BC6G--BC3G--CC6G2D--CC6DG, Red, t);
+	stick(BD6C--BD3C--CD6C2H--CD6CH, Red);
+	stick(BD6H--BD3H--CD6H2C--CD6CH, Red);
+	stick(BG6C--BG3C--CG6C2H--CG6CH, Red, t);
+	stick(BG6H--BG3H--CG6H2C--CG6CH, Red, q);
+	stick(BH6D--BH3D--CH6D2G--CH6DG, Red);
+	stick(BH6G--BH3G--CH6G2D--CH6DG, Red);
+	stick(CC6DG--CC6D2G--CC3DG--CC6G2D, Red, q);
+	stick(CD6CH--CD6C2H--CD3CH--CD6H2C, Red);
+	stick(CG6CH--CG6C2H--CG3CH--CG6H2C, Red, q);
+	stick(CH6DG--CH6D2G--CH3DG--CH6G2D, Red);
+	stick(BC2D--BC3D--CC6D2G--CC2D6GH, Red, p);
+	stick(BC2D--BD3C--CD6C2H--CC2D6GH, Red);
+	stick(BC2G--BC3G--CC6G2D--CC2G6DH, Red, t);
+	stick(BC2G--BG3C--CG6C2H--CC2G6DH, Red, t);
+	stick(BD2H--BD3H--CD6H2C--CD2H6CG, Red);
+	stick(BD2H--BH3D--CH6D2G--CD2H6CG, Red);
+	stick(BG2H--BG3H--CG6H2C--CG2H6CD, Red, p);
+	stick(BG2H--BH3G--CH6G2D--CG2H6CD, Red);
+	stick(CC6D2G--CC3DG--CC2D3GH--CC2D6GH, Red, p);
+	stick(CC6G2D--CC3DG--CC2G3DH--CC2G6DH, Red, q);
+	stick(CD6C2H--CD3CH--CC2D3GH--CC2D6GH, Red);
+	stick(CD6H2C--CD3CH--CD2H3CG--CD2H6CG, Red);
+	stick(CG6C2H--CG3CH--CC2G3DH--CC2G6DH, Red, q);
+	stick(CG6H2C--CG3CH--CG2H3CD--CG2H6CD, Red, p);
+	stick(CH6D2G--CH3DG--CD2H3CG--CD2H6CG, Red);
+	stick(CH6G2D--CH3DG--CG2H3CD--CG2H6CD, Red);
+	stick(CC3DG--CC2D3GH--CCDGH--CC2G3DH, Red, p);
+	stick(CD3CH--CC2D3GH--CCDGH--CD2H3CG, Red);
+	stick(CG3CH--CC2G3DH--CCDGH--CG2H3CD, Red, p);
+	stick(CH3DG--CD2H3CG--CCDGH--CG2H3CD, Red);
+
+	//stick(AE--AF--AH--AG, Green);
+	stick(AE--BE6F--CE6FG--BE6G, Green, t);
+	stick(AF--BF6E--CF6EH--BF6H, Green);
+	stick(AG--BG6E--CG6EH--BG6H, Green, t);
+	stick(AH--BH6F--CH6FG--BH6G, Green);
+	stick(BE6F--BE3F--CE6F2G--CE6FG, Green, q);
+	stick(BE6G--BE3G--CE6G2F--CE6FG, Green, t);
+	stick(BF6E--BF3E--CF6E2H--CF6EH, Green);
+	stick(BF6H--BF3H--CF6H2E--CF6EH, Green);
+	stick(BG6E--BG3E--CG6E2H--CG6EH, Green, t);
+	stick(BG6H--BG3H--CG6H2E--CG6EH, Green, q);
+	stick(BH6F--BH3F--CH6F2G--CH6FG, Green);
+	stick(BH6G--BH3G--CH6G2F--CH6FG, Green);
+	stick(CE6FG--CE6F2G--CE3FG--CE6G2F, Green, q);
+	stick(CF6EH--CF6E2H--CF3EH--CF6H2E, Green);
+	stick(CG6EH--CG6E2H--CG3EH--CG6H2E, Green, q);
+	stick(CH6FG--CH6F2G--CH3FG--CH6G2F, Green);
+	stick(BE2F--BE3F--CE6F2G--CE2F6GH, Green, p);
+	stick(BE2F--BF3E--CF6E2H--CE2F6GH, Green);
+	stick(BE2G--BE3G--CE6G2F--CE2G6FH, Green, t);
+	stick(BE2G--BG3E--CG6E2H--CE2G6FH, Green, t);
+	stick(BF2H--BF3H--CF6H2E--CF2H6EG, Green);
+	stick(BF2H--BH3F--CH6F2G--CF2H6EG, Green);
+	stick(BG2H--BG3H--CG6H2E--CG2H6EF, Green, p);
+	stick(BG2H--BH3G--CH6G2F--CG2H6EF, Green);
+	stick(CE6F2G--CE3FG--CE2F3GH--CE2F6GH, Green, p);
+	stick(CE6G2F--CE3FG--CE2G3FH--CE2G6FH, Green, q);
+	stick(CF6E2H--CF3EH--CE2F3GH--CE2F6GH, Green);
+	stick(CF6H2E--CF3EH--CF2H3EG--CF2H6EG, Green);
+	stick(CG6E2H--CG3EH--CE2G3FH--CE2G6FH, Green, q);
+	stick(CG6H2E--CG3EH--CG2H3EF--CG2H6EF, Green, p);
+	stick(CH6F2G--CH3FG--CF2H3EG--CF2H6EG, Green);
+	stick(CH6G2F--CH3FG--CG2H3EF--CG2H6EF, Green);
+	stick(CE3FG--CE2F3GH--CEFGH--CE2G3FH, Green, p);
+	stick(CF3EH--CE2F3GH--CEFGH--CF2H3EG, Green);
+	stick(CG3EH--CE2G3FH--CEFGH--CG2H3EF, Green, p);
+	stick(CH3FG--CF2H3EG--CEFGH--CG2H3EF, Green);
+
+	polygon(BA2B--BC2D--BG2H--BE2F, Background);
+	polygon(BA2B--BC2D--BG2H--BE2F, Background, p);
+	polygon(BA3B--BC3D--BG3H--BE3F, Background, p);
+	polygon(BA3B--BC3D--BG3H--BE3F, Background, q);
+	polygon(BA6B--BC6D--BG6H--BE6F, Background, q);
+	polygon(BA6B--BC6D--BG6H--BE6F, Background, t);
+}

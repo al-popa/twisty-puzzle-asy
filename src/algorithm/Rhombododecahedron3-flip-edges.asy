@@ -1,0 +1,37 @@
+include "algorithm.asyhdr";
+include "../data/Rhombododecahedron3.dat";
+
+setView(45, 35.2, 0);
+
+figureBegin();
+Rhombododecahedron3();
+label("$\times 3$", 0.95*(X-Y));
+highline(DBB--FBF--GBFBF);
+highline(DBF--FBF--GFBBF);
+highline(DBF--FBD--GFABD);
+highline(DBB--FBA--GBABA);
+makeChange(DBB--FBF--GBFBF, DBB--FBA--GBABA, 1.1*DBB);
+makeChange(DBF--FBF--GFBBF, DBF--FBD--GFABD, 1.1*DBF);
+figureLine();
+Rhombododecahedron3();
+makeMove(0.38*(-Y-Z), -70.5, 0.72);
+makeMove(0.46*(-Y-Z), 70.5, 0.72);
+makeMove(0.38*(X-Z), 70.5, 0.72);
+makeMove(0.46*(X-Z), -70.5, 0.72);
+label("$F^2$", X-Y);
+figureNext();
+Rhombododecahedron3();
+makeTurn(-120, 0.94);
+label("$T^{-1}$", X-Y);
+figureNext();
+Rhombododecahedron3();
+makeMove(0.38*(-Y-Z), 70.5, 0.72);
+makeMove(0.46*(-Y-Z), -70.5, 0.72);
+makeMove(0.38*(X-Z), -70.5, 0.72);
+makeMove(0.46*(X-Z), 70.5, 0.72);
+label("$F^{-2}$", X-Y);
+figureNext();
+Rhombododecahedron3();
+makeTurn(120, 0.94);
+label("$T$", X-Y);
+figureEnd();

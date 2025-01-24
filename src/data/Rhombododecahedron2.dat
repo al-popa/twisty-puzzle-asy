@@ -1,0 +1,159 @@
+triple
+AA, AB, AC, AD, AE, BA, BB, BC, BD, BE, CA, CB, CC, CD, CE,
+DA, DB, DC, DD, DE, EA, EB, EC, ED, EE, FA, FB, FC, FD, FE,
+GA, GB, GC, GD, GE, GF, GG, GH, GI, GJ, GK, GL,
+HA, HB, HC, HD, HE, HF, HG, HH;
+
+void init()
+{
+	AA = -Z;
+	AB = (X+Y-3*Z)/4;
+	AC = (X-Y-3*Z)/4;
+	AD = (-X-Y-3*Z)/4;
+	AE = (-X+Y-3*Z)/4;
+
+	BA = -Y;
+	BB = (X-3*Y+Z)/4;
+	BC = (X-3*Y-Z)/4;
+	BD = (-X-3*Y-Z)/4;
+	BE = (-X-3*Y+Z)/4;
+
+	CA = -X;
+	CB = (-3*X+Y+Z)/4;
+	CC = (-3*X+Y-Z)/4;
+	CD = (-3*X-Y-Z)/4;
+	CE = (-3*X-Y+Z)/4;
+
+	DA = Z;
+	DB = (X+Y+3*Z)/4;
+	DC = (X-Y+3*Z)/4;
+	DD = (-X-Y+3*Z)/4;
+	DE = (-X+Y+3*Z)/4;
+
+	EA = Y;
+	EB = (X+3*Y+Z)/4;
+	EC = (X+3*Y-Z)/4;
+	ED = (-X+3*Y-Z)/4;
+	EE = (-X+3*Y+Z)/4;
+
+	FA = X;
+	FB = (3*X+Y+Z)/4;
+	FC = (3*X+Y-Z)/4;
+	FD = (3*X-Y-Z)/4;
+	FE = (3*X-Y+Z)/4;
+
+	GA = (-Y-Z)/2;
+	GB = (Y-Z)/2;
+	GC = (-Y+Z)/2;
+	GD = (Y+Z)/2;
+	GE = (-X-Z)/2;
+	GF = (X-Z)/2;
+	GG = (-X+Z)/2;
+	GH = (X+Z)/2;
+	GI = (-X-Y)/2;
+	GJ = (X-Y)/2;
+	GK = (-X+Y)/2;
+	GL = (X+Y)/2;
+
+	HA = (-X-Y-Z)/2;
+	HB = (X-Y-Z)/2;
+	HC = (-X+Y-Z)/2;
+	HD = (X+Y-Z)/2;
+	HE = (-X-Y+Z)/2;
+	HF = (X-Y+Z)/2;
+	HG = (-X+Y+Z)/2;
+	HH = (X+Y+Z)/2;
+}
+
+void Rhombododecahedron2()
+{
+	init();
+	transform3 t = rotate(one, Y+Z);
+
+	stick(AA--AD--AE, Red, t);
+	stick(CA--CC--CD, Red);
+	stick(GE--AD--AE, Red, t);
+	stick(GE--CC--CD, Red);
+	stick(HA--AD--GE--CD, Red, t);
+	stick(HC--AE--GE--CC, Red);
+
+	stick(AA--AB--AC, Violet, t);
+	stick(FA--FC--FD, Violet);
+	stick(GF--AB--AC, Violet, t);
+	stick(GF--FC--FD, Violet);
+	stick(HB--AC--GF--FD, Violet, t);
+	stick(HD--AB--GF--FC, Violet);
+
+	stick(AA--AC--AD, Grey, t);
+	stick(BA--BC--BD, Grey, t);
+	stick(GA--AC--AD, Grey, t);
+	stick(GA--BC--BD, Grey, t);
+	stick(HA--AD--GA--BD, Grey, t);
+	stick(HB--AC--GA--BC, Grey, t);
+
+	stick(AA--AE--AB, Orange, t);
+	stick(EA--EC--ED, Orange);
+	stick(GB--AE--AB, Orange);
+	stick(GB--EC--ED, Orange);
+	stick(HC--AE--GB--ED, Orange);
+	stick(HD--AB--GB--EC, Orange);
+
+	stick(BA--BB--BC, LightBlue, t);
+	stick(FA--FD--FE, LightBlue);
+	stick(GJ--BB--BC, LightBlue, t);
+	stick(GJ--FD--FE, LightBlue);
+	stick(HB--BC--GJ--FD, LightBlue, t);
+	stick(HF--BB--GJ--FE, LightBlue);
+
+	stick(BA--BD--BE, LightGreen, t);
+	stick(CA--CD--CE, LightGreen);
+	stick(GI--BD--BE, LightGreen, t);
+	stick(GI--CD--CE, LightGreen);
+	stick(HA--BD--GI--CD, LightGreen, t);
+	stick(HE--BE--GI--CE, LightGreen);
+
+	stick(BA--BE--BB, Yellow, t);
+	stick(DA--DC--DD, Yellow);
+	stick(GC--BE--BB, Yellow);
+	stick(GC--DC--DD, Yellow);
+	stick(HE--BE--GC--DD, Yellow);
+	stick(HF--BB--GC--DC, Yellow);
+
+	stick(CA--CB--CC, Blue);
+	stick(EA--ED--EE, Blue);
+	stick(GK--CB--CC, Blue);
+	stick(GK--ED--EE, Blue);
+	stick(HC--CC--GK--ED, Blue);
+	stick(HG--CB--GK--EE, Blue);
+
+	stick(CA--CE--CB, Lilac);
+	stick(DA--DD--DE, Lilac);
+	stick(GG--CE--CB, Lilac);
+	stick(GG--DD--DE, Lilac);
+	stick(HE--CE--GG--DD, Lilac);
+	stick(HG--CB--GG--DE, Lilac);
+
+	stick(DA--DB--DC, Pink);
+	stick(FA--FE--FB, Pink);
+	stick(GH--DB--DC, Pink);
+	stick(GH--FE--FB, Pink);
+	stick(HF--DC--GH--FE, Pink);
+	stick(HH--DB--GH--FB, Pink);
+
+	stick(DA--DE--DB, White);
+	stick(EA--EE--EB, White);
+	stick(GD--DB--DE, White);
+	stick(GD--EB--EE, White);
+	stick(HG--DE--GD--EE, White);
+	stick(HH--DB--GD--EB, White);
+
+	stick(EA--EB--EC, Green);
+	stick(FA--FB--FC, Green);
+	stick(GL--EB--EC, Green);
+	stick(GL--FB--FC, Green);
+	stick(HD--EC--GL--FC, Green);
+	stick(HH--EB--GL--FB, Green);
+
+	polygon(AE--AB--FD--BB--BE--CD, Background);
+	polygon(AE--AB--FD--BB--BE--CD, Background, t);
+}

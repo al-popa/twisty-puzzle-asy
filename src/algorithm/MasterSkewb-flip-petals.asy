@@ -1,0 +1,38 @@
+include "algorithm.asyhdr";
+include "../data/MasterSkewb.dat";
+
+setView(135, -35.2, 0);
+
+figureBegin();
+MasterSkewb();
+highline(BAB--CA--CB--BAC);
+highline(BDB--CC--CD--BDC);
+highline(BAB--DA--DB--BAE);
+highline(BFB--DC--DD--BFE);
+makeChange(BAB--CA--CB--BAC, BDB--CC--CD--BDC, 0.55*(AA+AD)+0.1*AC);
+makeChange(BDB--CC--CD--BDC, BAB--CA--CB--BAC, 0.55*(AA+AD)+0.1*AB);
+makeChange(BAB--DA--DB--BAE, BFB--DC--DD--BFE, 0.55*(AA+AF)+0.1*AE);
+makeChange(BFB--DC--DD--BFE, BAB--DA--DB--BAE, 0.55*(AA+AF)+0.1*AB);
+figureLine();
+MasterSkewb();
+makeMove(0.45*AC, 120, 1.35);
+makeMove(0.55*AE, 120, 1.25);
+makeMove(0.55*AC, -120, 1.25);
+makeMove(0.45*AE, -120, 1.35);
+label("$F$", 1.7*Z);
+figureNext();
+MasterSkewb();
+makeTurn(-120, 1.8, AA);
+label("$T^{-1}$", 1.65*Z);
+figureNext();
+MasterSkewb();
+label("$F^{-1}$", 1.7*Z);
+makeMove(0.45*AC, -120, 1.35);
+makeMove(0.55*AE, -120, 1.25);
+makeMove(0.55*AC, 120, 1.25);
+makeMove(0.45*AE, 120, 1.35);
+figureNext();
+MasterSkewb();
+makeTurn(120, 1.8, AA);
+label("$T$", 1.65*Z);
+figureEnd();

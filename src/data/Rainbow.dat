@@ -1,0 +1,134 @@
+triple A, B, C, D, E, F, G, H, I, J, K, L,
+AA, AB, AC, AD, AE, BA, BB, BC, BD, BE, CA, CB, CC, CD, CE,
+DA, DB, DC, DD, DE, EA, EB, EC, ED, EE, FA, FB, FC, FD, FE;
+
+void init()
+{
+	A = X+Y;
+	B = X-Y;
+	C = -X-Y;
+	D = -X+Y;
+	E = X+Z;
+	F = X-Z;
+	G = -X-Z;
+	H = -X+Z;
+	I = Y+Z;
+	J = Y-Z;
+	K = -Y-Z;
+	L = -Y+Z;
+
+	AA = X;
+	AB = X+(Y+Z)/2;
+	AC = X+(Y-Z)/2;
+	AD = X+(-Y-Z)/2;
+	AE = X+(-Y+Z)/2;
+
+	BA = Y;
+	BB = Y+(X+Z)/2;
+	BC = Y+(X-Z)/2;
+	BD = Y+(-X-Z)/2;
+	BE = Y+(-X+Z)/2;
+
+	CA = Z;
+	CB = Z+(X+Y)/2;
+	CC = Z+(X-Y)/2;
+	CD = Z+(-X-Y)/2;
+	CE = Z+(-X+Y)/2;
+
+	DA = -X;
+	DB = -X+(Y+Z)/2;
+	DC = -X+(Y-Z)/2;
+	DD = -X+(-Y-Z)/2;
+	DE = -X+(-Y+Z)/2;
+
+	EA = -Y;
+	EB = -Y+(X+Z)/2;
+	EC = -Y+(X-Z)/2;
+	ED = -Y+(-X-Z)/2;
+	EE = -Y+(-X+Z)/2;
+
+	FA = -Z;
+	FB = -Z+(X+Y)/2;
+	FC = -Z+(X-Y)/2;
+	FD = -Z+(-X-Y)/2;
+	FE = -Z+(-X+Y)/2;
+}
+
+void Rainbow()
+{
+	init();
+	transform3 t = rotate(one, -X-Y-Z);
+
+	stick(AA--AB--A--AC, Red, t);
+	stick(AA--AC--F--AD, Red);
+	stick(AA--AD--B--AE, Red);
+	stick(AA--AE--E--AB, Red, t);
+
+	stick(BA--BB--A--BC, Green, t);
+	stick(BA--BC--J--BD, Green);
+	stick(BA--BD--D--BE, Green);
+	stick(BA--BE--I--BB, Green, t);
+
+	stick(CA--CB--E--CC, Yellow, t);
+	stick(CA--CC--L--CD, Yellow);
+	stick(CA--CD--H--CE, Yellow);
+	stick(CA--CE--I--CB, Yellow, t);
+
+	stick(DA--DB--D--DC, Pink);
+	stick(DA--DC--G--DD, Pink);
+	stick(DA--DD--C--DE, Pink);
+	stick(DA--DE--H--DB, Pink);
+
+	stick(EA--EB--B--EC, LightGreen);
+	stick(EA--EC--K--ED, LightGreen);
+	stick(EA--ED--C--EE, LightGreen);
+	stick(EA--EE--L--EB, LightGreen);
+
+	stick(FA--FB--F--FC, Tan);
+	stick(FA--FC--K--FD, Tan);
+	stick(FA--FD--G--FE, Tan);
+	stick(FA--FE--J--FB, Tan);
+
+	stick(A--AB--BB, White, t);
+	stick(E--AB--CB, White, t);
+	stick(I--BB--CB, White, t);
+	stick(AB--BB--CB, White, t);
+
+	stick(A--AC--BC, Violet, t);
+	stick(F--AC--FB, Violet);
+	stick(J--BC--FB, Violet);
+	stick(AC--BC--FB, Violet);
+
+	stick(E--AE--CC, Blue, t);
+	stick(B--AE--EB, Blue);
+	stick(L--CC--EB, Blue);
+	stick(AE--CC--EB, Blue);
+
+	stick(I--BE--CE, Orange, t);
+	stick(D--BE--DB, Orange);
+	stick(H--CE--DB, Orange);
+	stick(BE--CE--DB, Orange);
+
+	stick(D--BD--DC, LightBlue);
+	stick(G--DC--FE, LightBlue);
+	stick(J--BD--FE, LightBlue);
+	stick(BD--DC--FE, LightBlue);
+
+	stick(H--CD--DE, Lilac);
+	stick(C--DE--EE, Lilac);
+	stick(L--CD--EE, Lilac);
+	stick(CD--DE--EE, Lilac);
+
+	stick(B--AD--EC, Brown);
+	stick(K--EC--FC, Brown);
+	stick(F--AD--FC, Brown);
+	stick(AD--EC--FC, Brown);
+
+	stick(C--DD--ED, Grey);
+	stick(K--ED--FD, Grey);
+	stick(G--DD--FD, Grey);
+	stick(DD--ED--FD, Grey);
+
+	polygon(AE--AC--BC--BE--CE--CC, Background);
+	polygon(AE--AC--BC--BE--CE--CC, Background, t);
+}

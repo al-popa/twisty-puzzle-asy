@@ -1,0 +1,31 @@
+include "algorithm.asyhdr";
+include "../data/Gem7.dat";
+
+setView(45, 0, -35);
+
+figureBegin();
+Gem7();
+label("$\times 5$", 0.9*(Z-Y));
+highline(UB--MC--UC);
+highline(UE--KE--UF);
+highline(RE--MB--RF);
+makeChange(UB--MC--UC, RE--MB--RF, 0.9*MF+0.2*MA);
+makeChange(RE--MB--RF, UE--KE--UF, 0.7*CC+0.3*CA);
+makeChange(UE--KE--UF, UB--MC--UC, 0.55*(KE+MC));
+figureLine();
+Gem7();
+makeMove(-11*Y/12, -90, 0.65);
+label("$L^{-1}$", 0.9*(Z-Y));
+figureNext();
+Gem7();
+makeMove(7*(Z-Y)/12, 180, 0.75);
+label("$U$", 0.9*(Z-Y));
+figureNext();
+Gem7();
+makeMove(-11*Y/12, 90, 0.65);
+label("$L$", 0.9*(Z-Y));
+figureNext();
+Gem7();
+makeMove(7*(Z-Y)/12, -180, 0.75);
+label("$U^{-1}$", 0.9*(Z-Y));
+figureEnd();

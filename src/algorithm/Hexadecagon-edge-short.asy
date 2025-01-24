@@ -1,0 +1,33 @@
+include "algorithm.asyhdr";
+include "../data/Hexadecagon.dat";
+
+setView(0, 0, -45);
+
+figureBegin();
+Hexadecagon();
+highline(BEG--PE--PA--EEB);
+highline(EEB--MA--MB--BEG);
+highline(BFG--MC--MD--DEG);
+highline(DEG--HC--HD--BFG);
+highline(EGD--HA--HB--DDG);
+highline(DDG--LE--LA--EGD);
+makeChange(EEB--MA--MB--BEG, BFG--MC--MD--DEG, 1.1*FB);
+makeChange(DEG--HC--HD--BFG, EGD--HA--HB--DDG, 1.1*FH);
+makeChange(DDG--LE--LA--EGD, EEB--MA--MB--BEG, 1.15*DE);
+figureLine();
+Hexadecagon();
+makeMove(0.9*FB, -144, 0.65);
+label("$L^{-2}$", 1.15*DB);
+figureNext();
+Hexadecagon();
+makeMove(0.9*FH, -144, 0.65);
+label("$R^{-2} (R^2)$", 1.15*DB);
+figureNext();
+Hexadecagon();
+makeMove(0.9*FB, 144, 0.65);
+label("$L^2$", 1.15*DB);
+figureNext();
+Hexadecagon();
+makeMove(0.9*FH, 144, 0.65);
+label("$R^2 (R^{-2})$", 1.15*DB);
+figureEnd();

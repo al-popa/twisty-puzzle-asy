@@ -1,0 +1,32 @@
+include "algorithm.asyhdr";
+include "../data/Hexadecagon.dat";
+
+setView(-18.5, 17, 48);
+
+figureBegin();
+Hexadecagon();
+highline(BEF--BEH--BFH--BFE);
+highline(BEF--MB--MC--BFE);
+highline(DEF--MD--ME--DFE);
+highline(DEH--DEF--DFE--DFH);
+highline(DBC--DBH--DCH--DCB);
+makeChange(DBC--DBH--DCH--DCB, DEH--DEF--DFE--DFH, 1.1*ED+0.2*DA);
+makeChange(DEF--MD--ME--DFE, BEF--MB--MC--BFE, 1.1*FB);
+makeChange(BEF--BEH--BFH--BFE, DBC--DBH--DCH--DCB, 1.2*DE);
+figureLine();
+Hexadecagon();
+makeMove(0.9*ED, 180, 0.75);
+label("$L^3$", 1.1*EG);
+figureNext();
+Hexadecagon();
+makeMove(0.9*FB, -144, 0.65);
+label("$C^{-2}$", 1.1*EG);
+figureNext();
+Hexadecagon();
+makeMove(0.9*ED, -180, 0.75);
+label("$L^{-3}$", 1.1*EG);
+figureNext();
+Hexadecagon();
+makeMove(0.9*FB, 144, 0.65);
+label("$C^2$", 1.1*EG);
+figureEnd();

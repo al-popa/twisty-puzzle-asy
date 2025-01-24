@@ -1,0 +1,171 @@
+triple AA, AB, AC, AD, AE, AF, AG, AH,
+BAB, BAC, BAE, BBA, BBD, BBF, BCA, BCD, BCG, BDB, BDC, BDH,
+BEA, BEF, BEG, BFB, BFE, BFH, BGC, BGE, BGH, BHD, BHF, BHG,
+CA, CB, CC, CD, DA, DB, DC, DD, EA, EB, EC, ED,
+FA, FB, FC, FD, GA, GB, GC, GD, HA, HB, HC, HD;
+
+void init()
+{
+	AA = X+Y+Z;
+	AB = X+Y-Z;
+	AC = X-Y+Z;
+	AD = X-Y-Z;
+	AE = -X+Y+Z;
+	AF = -X+Y-Z;
+	AG = -X-Y+Z;
+	AH = -X-Y-Z;
+
+	BAB = (3*AA+AB)/4;
+	BAC = (3*AA+AC)/4;
+	BAE = (3*AA+AE)/4;
+	BBA = (3*AB+AA)/4;
+	BBD = (3*AB+AD)/4;
+	BBF = (3*AB+AF)/4;
+	BCA = (3*AC+AA)/4;
+	BCD = (3*AC+AD)/4;
+	BCG = (3*AC+AG)/4;
+	BDB = (3*AD+AB)/4;
+	BDC = (3*AD+AC)/4;
+	BDH = (3*AD+AH)/4;
+	BEA = (3*AE+AA)/4;
+	BEF = (3*AE+AF)/4;
+	BEG = (3*AE+AG)/4;
+	BFB = (3*AF+AB)/4;
+	BFE = (3*AF+AE)/4;
+	BFH = (3*AF+AH)/4;
+	BGC = (3*AG+AC)/4;
+	BGE = (3*AG+AE)/4;
+	BGH = (3*AG+AH)/4;
+	BHD = (3*AH+AD)/4;
+	BHF = (3*AH+AF)/4;
+	BHG = (3*AH+AG)/4;
+
+	CA = (3*(AA+AB)+AC+AD)/8;
+	CB = (3*(AA+AC)+AB+AD)/8;
+	CC = (3*(AB+AD)+AA+AC)/8;
+	CD = (3*(AC+AD)+AA+AB)/8;
+
+	DA = (3*(AA+AB)+AE+AF)/8;
+	DB = (3*(AA+AE)+AB+AF)/8;
+	DC = (3*(AB+AF)+AA+AE)/8;
+	DD = (3*(AE+AF)+AA+AB)/8;
+
+	EA = (3*(AA+AC)+AE+AG)/8;
+	EB = (3*(AA+AE)+AC+AG)/8;
+	EC = (3*(AC+AG)+AA+AE)/8;
+	ED = (3*(AE+AG)+AA+AC)/8;
+
+	FA = (3*(AB+AD)+AF+AH)/8;
+	FB = (3*(AB+AF)+AD+AH)/8;
+	FC = (3*(AD+AH)+AB+AF)/8;
+	FD = (3*(AF+AH)+AB+AD)/8;
+
+	GA = (3*(AC+AD)+AG+AH)/8;
+	GB = (3*(AC+AG)+AD+AH)/8;
+	GC = (3*(AD+AH)+AC+AG)/8;
+	GD = (3*(AG+AH)+AC+AD)/8;
+
+	HA = (3*(AE+AF)+AG+AH)/8;
+	HB = (3*(AE+AG)+AF+AH)/8;
+	HC = (3*(AF+AH)+AE+AG)/8;
+	HD = (3*(AG+AH)+AE+AF)/8;
+}
+
+void MasterSkewb()
+{
+	init();
+	transform3 t = rotate(one, -X-Y-Z);
+
+	//stick(AA--AB--AD--AC, White);
+	stick(AA--BAB--BAC, White, t);
+	stick(AB--BBA--BBD, White, t);
+	stick(AC--BCA--BCD, White, t);
+	stick(AD--BDB--BDC, White);
+	stick(BAB--BBA--CA, White, t);
+	stick(BAC--BCA--CB, White, t);
+	stick(BBD--BDB--CC, White);
+	stick(BCD--BDC--CD, White);
+	stick(BAB--CA--CB--BAC, White, t);
+	stick(BBA--CA--CC--BBD, White, t);
+	stick(BCA--CB--CD--BCD, White, t);
+	stick(BDB--CC--CD--BDC, White);
+	stick(CA--CB--CD--CC, White, t);
+
+	//stick(AA--AB--AF--AE, Red);
+	stick(AA--BAB--BAE, Red, t);
+	stick(AB--BBA--BBF, Red, t);
+	stick(AE--BEA--BEF, Red, t);
+	stick(AF--BFB--BFE, Red);
+	stick(BAB--BBA--DA, Red, t);
+	stick(BAE--BEA--DB, Red, t);
+	stick(BBF--BFB--DC, Red);
+	stick(BEF--BFE--DD, Red);
+	stick(BAB--DA--DB--BAE, Red, t);
+	stick(BBA--DA--DC--BBF, Red, t);
+	stick(BEA--DB--DD--BEF, Red, t);
+	stick(BFB--DC--DD--BFE, Red);
+	stick(DA--DB--DD--DC, Red, t);
+
+	//stick(AA--AC--AG--AE, Blue);
+	stick(AA--BAC--BAE, Blue, t);
+	stick(AC--BCA--BCG, Blue, t);
+	stick(AE--BEA--BEG, Blue, t);
+	stick(AG--BGC--BGE, Blue);
+	stick(BAC--BCA--EA, Blue, t);
+	stick(BAE--BEA--EB, Blue, t);
+	stick(BCG--BGC--EC, Blue);
+	stick(BEG--BGE--ED, Blue);
+	stick(BAC--EA--EB--BAE, Blue, t);
+	stick(BCA--EA--EC--BCG, Blue, t);
+	stick(BEA--EB--ED--BEG, Blue, t);
+	stick(BGC--EC--ED--BGE, Blue);
+	stick(EA--EB--ED--EC, Blue, t);
+
+	//stick(AB--AD--AH--AF, Green);
+	stick(AB--BBD--BBF, Green, t);
+	stick(AD--BDB--BDH, Green);
+	stick(AF--BFB--BFH, Green);
+	stick(AH--BHD--BHF, Green);
+	stick(BBD--BDB--FA, Green);
+	stick(BBF--BFB--FB, Green);
+	stick(BDH--BHD--FC, Green);
+	stick(BFH--BHF--FD, Green);
+	stick(BBD--FA--FB--BBF, Green);
+	stick(BDB--FA--FC--BDH, Green);
+	stick(BFB--FB--FD--BFH, Green);
+	stick(BHD--FC--FD--BHF, Green);
+	stick(FA--FB--FD--FC, Green);
+
+	//stick(AC--AD--AH--AG, Orange);
+	stick(AC--BCD--BCG, Orange, t);
+	stick(AD--BDC--BDH, Orange);
+	stick(AG--BGC--BGH, Orange);
+	stick(AH--BHD--BHG, Orange);
+	stick(BCD--BDC--GA, Orange);
+	stick(BCG--BGC--GB, Orange);
+	stick(BDH--BHD--GC, Orange);
+	stick(BGH--BHG--GD, Orange);
+	stick(BCD--GA--GB--BCG, Orange);
+	stick(BDC--GA--GC--BDH, Orange);
+	stick(BGC--GB--GD--BGH, Orange);
+	stick(BHD--GC--GD--BHG, Orange);
+	stick(GA--GB--GD--GC, Orange);
+
+	//stick(AE--AF--AH--AG, Yellow);
+	stick(AE--BEF--BEG, Yellow, t);
+	stick(AF--BFE--BFH, Yellow);
+	stick(AG--BGE--BGH, Yellow);
+	stick(AH--BHF--BHG, Yellow);
+	stick(BEF--BFE--HA, Yellow);
+	stick(BEG--BGE--HB, Yellow);
+	stick(BFH--BHF--HC, Yellow);
+	stick(BGH--BHG--HD, Yellow);
+	stick(BEF--HA--HB--BEG, Yellow);
+	stick(BFE--HA--HC--BFH, Yellow);
+	stick(BGE--HB--HD--BGH, Yellow);
+	stick(BHF--HC--HD--BHG, Yellow);
+	stick(HA--HB--HD--HC, Yellow);
+
+	polygon(BCG--BCD--BBD--BBF--BEF--BEG, Background);
+	polygon(BCG--BCD--BBD--BBF--BEF--BEG, Background, t);
+}

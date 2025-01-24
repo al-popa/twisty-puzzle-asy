@@ -1,0 +1,408 @@
+triple
+AA, AB, AC, AD, BA, BB, BC, BD, CA, CB, CC, CD, DA, DB, DC, DD,
+EA, EB, EC, ED, FA, FB, FC, FD, GA, GB, GC, GD, HA, HB, HC, HD,
+IA, IB, IC, ID, IE, IF, IG, IH, II, JA, JB, JC, JD, JE, JF, JG, JH, JI,
+KA, KB, KC, KD, KE, KF, KG, KH, KI, LA, LB, LC, LD, LE, LF, LG, LH, LI,
+MA, MB, MC, MD, ME, MF, MG, MH, MI, NA, NB, NC, ND, NE, NF, NG, NH, NI,
+OA, OB, OC, OD, OE, OF, PA, PB, PC, PD, PE, PF, QA, QB, QC, QD, QE, QF,
+RA, RB, RC, RD, RE, RF, SA, SB, SC, SD, SE, SF, TA, TB, TC, TD, TE, TF,
+UA, UB, UC, UD, UE, UF, VA, VB, VC, VD, VE, VF, WA, WB, WC, WD, WE, WF,
+XA, XB, XC, XD, XE, XF, YA, YB, YC, YD, YE, YF, ZA, ZB, ZC, ZD, ZE, ZF;
+
+void init()
+{
+	AA = (2*X+2*Y+2*Z)/3;
+	AB = (2.5*X+1.5*Y+1.5*Z)/3;
+	AC = (1.5*X+2.5*Y+1.5*Z)/3;
+	AD = (1.5*X+1.5*Y+2.5*Z)/3;
+
+	BA = (2*X+2*Y-2*Z)/3;
+	BB = (2.5*X+1.5*Y-1.5*Z)/3;
+	BC = (1.5*X+2.5*Y-1.5*Z)/3;
+	BD = (1.5*X+1.5*Y-2.5*Z)/3;
+
+	CA = (2*X-2*Y+2*Z)/3;
+	CB = (2.5*X-1.5*Y+1.5*Z)/3;
+	CC = (1.5*X-2.5*Y+1.5*Z)/3;
+	CD = (1.5*X-1.5*Y+2.5*Z)/3;
+
+	DA = (2*X-2*Y-2*Z)/3;
+	DB = (2.5*X-1.5*Y-1.5*Z)/3;
+	DC = (1.5*X-2.5*Y-1.5*Z)/3;
+	DD = (1.5*X-1.5*Y-2.5*Z)/3;
+
+	EA = (-2*X+2*Y+2*Z)/3;
+	EB = (-2.5*X+1.5*Y+1.5*Z)/3;
+	EC = (-1.5*X+2.5*Y+1.5*Z)/3;
+	ED = (-1.5*X+1.5*Y+2.5*Z)/3;
+
+	FA = (-2*X+2*Y-2*Z)/3;
+	FB = (-2.5*X+1.5*Y-1.5*Z)/3;
+	FC = (-1.5*X+2.5*Y-1.5*Z)/3;
+	FD = (-1.5*X+1.5*Y-2.5*Z)/3;
+
+	GA = (-2*X-2*Y+2*Z)/3;
+	GB = (-2.5*X-1.5*Y+1.5*Z)/3;
+	GC = (-1.5*X-2.5*Y+1.5*Z)/3;
+	GD = (-1.5*X-1.5*Y+2.5*Z)/3;
+
+	HA = (-2*X-2*Y-2*Z)/3;
+	HB = (-2.5*X-1.5*Y-1.5*Z)/3;
+	HC = (-1.5*X-2.5*Y-1.5*Z)/3;
+	HD = (-1.5*X-1.5*Y-2.5*Z)/3;
+
+	IA = X;
+	IB = X+Y/3;
+	IC = X+Z/3;
+	ID = X-Y/3;
+	IE = X-Z/3;
+	IF = X+(Y+Z)/3;
+	IG = X+(Y-Z)/3;
+	IH = X+(-Y-Z)/3;
+	II = X+(-Y+Z)/3;
+
+	JA = Y;
+	JB = Y+X/3;
+	JC = Y+Z/3;
+	JD = Y-X/3;
+	JE = Y-Z/3;
+	JF = Y+(X+Z)/3;
+	JG = Y+(X-Z)/3;
+	JH = Y+(-X-Z)/3;
+	JI = Y+(-X+Z)/3;
+
+	KA = Z;
+	KB = Z+X/3;
+	KC = Z+Y/3;
+	KD = Z-X/3;
+	KE = Z-Y/3;
+	KF = Z+(X+Y)/3;
+	KG = Z+(X-Y)/3;
+	KH = Z+(-X-Y)/3;
+	KI = Z+(-X+Y)/3;
+
+	LA = -X;
+	LB = -X+Y/3;
+	LC = -X+Z/3;
+	LD = -X-Y/3;
+	LE = -X-Z/3;
+	LF = -X+(Y+Z)/3;
+	LG = -X+(Y-Z)/3;
+	LH = -X+(-Y-Z)/3;
+	LI = -X+(-Y+Z)/3;
+
+	MA = -Y;
+	MB = -Y+X/3;
+	MC = -Y+Z/3;
+	MD = -Y-X/3;
+	ME = -Y-Z/3;
+	MF = -Y+(X+Z)/3;
+	MG = -Y+(X-Z)/3;
+	MH = -Y+(-X-Z)/3;
+	MI = -Y+(-X+Z)/3;
+
+	NA = -Z;
+	NB = -Z+X/3;
+	NC = -Z+Y/3;
+	ND = -Z-X/3;
+	NE = -Z-Y/3;
+	NF = -Z+(X+Y)/3;
+	NG = -Z+(X-Y)/3;
+	NH = -Z+(-X-Y)/3;
+	NI = -Z+(-X+Y)/3;
+
+	OA = (2*X+2*Y+Z)/3;
+	OB = (2.5*X+1.5*Y+0.5*Z)/3;
+	OC = (2.5*X+1.5*Y-0.5*Z)/3;
+	OD = (2*X+2*Y-Z)/3;
+	OE = (1.5*X+2.5*Y-0.5*Z)/3;
+	OF = (1.5*X+2.5*Y+0.5*Z)/3;
+
+	PA = (2*X+Y+2*Z)/3;
+	PB = (2.5*X+0.5*Y+1.5*Z)/3;
+	PC = (2.5*X-0.5*Y+1.5*Z)/3;
+	PD = (2*X-Y+2*Z)/3;
+	PE = (1.5*X-0.5*Y+2.5*Z)/3;
+	PF = (1.5*X+0.5*Y+2.5*Z)/3;
+
+	QA = (X+2*Y+2*Z)/3;
+	QB = (0.5*X+2.5*Y+1.5*Z)/3;
+	QC = (-0.5*X+2.5*Y+1.5*Z)/3;
+	QD = (-X+2*Y+2*Z)/3;
+	QE = (-0.5*X+1.5*Y+2.5*Z)/3;
+	QF = (0.5*X+1.5*Y+2.5*Z)/3;
+
+	RA = (2*X-2*Y+Z)/3;
+	RB = (2.5*X-1.5*Y+0.5*Z)/3;
+	RC = (2.5*X-1.5*Y-0.5*Z)/3;
+	RD = (2*X-2*Y-Z)/3;
+	RE = (1.5*X-2.5*Y-0.5*Z)/3;
+	RF = (1.5*X-2.5*Y+0.5*Z)/3;
+
+	SA = (2*X+Y-2*Z)/3;
+	SB = (2.5*X+0.5*Y-1.5*Z)/3;
+	SC = (2.5*X-0.5*Y-1.5*Z)/3;
+	SD = (2*X-Y-2*Z)/3;
+	SE = (1.5*X-0.5*Y-2.5*Z)/3;
+	SF = (1.5*X+0.5*Y-2.5*Z)/3;
+
+	TA = (X+2*Y-2*Z)/3;
+	TB = (0.5*X+2.5*Y-1.5*Z)/3;
+	TC = (-0.5*X+2.5*Y-1.5*Z)/3;
+	TD = (-X+2*Y-2.Z)/3;
+	TE = (-0.5*X+1.5*Y-2.5*Z)/3;
+	TF = (0.5*X+1.5*Y-2.5*Z)/3;
+
+	UA = (X-2*Y+2*Z)/3;
+	UB = (0.5*X-2.5*Y+1.5*Z)/3;
+	UC = (-0.5*X-2.5*Y+1.5*Z)/3;
+	UD = (-X-2*Y+2*Z)/3;
+	UE = (-0.5*X-1.5*Y+2.5*Z)/3;
+	UF = (0.5*X-1.5*Y+2.5*Z)/3;
+
+	VA = (X-2*Y-2*Z)/3;
+	VB = (0.5*X-2.5*Y-1.5*Z)/3;
+	VC = (-0.5*X-2.5*Y-1.5*Z)/3;
+	VD = (-X-2*Y-2*Z)/3;
+	VE = (-0.5*X-1.5*Y-2.5*Z)/3;
+	VF = (0.5*X-1.5*Y-2.5*Z)/3;
+
+	WA = (-2.X+2*Y+Z)/3;
+	WB = (-2.5*X+1.5*Y+0.5*Z)/3;
+	WC = (-2.5*X+1.5*Y-0.5*Z)/3;
+	WD = (-2*X+2*Y-Z)/3;
+	WE = (-1.5*X+2.5*Y-0.5*Z)/3;
+	WF = (-1.5*X+2.5*Y+0.5*Z)/3;
+
+	XA = (-2*X+Y-2*Z)/3;
+	XB = (-2.5*X+0.5*Y-1.5*Z)/3;
+	XC = (-2.5*X-0.5*Y-1.5*Z)/3;
+	XD = (-2*X-Y-2*Z)/3;
+	XE = (-1.5*X-0.5*Y-2.5*Z)/3;
+	XF = (-1.5*X+0.5*Y-2.5*Z)/3;
+
+	YA = (-2*X-2*Y+Z)/3;
+	YB = (-2.5*X-1.5*Y+0.5*Z)/3;
+	YC = (-2.5*X-1.5*Y-0.5*Z)/3;
+	YD = (-2.X-2*Y-Z)/3;
+	YE = (-1.5*X-2.5*Y-0.5*Z)/3;
+	YF = (-1.5*X-2.5*Y+0.5*Z)/3;
+
+	ZA = (-2*X+Y+2*Z)/3;
+	ZB = (-2.5*X+0.5*Y+1.5*Z)/3;
+	ZC = (-2.5*X-0.5*Y+1.5*Z)/3;
+	ZD = (-2*X-Y+2*Z)/3;
+	ZE = (-1.5*X-0.5*Y+2.5*Z)/3;
+	ZF = (-1.5*X+0.5*Y+2.5*Z)/3;
+}
+
+void Gem7()
+{
+	init();
+	transform3 p = rotate(one, -X-Z);
+	transform3 t = rotate(one, Z);
+
+	stick(AA--AB--OA--AC, White, p);
+	stick(AB--OA--OB, White, p);
+	stick(AB--OB--IB--IF, White, p);
+	stick(OB--IB--OC, White);
+	stick(BB--OC--IB--IG, White);
+	stick(BB--OC--OD, White);
+	stick(BA--BB--OD--BC, White);
+	stick(BC--OD--OE, White);
+	stick(BC--OE--JB--JG, White);
+	stick(OE--JB--OF, White);
+	stick(AC--OF--JB--JF, White);
+	stick(AC--OA--OF, White);
+	stick(OA--OB--OC--OD--OE--OF, White);
+
+	stick(AA--AB--PA--AD, Pink, p);
+	stick(AB--PA--PB, Pink, p);
+	stick(AB--PB--IC--IF, Pink, p);
+	stick(PB--IC--PC, Pink, p);
+	stick(CB--PC--IC--II, Pink, p);
+	stick(CB--PC--PD, Pink, p);
+	stick(CA--CB--PD--CD, Pink, p);
+	stick(CD--PD--PE, Pink, p);
+	stick(CD--PE--KB--KG, Pink, p);
+	stick(PE--KB--PF, Pink, p);
+	stick(AD--PF--KB--KF, Pink, p);
+	stick(AD--PA--PF, Pink, p);
+	stick(PA--PB--PC--PD--PE--PF, Pink, p);
+
+	stick(AA--AC--QA--AD, LightBlue, p);
+	stick(AC--QA--QB, LightBlue);
+	stick(AC--QB--JC--JF, LightBlue);
+	stick(QB--JC--QC, LightBlue);
+	stick(EC--QC--QD, LightBlue);
+	stick(EA--EC--QD--ED, LightBlue);
+	stick(ED--QD--QE, LightBlue);
+	stick(EC--QC--JC--JI, LightBlue);
+	stick(ED--QE--KC--KI, LightBlue);
+	stick(QE--KC--QF, LightBlue);
+	stick(AD--QF--KC--KF, LightBlue, p);
+	stick(AD--QA--QF, LightBlue, p);
+	stick(QA--QB--QC--QD--QE--QF, LightBlue);
+
+	stick(BA--BB--SA--BD, Red);
+	stick(BB--SA--SB, Red);
+	stick(BB--SB--IE--IG, Red);
+	stick(SB--IE--SC, Red);
+	stick(DB--SC--IE--IH, Red);
+	stick(DB--SC--SD, Red);
+	stick(DA--DB--SD--DD, Red);
+	stick(DD--SD--SE, Red);
+	stick(DD--SE--NB--NG, Red, t);
+	stick(SE--NB--SF, Red, t);
+	stick(BD--SF--NB--NF, Red, t);
+	stick(BD--SA--SF, Red);
+	stick(SA--SB--SC--SD--SE--SF, Red);
+
+	stick(BA--BC--TA--BD, Green);
+	stick(BC--TA--TB, Green);
+	stick(BC--TB--JE--JG, Green);
+	stick(TB--JE--TC, Green);
+	stick(FC--TC--JE--JH, Green);
+	stick(FC--TC--TD, Green);
+	stick(FA--FC--TD--FD, Green);
+	stick(FD--TD--TE, Green);
+	stick(FD--TE--NC--NI, Green, t);
+	stick(TE--NC--TF, Green, t);
+	stick(BD--TF--NC--NF, Green, t);
+	stick(BD--TA--TF, Green);
+	stick(TA--TB--TC--TD--TE--TF, Green);
+
+	stick(CA--CB--RA--CC, Yellow, p);
+	stick(CB--RA--RB, Yellow, p);
+	stick(CB--RB--ID--II, Yellow, p);
+	stick(RB--ID--RC, Yellow);
+	stick(DB--RC--ID--IH, Yellow);
+	stick(DB--RC--RD, Yellow);
+	stick(DA--DB--RD--DC, Yellow);
+	stick(DC--RD--RE, Yellow);
+	stick(DC--RE--MB--MG, Yellow);
+	stick(RE--MB--RF, Yellow);
+	stick(CC--RF--MB--MF, Yellow);
+	stick(CC--RA--RF, Yellow);
+	stick(RA--RB--RC--RD--RE--RF, Yellow);
+
+	stick(CA--CC--UA--CD, LightGreen, p);
+	stick(CC--UA--UB, LightGreen);
+	stick(CC--UB--MC--MF, LightGreen);
+	stick(UB--MC--UC, LightGreen);
+	stick(GC--UC--MC--MI, LightGreen);
+	stick(GC--UC--UD, LightGreen);
+	stick(GA--GC--UD--GD, LightGreen);
+	stick(GD--UD--UE, LightGreen);
+	stick(GD--UE--KE--KH, LightGreen);
+	stick(UE--KE--UF, LightGreen);
+	stick(CD--UF--KE--KG, LightGreen, p);
+	stick(CD--UA--UF, LightGreen, p);
+	stick(UA--UB--UC--UD--UE--UF, LightGreen);
+
+	stick(DA--DC--VA--DD, Blue);
+	stick(DC--VA--VB, Blue);
+	stick(DC--VB--ME--MG, Blue);
+	stick(VB--ME--VC, Blue);
+	stick(HC--VC--ME--MH, Blue);
+	stick(HC--VC--VD, Blue);
+	stick(HA--HC--VD--HD, Blue);
+	stick(HD--VD--VE, Blue);
+	stick(HD--VE--NE--NH, Blue, t);
+	stick(VE--NE--VF, Blue, t);
+	stick(DD--VF--NE--NG, Blue, t);
+	stick(DD--VA--VF, Blue);
+	stick(VA--VB--VC--VD--VE--VF, Blue);
+
+	stick(EA--EB--WA--EC, Lime);
+	stick(EB--WA--WB, Lime);
+	stick(EB--WB--LB--LF, Lime);
+	stick(WB--LB--WC, Lime);
+	stick(FB--WC--LB--LG, Lime);
+	stick(FB--WC--WD, Lime);
+	stick(FA--FB--WD--FC, Lime);
+	stick(FC--WD--WE, Lime);
+	stick(FC--WE--JD--JH, Lime);
+	stick(WE--JD--WF, Lime);
+	stick(EC--WF--JD--JI, Lime);
+	stick(EC--WA--WF, Lime);
+	stick(WA--WB--WC--WD--WE--WF, Lime);
+
+	stick(EA--EB--ZA--ED, Orange);
+	stick(EB--ZA--ZB, Orange);
+	stick(EB--ZB--LC--LF, Orange);
+	stick(ZB--LC--ZC, Orange);
+	stick(GB--ZC--LC--LI, Orange);
+	stick(GB--ZC--ZD, Orange);
+	stick(GA--GB--ZD--GD, Orange);
+	stick(GD--ZD--ZE, Orange);
+	stick(GD--ZE--KD--KH, Orange);
+	stick(ZE--KD--ZF, Orange);
+	stick(ED--ZF--KD--KI, Orange);
+	stick(ED--ZA--ZF, Orange);
+	stick(ZA--ZB--ZC--ZD--ZE--ZF, Orange);
+
+	stick(FA--FB--XA--FD, Violet);
+	stick(FB--XA--XB, Violet);
+	stick(FB--XB--LE--LG, Violet);
+	stick(XB--LE--XC, Violet);
+	stick(HB--XC--LE--LH, Violet);
+	stick(HB--XC--XD, Violet);
+	stick(HA--HB--XD--HD, Violet);
+	stick(HD--XD--XE, Violet);
+	stick(HD--XE--ND--NH, Violet, t);
+	stick(XE--ND--XF, Violet, t);
+	stick(FD--XF--ND--NI, Violet, t);
+	stick(FD--XA--XF, Violet);
+	stick(XA--XB--XC--XD--XE--XF, Violet);
+
+	stick(GA--GB--YA--GC, Grey);
+	stick(GB--YA--YB, Grey);
+	stick(GB--YB--LD--LI, Grey);
+	stick(YB--LD--YC, Grey);
+	stick(HB--YC--LD--LH, Grey);
+	stick(HB--YC--YD, Grey);
+	stick(HA--HB--YD--HC, Grey);
+	stick(HC--YD--YE, Grey);
+	stick(HC--YE--MD--MH, Grey);
+	stick(YE--MD--YF, Grey);
+	stick(GC--YF--MD--MI, Grey);
+	stick(GC--YA--YF, Grey);
+	stick(YA--YB--YC--YD--YE--YF, Grey);
+
+	stick(IA--IB--IF--IC, Tan, p);
+	stick(IA--IC--II--ID, Tan, p);
+	stick(IA--ID--IH--IE, Tan);
+	stick(IA--IE--IG--IB, Tan);
+
+	stick(JA--JB--JF--JC, Cerry);
+	stick(JA--JC--JI--JD, Cerry);
+	stick(JA--JD--JH--JE, Cerry);
+	stick(JA--JE--JG--JB, Cerry);
+
+	stick(KA--KB--KF--KC, Lilac, p);
+	stick(KA--KC--KI--KD, Lilac);
+	stick(KA--KD--KH--KE, Lilac);
+	stick(KA--KE--KG--KB, Lilac, p);
+
+	stick(LA--LB--LF--LC, Brown);
+	stick(LA--LC--LI--LD, Brown);
+	stick(LA--LD--LH--LE, Brown);
+	stick(LA--LE--LG--LB, Brown);
+
+	stick(MA--MB--MF--MC, BrickRed);
+	stick(MA--MC--MI--MD, BrickRed);
+	stick(MA--MD--MH--ME, BrickRed);
+	stick(MA--ME--MG--MB, BrickRed);
+
+	stick(NA--NB--NF--NC, Plum, t);
+	stick(NA--NC--NI--ND, Plum, t);
+	stick(NA--ND--NH--NE, Plum, t);
+	stick(NA--NE--NG--NB, Plum, t);
+
+	polygon(BD--FD--HD--DD, Background);
+	polygon(BD--FD--HD--DD, Background, t);
+
+	polygon(AC--IB--ID--CC--KE--KC, Background);
+	polygon(AC--IB--ID--CC--KE--KC, Background, p);
+}

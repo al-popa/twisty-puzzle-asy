@@ -1,0 +1,142 @@
+triple AA, AB, AC, AD, AE, AF, AG, AH,
+BAB, BAC, BAE, BBA, BBD, BBF, BCA, BCD, BCG, BDB, BDC, BDH,
+BEA, BEF, BEG, BFB, BFE, BFH, BGC, BGE, BGH, BHD, BHF, BHG, 
+CABC, CABE, CACE, CBAD, CBAF, CBDF, CCAD, CCAG, CCDG, CDBC, CDBH, CDCH,
+CEAF, CEAG, CEFG, CFBE, CFBH, CFEH, CGCE, CGCH, CGEH, CHDF, CHDG, CHFG;
+
+void init()
+{
+	AA = X+Y+Z;
+	AB = X+Y-Z;
+	AC = X-Y+Z;
+	AD = X-Y-Z;
+	AE = -X+Y+Z;
+	AF = -X+Y-Z;
+	AG = -X-Y+Z;
+	AH = -X-Y-Z;
+
+	BAB = (2*AA+AB)/3;
+	BAC = (2*AA+AC)/3;
+	BAE = (2*AA+AE)/3;
+	BBA = (2*AB+AA)/3;
+	BBD = (2*AB+AD)/3;
+	BBF = (2*AB+AF)/3;
+	BCA = (2*AC+AA)/3;
+	BCD = (2*AC+AD)/3;
+	BCG = (2*AC+AG)/3;
+	BDB = (2*AD+AB)/3;
+	BDC = (2*AD+AC)/3;
+	BDH = (2*AD+AH)/3;
+	BEA = (2*AE+AA)/3;
+	BEF = (2*AE+AF)/3;
+	BEG = (2*AE+AG)/3;
+	BFB = (2*AF+AB)/3;
+	BFE = (2*AF+AE)/3;
+	BFH = (2*AF+AH)/3;
+	BGC = (2*AG+AC)/3;
+	BGE = (2*AG+AE)/3;
+	BGH = (2*AG+AH)/3;
+	BHD = (2*AH+AD)/3;
+	BHF = (2*AH+AF)/3;
+	BHG = (2*AH+AG)/3;
+
+	CABC = (AA+AB+AC)/3;
+	CABE = (AA+AB+AE)/3;
+	CACE = (AA+AC+AE)/3;
+	CBAD = (AB+AA+AD)/3;
+	CBAF = (AB+AA+AF)/3;
+	CBDF = (AB+AD+AF)/3;
+	CCAD = (AC+AA+AD)/3;
+	CCAG = (AC+AA+AG)/3;
+	CCDG = (AC+AD+AG)/3;
+	CDBC = (AD+AB+AC)/3;
+	CDBH = (AD+AB+AH)/3;
+	CDCH = (AD+AC+AH)/3;
+	CEAF = (AE+AA+AF)/3;
+	CEAG = (AE+AA+AG)/3;
+	CEFG = (AE+AF+AG)/3;
+	CFBE = (AF+AB+AE)/3;
+	CFBH = (AF+AB+AH)/3;
+	CFEH = (AF+AE+AH)/3;
+	CGCE = (AG+AC+AE)/3;
+	CGCH = (AG+AC+AH)/3;
+	CGEH = (AG+AE+AH)/3;
+	CHDF = (AH+AD+AF)/3;
+	CHDG = (AH+AD+AG)/3;
+	CHFG = (AH+AF+AG)/3;
+}
+
+void Cube3()
+{
+	init();
+	transform3 t = rotate(one, -Z);
+
+	//stick(AA--AB--AD--AC, Blue);
+	stick(AA--BAB--CABC--BAC, Blue, t);
+	stick(AB--BBA--CBAD--BBD, Blue);
+	stick(AC--BCA--CCAD--BCD, Blue, t);
+	stick(AD--BDB--CDBC--BDC, Blue);
+	stick(BAB--CABC--CBAD--BBA, Blue);
+	stick(BAC--CABC--CCAD--BCA, Blue, t);
+	stick(BBD--CBAD--CDBC--BDB, Blue);
+	stick(BCD--CCAD--CDBC--BDC, Blue);
+	stick(CABC--CBAD--CDBC--CCAD, Blue);
+
+	//stick(AA--AB--AF--AE, Orange);
+	stick(AA--BAB--CABE--BAE, Orange, t);
+	stick(AB--BBA--CBAF--BBF, Orange);
+	stick(AE--BEA--CEAF--BEF, Orange, t);
+	stick(AF--BFB--CFBE--BFE, Orange);
+	stick(BAB--CABE--CBAF--BBA, Orange);
+	stick(BAE--CABE--CEAF--BEA, Orange, t);
+	stick(BBF--CBAF--CFBE--BFB, Orange);
+	stick(BEF--CEAF--CFBE--BFE, Orange);
+	stick(CABE--CBAF--CFBE--CEAF, Orange);
+
+	//stick(AA--AC--AG--AE, White);
+	stick(AA--BAC--CACE--BAE, White, t);
+	stick(AC--BCA--CCAG--BCG, White, t);
+	stick(AE--BEA--CEAG--BEG, White, t);
+	stick(AG--BGC--CGCE--BGE, White, t);
+	stick(BAC--CACE--CCAG--BCA, White, t);
+	stick(BAE--CACE--CEAG--BEA, White, t);
+	stick(BCG--CCAG--CGCE--BGC, White, t);
+	stick(BEG--CEAG--CGCE--BGE, White, t);
+	stick(CACE--CCAG--CGCE--CEAG, White, t);
+
+	//stick(AB--AD--AH--AF, Yellow);
+	stick(AB--BBD--CBDF--BBF, Yellow);
+	stick(AD--BDB--CDBH--BDH, Yellow);
+	stick(AF--BFB--CFBH--BFH, Yellow);
+	stick(AH--BHD--CHDF--BHF, Yellow);
+	stick(BBD--CBDF--CDBH--BDB, Yellow);
+	stick(BBF--CBDF--CFBH--BFB, Yellow);
+	stick(BDH--CDBH--CHDF--BHD, Yellow);
+	stick(BFH--CFBH--CHDF--BHF, Yellow);
+	stick(CBDF--CDBH--CHDF--CFBH, Yellow);
+
+	//stick(AC--AD--AH--AG, Red);
+	stick(AC--BCD--CCDG--BCG, Red, t);
+	stick(AD--BDC--CDCH--BDH, Red);
+	stick(AG--BGC--CGCH--BGH, Red, t);
+	stick(AH--BHD--CHDG--BHG, Red);
+	stick(BCD--CCDG--CDCH--BDC, Red);
+	stick(BCG--CCDG--CGCH--BGC, Red, t);
+	stick(BDH--CDCH--CHDG--BHD, Red);
+	stick(BGH--CGCH--CHDG--BHG, Red);
+	stick(CCDG--CDCH--CHDG--CGCH, Red);
+
+	//stick(AE--AF--AH--AG, Green);
+	stick(AE--BEF--CEFG--BEG, Green, t);
+	stick(AF--BFE--CFEH--BFH, Green);
+	stick(AG--BGE--CGEH--BGH, Green, t);
+	stick(AH--BHF--CHFG--BHG, Green);
+	stick(BEF--CEFG--CFEH--BFE, Green);
+	stick(BEG--CEFG--CGEH--BGE, Green, t);
+	stick(BFH--CFEH--CHFG--BHF, Green);
+	stick(BGH--CGEH--CHFG--BHG, Green);
+	stick(CEFG--CFEH--CHFG--CGEH, Green);
+
+	polygon(BAB--BCD--BGH--BEF, Background);
+	polygon(BAB--BCD--BGH--BEF, Background, t);
+}

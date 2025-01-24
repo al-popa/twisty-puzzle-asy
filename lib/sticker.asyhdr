@@ -1,0 +1,330 @@
+//
+settings.render = 8;
+
+real pictureSize;
+
+void setSize(real s)
+{
+	pictureSize = s;
+	size(pictureSize);
+}
+
+void drawStickerConfiguration(bool[] vertex, transform t = identity)
+{
+	int n = vertex.length;
+	pair Origin = (0, 0);
+	pair[] A = new pair[n];
+	pair[] B = new pair[n];
+	pair[] C = new pair[n];
+	pair[] D = new pair[n];
+	pair[] E = new pair[n];
+
+	A.cyclic = true;
+	B.cyclic = true;
+	C.cyclic = true;
+	D.cyclic = true;
+	E.cyclic = true;
+
+	for (int i = 0; i < n; ++i)
+	{
+		B[i] = t * (Sin(i * 360 / n), Cos(i * 360 / n));
+	}
+	for(int i = 0; i < n; ++i)
+	{
+		C[i] = intersectionpoint(B[i]--B[i + 2], B[i - 1]--B[i + 1]);
+	}
+	for (int i = 0; i < n; ++i)
+	{
+		if (n != 8)
+		{
+			A[i] = extension(B[i - 1], B[i - 3], B[i + 1], B[i + 3]);
+		}
+	}
+	for (int i = 0; i < n; ++i)
+	{
+		if (n == 8)
+		{
+			D[i] = intersectionpoint(C[i]--C[i + 3], C[i - 2]--C[i + 1]);
+		}
+		else
+		{
+			D[i] = extension(A[i], C[i], A[i + 2], C[i + 1]);
+		}
+	}
+	
+	draw(unitcircle, white);
+	
+	for (int i = 0; i < n; ++i)
+	{
+		if (vertex[i])
+		{
+			draw(C[i - 1]--B[i]--C[i]);
+		}
+		else
+		{
+			draw(C[i - 1]--C[i]);
+		}
+		draw(C[i]--D[i]--C[i + 1]);
+		if (n == 8)
+		{
+			draw(D[i - 2]--D[i]);
+		}
+		else if (n > 8)
+		{
+			draw(arc(A[i], D[i - 2], D[i]));
+		}
+		else
+		{
+			draw(arc(A[i], D[i], D[i - 2]));
+		}
+	}
+}
+
+real distance(pair a, pair b)
+{
+	pair p = a - b;
+	return sqrt(dot(p, p));
+}
+
+path truearc(pair c, pair f, pair t)
+{
+	static transform ccw = rotate(90, (0, 0));
+	return f{ccw * dir(f - c)}..{ccw * dir(t - c)}t;
+}
+
+transform stick(path p, pen color, real lineWidth, real radius)
+{
+	transform result = identity;
+	int n = size(p);
+	real r, maxSize = 0;
+	pair center = (0, 0);
+	for (int i = 0; i < n; ++i)
+	{
+		center = center + point(p, i) / n;
+		for (int j = i + 1; j < n; ++j)
+		{
+			r = distance(point(p, i), point(p, j));
+			if (r > maxSize)
+			{
+				maxSize = r;
+			}
+		}
+	}
+	real m = (maxSize - 3 * lineWidth - 2 * radius) / maxSize; // TODO Problem: This is not quite a equidistant
+	if (m > 0)
+	{
+		result = shift(center) * scale(m) * shift(-center);
+		fill(result * p, color); // TODO Problem: There are 2 paths
+		draw(result * p, color + linewidth(radius * pictureSize)); // TODO Problem: There are 2 paths
+	}
+	return result;
+}
+
+void stickRay(path p, pen color, bool isLeft, real lineWidth, real radius)
+{
+	transform t = stick(p, color, lineWidth, radius);
+	path orientation = nullpath;
+	if (isLeft)
+	{
+		orientation = orientation--point(p, 1)--point(p, 2)--point(p, 3);
+	}
+	else
+	{
+		orientation = orientation--point(p, 1)--point(p, 0)--point(p, 3);
+	}
+	draw(t * t * orientation, linewidth(radius * pictureSize));
+}
+
+void drawFaceStickers(bool[] vertex, pen color, transform t = identity, real lineWidth = 0.03, real radius = lineWidth, bool[] orient = new bool[] {})
+{
+	int n = vertex.length;
+	int m = orient.length;
+	pair Origin = (0, 0);
+	pair[] A = new pair[n];
+	pair[] B = new pair[n];
+	pair[] C = new pair[n];
+	pair[] D = new pair[n];
+	pair[] E = new pair[n];
+
+	A.cyclic = true;
+	B.cyclic = true;
+	C.cyclic = true;
+	D.cyclic = true;
+	E.cyclic = true;
+
+	for (int i = 0; i < n; ++i)
+	{
+		B[i] = t * (Sin(i * 360 / n), Cos(i * 360 / n));
+	}
+	for(int i = 0; i < n; ++i)
+	{
+		C[i] = intersectionpoint(B[i]--B[i + 2], B[i - 1]--B[i + 1]);
+	}
+	for (int i = 0; i < n; ++i)
+	{
+		if (n != 8)
+		{
+			A[i] = extension(B[i - 1], B[i - 3], B[i + 1], B[i + 3]);
+		}
+	}
+	for (int i = 0; i < n; ++i)
+	{
+		if (n == 8)
+		{
+			D[i] = intersectionpoint(C[i]--C[i + 3], C[i - 2]--C[i + 1]);
+		}
+		else
+		{
+			D[i] = extension(A[i], C[i], A[i + 2], C[i + 1]);
+		}
+	}
+
+	path[] vertexEdge = new path[n];
+	path[] ray = new path[n];
+	path[] petal = new path[n];
+	path center = nullpath;
+	pair first, second;
+	int use = 0;
+
+	for (int i = 0; i < n; ++i)
+	{
+		if (vertex[i])
+		{
+			vertexEdge[i] = C[i - 1]--D[i - 1]--C[i]--B[i]--cycle;
+		}
+		else
+		{
+			vertexEdge[i] = C[i - 1]--D[i - 1]--C[i]--cycle;
+		}
+		if (n == 8)
+		{
+			first = intersectionpoint(D[i - 2]--D[i], Origin--C[i]);
+			second = intersectionpoint(D[i - 3]--D[i - 1], Origin--C[i - 1]);
+			ray[i] = D[i]--first--first--D[i - 1];
+			petal[i] = first--D[i - 1]--second--cycle;
+			center = center--second--first;
+			if (i == 0)
+			{
+				// TODO Problem: Scale factor is computed very imprecise
+				write("Scale factor = ", distance(D[i - 1], midpoint(first--second)) * pictureSize / 0.5cm);
+			}
+		}
+		else if (n > 8)
+		{
+			first = intersectionpoint(truearc(A[i], D[i - 2], D[i]), Origin--C[i]);
+			second = intersectionpoint(truearc(A[i - 1], D[i - 3], D[i - 1]), Origin--C[i - 1]);
+			ray[i] = reverse(truearc(A[i], first, D[i]))&reverse(truearc(A[i + 1], D[i - 1], first));
+			petal[i] = reverse(truearc(A[i + 1], D[i - 1], first))&reverse(truearc(A[i - 1], second, D[i - 1]))&truearc(A[i], second, first)&cycle;
+			center = center&truearc(A[i], second, first);
+			if (i == 0)
+			{
+				// TODO Problem: Scale factor is computed very imprecise
+				write("Scale factor = ", distance(D[i - 1], midpoint(arc(A[i], second, first))) * pictureSize / 0.5cm);
+			}
+		}
+		else
+		{
+			first = intersectionpoint(truearc(A[i], D[i], D[i - 2]), Origin--C[i]);
+			second = intersectionpoint(truearc(A[i - 1], D[i - 1], D[i - 3]), Origin--C[i - 1]);
+			ray[i] = truearc(A[i], D[i], first)&truearc(A[i + 1], first, D[i - 1]);
+			petal[i] = truearc(A[i + 1], first, D[i - 1])&truearc(A[i - 1], D[i - 1], second)&reverse(truearc(A[i], first, second))&cycle;
+			center = center&reverse(truearc(A[i], first, second));
+			if (i == 0)
+			{
+				// TODO Problem: Scale factor is computed very imprecise
+				write("Scale factor = ", distance(D[i - 1], midpoint(reverse(arc(A[i], first, second)))) * pictureSize / 0.5cm);
+			}
+		}
+		ray[i] = ray[i]--C[i]--cycle;
+		stick(vertexEdge[i], color, lineWidth, radius);
+		if (vertex[i] && !vertex[(i + 1) % n])
+		{
+			stickRay(ray[i], color, true, lineWidth, radius);
+		}
+		else if (!vertex[i] && vertex[(i - 1) % n])
+		{
+			stickRay(ray[i], color, false, lineWidth, radius);
+		}
+		else if (m > 0 && orient[use % m])
+		{
+			stickRay(ray[i], color, true, lineWidth, radius);
+			use = use + 1;
+		}
+		else if (m > 0 && !orient[use % m])
+		{
+			stickRay(ray[i], color, false, lineWidth, radius);
+			use = use + 1;
+		}
+		else
+		{
+			stick(ray[i], color, lineWidth, radius);
+		}
+		stick(petal[i], color, lineWidth, radius);
+	}
+	if (n == 8)
+	{
+		center = center--cycle;
+	}
+	else
+	{
+		center = center&cycle;
+	}
+	stick(center, color, lineWidth, radius);
+}
+
+void drawVertexStickers(int n, pen color, transform t = identity, real lineWidth = 0.03, real radius = lineWidth)
+{
+	draw(unitcircle, invisible);
+	pair Origin = (0, 0);
+	pair[] A = new pair[n];
+	pair[] B = new pair[n];
+	pair[] C = new pair[n];
+	pair[] D = new pair[n];
+	pair[] E = new pair[n];
+
+	A.cyclic = true;
+	B.cyclic = true;
+	C.cyclic = true;
+	D.cyclic = true;
+	E.cyclic = true;
+
+	for (int i = 0; i < n; ++i)
+	{
+		B[i] = t * (Sin(i * 360 / n), Cos(i * 360 / n));
+	}
+	for(int i = 0; i < n; ++i)
+	{
+		C[i] = intersectionpoint(B[i]--B[i + 2], B[i - 1]--B[i + 1]);
+	}
+	for (int i = 0; i < n; ++i)
+	{
+		if (n != 8)
+		{
+			A[i] = extension(B[i - 1], B[i - 3], B[i + 1], B[i + 3]);
+		}
+	}
+	for (int i = 0; i < n; ++i)
+	{
+		if (n == 8)
+		{
+			D[i] = intersectionpoint(C[i]--C[i + 3], C[i - 2]--C[i + 1]);
+		}
+		else
+		{
+			D[i] = extension(A[i], C[i], A[i + 2], C[i + 1]);
+		}
+	}
+
+	transform symmetry = rotate(-90, Origin);
+	path vertex = shift(-D[-1]) * (C[-1]--D[-1]--C[0]--B[0]--cycle);
+	stick(vertex, color, lineWidth, radius);
+	vertex = symmetry * vertex;
+	stick(vertex, color, lineWidth, radius);
+	vertex = symmetry * vertex;
+	stick(vertex, color, lineWidth, radius);
+	vertex = symmetry * vertex;
+	stick(vertex, color, lineWidth, radius);
+}
+
+setSize(10cm);
+

@@ -1,0 +1,124 @@
+include "color.asyhdr";
+include "rubiks.asyhdr";
+
+settings.interactiveView = false;
+settings.batchView = false;
+
+size(5cm);
+currentlight = Viewport;
+currentprojection = perspective(0, -5, 0);
+
+back = 0;
+one = 0;
+two = 0;
+thre = 0;
+
+pen Normal = RGB(191, 191, 191);
+pen Highline = RGB(127, 127, 127);
+
+triple forward = unit((0, -5, 0));
+
+void stick(guide3 face, pen color, transform3 t = identity4)
+{
+	triple center = 0.11 * findCenter(face);
+	polygon(face, Background, t);
+	polygon(shift(center) * scale3(0.9) * face, Normal, t);
+}
+
+void highline(guide3 face)
+{
+	triple center = 0.111 * findCenter(face);
+	polygon(face, Background);
+	polygon(shift(center) * scale3(0.9) * face, Highline);
+}
+
+void setViewAbsolute(real phi, real psi, real theta)
+{
+	X = (1, 0, 0);
+	Y = (0, 1, 0);
+	Z = (0, 0, 1);
+	setView(phi, psi, theta);
+}
+
+picture save;
+picture row;
+
+void figureBegin()
+{
+	save = currentpicture;
+	row = new picture;
+	size(row, 5cm);
+	currentpicture = new picture;
+	size(currentpicture, 5cm);
+}
+
+void figureNext()
+{
+	picture pic = new picture;
+	size(pic, 5cm);
+	add(pic, row.fit(), (0, 0), W);
+	add(pic, currentpicture.fit(), (0, 0), E);
+	row = pic;
+	currentpicture = new picture;
+	size(currentpicture, 5cm);
+}
+
+void figureLine()
+{
+	figureNext();
+	picture pic = new picture;
+	size(pic, 5cm);
+	add(pic, save.fit(), (0, 0), N);
+	add(pic, row.fit(), (0, 0), S);
+	save = pic;
+	row = new picture;
+	size(row, 5cm);
+}
+
+void figureEnd()
+{
+	figureLine();
+	currentpicture = save;
+}
+
+void makeMove(triple center, real angle, real radius = 1.0)
+{
+	real halfAngle = angle / 2;
+	triple unitCenter = unit(center);
+	triple middle = center + radius * unit(forward - unitCenter * dot(unitCenter, forward));
+	triple start = rotate(halfAngle, center) * middle;
+	triple stop = rotate(-halfAngle, center) * middle;
+	draw(start..middle..stop, blue, Arrow3);
+}
+
+triple fixedZ = (0, 0, 1);
+
+void makeTurn(real angle, real radius = 1.2, triple axes = forward, bool down = false)
+{
+	real halfAngle = angle / 2;
+	axes = unit(axes);
+	triple up = radius * unit(fixedZ - axes * dot(fixedZ, axes));
+	if (down)
+	{
+		up = -up;
+	}
+	triple start = rotate(halfAngle, axes) * up;
+	triple stop = rotate(-halfAngle, axes) * up;
+	draw(start..up..stop, Arrow3);
+}
+
+void makeChange(guide3 start, guide3 stop, triple through = O)
+{
+	triple posStart = findCenter(start);
+	triple posStop = findCenter(stop);
+	if (through == O)
+	{
+		triple dirStart = cross(point(start, 0.3)-point(start, 0), point(start, 0.7)-point(start, 0));
+		triple dirStop = cross(point(stop, 3)-point(stop, 0), point(stop, 0.7)-point(stop, 0));
+		draw(posStart{dirStart}..posStop{dirStop}, blue, Arrow3);
+	}
+	else
+	{
+		draw(posStart..through..posStop, blue, Arrow3);
+	}
+}

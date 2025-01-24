@@ -1,0 +1,152 @@
+triple
+AA, AB, AC, AD, AE, AF, AG, AH, AI, AJ, AK, AL, AM, AN, AO, AP, AQ, AR, AS, AT,
+BAM, BAN, BBO, BBP, BCQ, BCR, BDS, BDT, BEM, BEQ, BFN, BFR,
+BGO, BGS, BHP, BHT, BIM, BIO, BJQ, BJS, BKN, BKP, BLR, BLT,
+CA, CB, CC, CD, CE, CF, CG, CH, CI, CJ, CK, CL;
+
+void init()
+{
+	real u = (sqrt(5)+1)/2;
+	real v = u-1;
+	real s = sqrt(3);
+
+	AA = (u*X+v*Y)/s;
+	AB = (u*X-v*Y)/s;
+	AC = (-u*X+v*Y)/s;
+	AD = (-u*X-v*Y)/s;
+	AE = (u*Y+v*Z)/s;
+	AF = (u*Y-v*Z)/s;
+	AG = (-u*Y+v*Z)/s;
+	AH = (-u*Y-v*Z)/s;
+	AI = (v*X+u*Z)/s;
+	AJ = (-v*X+u*Z)/s;
+	AK = (v*X-u*Z)/s;
+	AL = (-v*X-u*Z)/s;
+	AM = (X+Y+Z)/s;
+	AN = (X+Y-Z)/s;
+	AO = (X-Y+Z)/s;
+	AP = (X-Y-Z)/s;
+	AQ = (-X+Y+Z)/s;
+	AR = (-X+Y-Z)/s;
+	AS = (-X-Y+Z)/s;
+	AT = (-X-Y-Z)/s;
+
+	BAM = (AA+AM)/2;
+	BAN = (AA+AN)/2;
+	BBO = (AB+AO)/2;
+	BBP = (AB+AP)/2;
+	BCQ = (AC+AQ)/2;
+	BCR = (AC+AR)/2;
+	BDS = (AD+AS)/2;
+	BDT = (AD+AT)/2;
+	BEM = (AE+AM)/2;
+	BEQ = (AE+AQ)/2;
+	BFN = (AF+AN)/2;
+	BFR = (AF+AR)/2;
+	BGO = (AG+AO)/2;
+	BGS = (AG+AS)/2;
+	BHP = (AH+AP)/2;
+	BHT = (AH+AT)/2;
+	BIM = (AI+AM)/2;
+	BIO = (AI+AO)/2;
+	BJQ = (AJ+AQ)/2;
+	BJS = (AJ+AS)/2;
+	BKN = (AK+AN)/2;
+	BKP = (AK+AP)/2;
+	BLR = (AL+AR)/2;
+	BLT = (AL+AT)/2;
+
+	CA = (AM+AN)/2;
+	CB = (AO+AP)/2;
+	CC = (AQ+AR)/2;
+	CD = (AS+AT)/2;
+	CE = (AM+AQ)/2;
+	CF = (AN+AR)/2;
+	CG = (AO+AS)/2;
+	CH = (AP+AT)/2;
+	CI = (AM+AO)/2;
+	CJ = (AQ+AS)/2;
+	CK = (AN+AP)/2;
+	CL = (AR+AT)/2;
+}
+
+void DodecahedronSkewb()
+{
+	init();
+	transform3 t = rotate(one, X+Y+Z);
+
+	//stick(AC--AR--AL--AT--AD, Grey);
+	stick(AL--BLR--CL--BLT, Grey);
+	stick(AR--BLR--CL--BCR, Grey);
+	stick(AT--BLT--CL--BDT, Grey);
+	stick(AC--BCR--CL--BDT--AD, Grey);
+
+	//stick(AC--AQ--AJ--AS--AD, LightBlue);
+	stick(AJ--BJQ--CJ--BJS, LightBlue, t);
+	stick(AQ--BJQ--CJ--BCQ, LightBlue, t);
+	stick(AS--BJS--CJ--BDS, LightBlue);
+	stick(AC--BCQ--CJ--BDS--AD, LightBlue);
+
+	//stick(AE--AQ--AC--AR--AF, Orange);
+	stick(AC--BCQ--CC--BCR, Orange);
+	stick(AQ--BCQ--CC--BEQ, Orange, t);
+	stick(AR--BCR--CC--BFR, Orange);
+	stick(AE--BEQ--CC--BFR--AF, Orange, t);
+
+	//stick(AK--AN--AF--AR--AL, LightGreen);
+	stick(AF--BFN--CF--BFR, LightGreen, t);
+	stick(AN--BFN--CF--BKN, LightGreen, t);
+	stick(AR--BFR--CF--BLR, LightGreen);
+	stick(AK--BKN--CF--BLR--AL, LightGreen);
+
+	//stick(AK--AP--AH--AT--AL, Pink);
+	stick(AH--BHP--CH--BHT, Pink);
+	stick(AP--BHP--CH--BKP, Pink);
+	stick(AT--BHT--CH--BLT, Pink);
+	stick(AK--BKP--CH--BLT--AL, Pink);
+
+	//stick(AG--AS--AD--AT--AH, Lime);
+	stick(AD--BDS--CD--BDT, Lime);
+	stick(AS--BDS--CD--BGS, Lime);
+	stick(AT--BDT--CD--BHT, Lime);
+	stick(AG--BGS--CD--BHT--AH, Lime);
+
+	//stick(AI--AO--AG--AS--AJ, Green);
+	stick(AG--BGO--CG--BGS, Green);
+	stick(AO--BGO--CG--BIO, Green, t);
+	stick(AS--BGS--CG--BJS, Green);
+	stick(AI--BIO--CG--BJS--AJ, Green, t);
+
+	//stick(AG--AO--AB--AP--AH, Red);
+	stick(AB--BBO--CB--BBP, Red, t);
+	stick(AO--BBO--CB--BGO, Red, t);
+	stick(AP--BBP--CB--BHP, Red);
+	stick(AG--BGO--CB--BHP--AH, Red);
+
+	//stick(AB--AP--AK--AN--AA, Blue);
+	stick(AK--BKN--CK--BKP, Blue);
+	stick(AN--BKN--CK--BAN, Blue, t);
+	stick(AP--BKP--CK--BBP, Blue);
+	stick(AA--BAN--CK--BBP--AB, Blue, t);
+
+	//stick(AE--AM--AA--AN--AF, Yellow);
+	stick(AA--BAM--CA--BAN, Yellow, t);
+	stick(AM--BAM--CA--BEM, Yellow, t);
+	stick(AN--BAN--CA--BFN, Yellow, t);
+	stick(AE--BEM--CA--BFN--AF, Yellow, t);
+
+	//stick(AI--AM--AE--AQ--AJ, Violet);
+	stick(AE--BEM--CE--BEQ, Violet, t);
+	stick(AM--BEM--CE--BIM, Violet, t);
+	stick(AQ--BEQ--CE--BJQ, Violet, t);
+	stick(AI--BIM--CE--BJQ--AJ, Violet, t);
+
+	//stick(AB--AO--AI--AM--AA, White);
+	stick(AI--BIM--CI--BIO, White, t);
+	stick(AM--BIM--CI--BAM, White, t);
+	stick(AO--BIO--CI--BBO, White, t);
+	stick(AA--BAM--CI--BBO--AB, White, t);
+
+	polygon(BBP--BGO--BJS--BCQ--BFR--BKN, Background);
+	polygon(BBP--BGO--BJS--BCQ--BFR--BKN, Background, t);
+}

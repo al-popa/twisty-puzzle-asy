@@ -1,0 +1,41 @@
+include "algorithm.asyhdr";
+include "../data/PyraminxCrystal.dat";
+
+setView(-31.6, -0.3, -162);
+
+init();
+triple fw = findCenter(AG--AS--AD--AT--AH);
+triple lt = findCenter(AG--AO--AB--AP--AH);
+triple rt = findCenter(AC--AQ--AJ--AS--AD);
+triple bt = findCenter(AI--AO--AG--AS--AJ);
+triple ul = findCenter(AK--AP--AH--AT--AL);
+triple ur = findCenter(AC--AR--AL--AT--AD);
+
+figureBegin();
+PyraminxCrystal();
+highline(BF--CTH--CHT);
+highline(BF--CSG--CGS);
+highline(BF--CDT--CTD);
+highline(BE--CHT--CTH);
+highline(BG--CGS--CSG);
+highline(BA--CDT--CTD);
+makeChange(BF--CDT--CTD, BF--CTH--CHT, fw+(ul+ur)/4);
+makeChange(BF--CTH--CHT, BG--CGS--CSG, 0.9*(fw+bt));
+makeChange(BF--CSG--CGS, BA--CDT--CTD, 0.9*(fw+ur));
+figureLine();
+PyraminxCrystal();
+makeMove(0.7*lt, 72, 0.8);
+label("$L$", 0.9*(ul+ur));
+figureNext();
+PyraminxCrystal();
+makeMove(0.7*rt, -72, 0.8);
+label("$R^{-1}$", 0.9*(ul+ur));
+figureNext();
+PyraminxCrystal();
+makeMove(0.7*lt, -72, 0.8);
+label("$L^{-1}$", 0.9*(ul+ur));
+figureNext();
+PyraminxCrystal();
+makeMove(0.7*rt, 72, 0.8);
+label("$R$", 0.9*(ul+ur));
+figureEnd();

@@ -1,0 +1,71 @@
+//
+settings.render = 8;
+settings.prc = true;
+
+import three;
+include "color.asyhdr";
+
+size(5cm);
+currentlight = Viewport;
+currentprojection = perspective(0, -5, 0);
+
+real back = -20;
+real one = 20;
+real two = 40;
+real thre = 60;
+
+triple O = (0, 0, 0);
+triple X = (1, 0, 0);
+triple Y = (0, 1, 0);
+triple Z = (0, 0, 1);
+
+surface makeSurface(guide3 p)
+{
+	if (!cyclic(p))
+	{
+		p = p--cycle;
+	}
+	return surface(p);
+}
+
+material makeMaterial(pen color)
+{
+	return material(
+		//ambientpen = black,
+		diffusepen = color,
+		emissivepen = 0.3 * color,
+		specularpen = mediumgray,
+		opacity = 1.0,
+		shininess = 1.0);
+}
+
+triple findCenter(guide3 face)
+{
+	int numPoints = size(face);
+	triple center = O;
+	for (int idx = 0; idx < numPoints; ++idx)
+	{
+		center = center + point(face, idx) / numPoints;
+	}
+	return center;
+}
+
+void polygon(guide3 p, pen color, transform3 t = identity4)
+{
+	draw(t * makeSurface(p), makeMaterial(color));
+}
+
+void stick(guide3 face, pen color, transform3 t = identity4)
+{
+	triple center = 0.11 * findCenter(face);
+	polygon(face, Background, t);
+	polygon(shift(center) * scale3(0.9) * face, color, t);
+}
+
+void setView(real phi, real psi, real theta)
+{
+	transform3 t = rotate(theta, -Y) * rotate(psi, -X) * rotate(phi, -Z);
+	X = t * X;
+	Y = t * Y;
+	Z = t * Z;
+}

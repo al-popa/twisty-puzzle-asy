@@ -1,0 +1,518 @@
+triple EA, EB, EC, ED, EE, EF, EG, EH,
+AA, AB, AC, AD, AE, AF, BA, BB, BC, BD, BE, BF,
+CA, CB, CC, CD, CE, CF, DA, DB, DC, DD, DE, DF,
+FA, FB, FC, FD, FE, FF, FG, FH, FI, FJ, FK, FL,
+GA, GB, GC, GD, GE, HA, HB, HC, HD, HE, IA, IB, IC, ID, IE,
+JA, JB, JC, JD, JE, KA, KB, KC, KD, KE, LA, LB, LC, LD, LE,
+MA, MB, MC, MD, ME, NA, NB, NC, ND, NE, OA, OB, OC, OD, OE,
+PA, PB, PC, PD, PE, QA, QB, QC, QD, QE, RA, RB, RC, RD, RE,
+AAB, AAF, ABA, ABC, ACB, ACD, ADC, ADE, AED, AEF, AFA, AFE,
+AAG, ABG, ACG, ADG, AEG, AFG, AAH, ABH, ACH, ADH, AEH, AFH,
+BAB, BAF, BBA, BBC, BCB, BCD, BDC, BDE, BED, BEF, BFA, BFE,
+BAG, BBG, BCG, BDG, BEG, BFG, BAH, BBH, BCH, BDH, BEH, BFH,
+CAF, CAB, CBA, CBC, CCB, CCD, CDC, CDE, CED, CEF, CFA, CFE,
+CAG, CBG, CCG, CDG, CEG, CFG, CAH, CBH, CCH, CDH, CEH, CFH,
+DAB, DAF, DBA, DBC, DCB, DCD, DDC, DDE, DED, DEF, DFA, DFE,
+DAG, DBG, DCG, DDG, DEG, DFG, DAH, DBH, DCH, DDH, DEH, DFH,
+EEB, EEC, EED, EFC, EFA, EFD, EGA, EGB, EGD, EHB, EHA, EHC;
+
+void init()
+{
+	real a = 7/15;
+	real b = 3/11;
+	real c = 4/15;
+	real d = 3/5;
+	real e = 31/18;
+	real f = 15/8;
+	real g = 11/72;
+	real u = 0.37; // Guess
+	real v = 0.43; // Guess
+
+	EA = a*(X+Y+Z);
+	EB = a*(X-Y-Z);
+	EC = a*(-X+Y-Z);
+	ED = a*(-X-Y+Z);
+	EE = d*(-X-Y-Z);
+	EF = d*(-X+Y+Z);
+	EG = d*(X-Y+Z);
+	EH = d*(X+Y-Z);
+
+	AA = EA+c*(2*X-Y-Z);
+	AB = EA+c*(X+Y-2*Z);
+	AC = EA+c*(-X+2*Y-Z);
+	AD = EA+c*(-2*X+Y+Z);
+	AE = EA+c*(-X-Y+2*Z);
+	AF = EA+c*(X-2*Y+Z);
+
+	BA = EB+c*(X-Y+2*Z);
+	BB = EB+c*(2*X+Y+Z);
+	BC = EB+c*(X+2*Y-Z);
+	BD = EB+c*(-X+Y-2*Z);
+	BE = EB+c*(-2*X-Y-Z);
+	BF = EB+c*(-X-2*Y+Z);
+
+	CA = EC+c*(-X+Y+2*Z);
+	CB = EC+c*(X+2*Y+Z);
+	CC = EC+c*(2*X+Y-Z);
+	CD = EC+c*(X-Y-2*Z);
+	CE = EC+c*(-X-2*Y-Z);
+	CF = EC+c*(-2*X-Y+Z);
+
+	DA = ED+c*(-2*X+Y-Z);
+	DB = ED+c*(-X+2*Y+Z);
+	DC = ED+c*(X+Y+2*Z);
+	DD = ED+c*(2*X-Y+Z);
+	DE = ED+c*(X-2*Y-Z);
+	DF = ED+c*(-X-Y-2*Z);
+
+	FA = b*(-3*X-Y-Z);
+	FB = b*(-X-3*Y-Z);
+	FC = b*(-X-Y-3*Z);
+	FD = b*(-3*X+Y+Z);
+	FE = b*(-X+3*Y+Z);
+	FF = b*(-X+Y+3*Z);
+	FG = b*(3*X-Y+Z);
+	FH = b*(X-3*Y+Z);
+	FI = b*(X-Y+3*Z);
+	FJ = b*(3*X+Y-Z);
+	FK = b*(X+3*Y-Z);
+	FL = b*(X+Y-3*Z);
+
+	GA = u*EH+(1-u)*FL;
+	GB = u*BC+(1-u)*FL;
+	GC = u*BD+(1-u)*FL;
+	GD = u*CD+(1-u)*FL;
+	GE = u*CC+(1-u)*FL;
+
+	HA = u*EG+(1-u)*FH;
+	HB = u*DD+(1-u)*FH;
+	HC = u*DE+(1-u)*FH;
+	HD = u*BF+(1-u)*FH;
+	HE = u*BA+(1-u)*FH;
+
+	IA = u*EF+(1-u)*FD;
+	IB = u*CA+(1-u)*FD;
+	IC = u*CF+(1-u)*FD;
+	ID = u*DA+(1-u)*FD;
+	IE = u*DB+(1-u)*FD;
+
+	JA = u*EE+(1-u)*FA;
+	JB = u*DF+(1-u)*FA;
+	JC = u*DA+(1-u)*FA;
+	JD = u*CF+(1-u)*FA;
+	JE = u*CE+(1-u)*FA;
+
+	KA = u*EH+(1-u)*FK;
+	KB = u*CC+(1-u)*FK;
+	KC = u*CB+(1-u)*FK;
+	KD = u*AC+(1-u)*FK;
+	KE = u*AB+(1-u)*FK;
+
+	LA = u*EG+(1-u)*FI;
+	LB = u*AF+(1-u)*FI;
+	LC = u*AE+(1-u)*FI;
+	LD = u*DC+(1-u)*FI;
+	LE = u*DD+(1-u)*FI;
+
+	MA = u*EE+(1-u)*FB;
+	MB = u*BE+(1-u)*FB;
+	MC = u*BF+(1-u)*FB;
+	MD = u*DE+(1-u)*FB;
+	ME = u*DF+(1-u)*FB;
+
+	NA = u*EH+(1-u)*FJ;
+	NB = u*AB+(1-u)*FJ;
+	NC = u*AA+(1-u)*FJ;
+	ND = u*BB+(1-u)*FJ;
+	NE = u*BC+(1-u)*FJ;
+
+	OA = u*EF+(1-u)*FF;
+	OB = u*DB+(1-u)*FF;
+	OC = u*DC+(1-u)*FF;
+	OD = u*AE+(1-u)*FF;
+	OE = u*AD+(1-u)*FF;
+
+	PA = u*EE+(1-u)*FC;
+	PB = u*CE+(1-u)*FC;
+	PC = u*CD+(1-u)*FC;
+	PD = u*BD+(1-u)*FC;
+	PE = u*BE+(1-u)*FC;
+
+	QA = u*EG+(1-u)*FG;
+	QB = u*BA+(1-u)*FG;
+	QC = u*BB+(1-u)*FG;
+	QD = u*AA+(1-u)*FG;
+	QE = u*AF+(1-u)*FG;
+
+	RA = u*EF+(1-u)*FE;
+	RB = u*AD+(1-u)*FE;
+	RC = u*AC+(1-u)*FE;
+	RD = u*CB+(1-u)*FE;
+	RE = u*CA+(1-u)*FE;
+
+	AAB = f*v*(AB+AA)/2-g*v*FJ+(1-e*v)*AA;
+	AAF = f*v*(AA+AF)/2-g*v*FG+(1-e*v)*AA;
+	ABA = f*v*(AB+AA)/2-g*v*FJ+(1-e*v)*AB;
+	ABC = f*v*(AB+AC)/2-g*v*FK+(1-e*v)*AB;
+	ACB = f*v*(AB+AC)/2-g*v*FK+(1-e*v)*AC;
+	ACD = f*v*(AD+AC)/2-g*v*FE+(1-e*v)*AC;
+	ADC = f*v*(AD+AC)/2-g*v*FE+(1-e*v)*AD;
+	ADE = f*v*(AE+AD)/2-g*v*FF+(1-e*v)*AD;
+	AED = f*v*(AE+AD)/2-g*v*FF+(1-e*v)*AE;
+	AEF = f*v*(AF+AE)/2-g*v*FI+(1-e*v)*AE;
+	AFA = f*v*(AA+AF)/2-g*v*FG+(1-e*v)*AF;
+	AFE = f*v*(AF+AE)/2-g*v*FI+(1-e*v)*AF;
+	AAG = (1-v)*AA+v*BB;
+	ABG = (1-v)*AB+v*EH;
+	ACG = (1-v)*AC+v*CB;
+	ADG = (1-v)*AD+v*EF;
+	AEG = (1-v)*AE+v*DC;
+	AFG = (1-v)*AF+v*EG;
+	AAH = f*(AB+AF)/4-g*(FG+FJ)/2+e*AA/8;
+	ABH = f*(AA+AC)/4-g*(FJ+FK)/2+e*AB/8;
+	ACH = f*(AB+AD)/4-g*(FE+FK)/2+e*AC/8;
+	ADH = f*(AC+AE)/4-g*(FE+FF)/2+e*AD/8;
+	AEH = f*(AD+AF)/4-g*(FF+FI)/2+e*AE/8;
+	AFH = f*(AA+AE)/4-g*(FG+FI)/2+e*AF/8;
+
+	BAB = f*v*(BA+BB)/2-g*v*FG+(1-e*v)*BA;
+	BAF = f*v*(BA+BF)/2-g*v*FH+(1-e*v)*BA;
+	BBA = f*v*(BA+BB)/2-g*v*FG+(1-e*v)*BB;
+	BBC = f*v*(BB+BC)/2-g*v*FJ+(1-e*v)*BB;
+	BCB = f*v*(BB+BC)/2-g*v*FJ+(1-e*v)*BC;
+	BCD = f*v*(BC+BD)/2-g*v*FL+(1-e*v)*BC;
+	BDC = f*v*(BC+BD)/2-g*v*FL+(1-e*v)*BD;
+	BDE = f*v*(BD+BE)/2-g*v*FC+(1-e*v)*BD;
+	BED = f*v*(BD+BE)/2-g*v*FC+(1-e*v)*BE;
+	BEF = f*v*(BE+BF)/2-g*v*FB+(1-e*v)*BE;
+	BFA = f*v*(BF+BA)/2-g*v*FH+(1-e*v)*BF;
+	BFE = f*v*(BE+BF)/2-g*v*FB+(1-e*v)*BF;
+	BAG = (1-v)*BA+v*EG;
+	BBG = (1-v)*BB+v*AA;
+	BCG = (1-v)*BC+v*EH;
+	BDG = (1-v)*BD+v*CD;
+	BEG = (1-v)*BE+v*EE;
+	BFG = (1-v)*BF+v*DE;
+	BAH = f*(BB+BF)/4-g*(FG+FH)/2+e*BA/8;
+	BBH = f*(BA+BC)/4-g*(FG+FJ)/2+e*BB/8;
+	BCH = f*(BB+BD)/4-g*(FJ+FL)/2+e*BC/8;
+	BDH = f*(BC+BE)/4-g*(FC+FL)/2+e*BD/8;
+	BEH = f*(BD+BF)/4-g*(FB+FC)/2+e*BE/8;
+	BFH = f*(BA+BE)/4-g*(FB+FH)/2+e*BF/8;
+
+	CAF = f*v*(CA+CF)/2-g*v*FD+(1-e*v)*CA;
+	CAB = f*v*(CB+CA)/2-g*v*FE+(1-e*v)*CA;
+	CBA = f*v*(CB+CA)/2-g*v*FE+(1-e*v)*CB;
+	CBC = f*v*(CB+CC)/2-g*v*FK+(1-e*v)*CB;
+	CCB = f*v*(CB+CC)/2-g*v*FK+(1-e*v)*CC;
+	CCD = f*v*(CC+CD)/2-g*v*FL+(1-e*v)*CC;
+	CDC = f*v*(CC+CD)/2-g*v*FL+(1-e*v)*CD;
+	CDE = f*v*(CE+CD)/2-g*v*FC+(1-e*v)*CD;
+	CED = f*v*(CE+CD)/2-g*v*FC+(1-e*v)*CE;
+	CEF = f*v*(CF+CE)/2-g*v*FA+(1-e*v)*CE;
+	CFA = f*v*(CA+CF)/2-g*v*FD+(1-e*v)*CF;
+	CFE = f*v*(CF+CE)/2-g*v*FA+(1-e*v)*CF;
+	CAG = (1-v)*CA+v*EF;
+	CBG = (1-v)*CB+v*AC;
+	CCG = (1-v)*CC+v*EH;
+	CDG = (1-v)*CD+v*BD;
+	CEG = (1-v)*CE+v*EE;
+	CFG = (1-v)*CF+v*DA;
+	CAH = f*(CB+CF)/4-g*(FD+FE)/2+e*CA/8;
+	CBH = f*(CA+CC)/4-g*(FE+FK)/2+e*CB/8;
+	CCH = f*(CB+CD)/4-g*(FK+FL)/2+e*CC/8;
+	CDH = f*(CC+CE)/4-g*(FC+FL)/2+e*CD/8;
+	CEH = f*(CD+CF)/4-g*(FA+FC)/2+e*CE/8;
+	CFH = f*(CE+CA)/4-g*(FA+FD)/2+e*CF/8;
+
+	DAB = f*v*(DA+DB)/2-g*v*FD+(1-e*v)*DA;
+	DAF = f*v*(DA+DF)/2-g*v*FA+(1-e*v)*DA;
+	DBA = f*v*(DA+DB)/2-g*v*FD+(1-e*v)*DB;
+	DBC = f*v*(DB+DC)/2-g*v*FF+(1-e*v)*DB;
+	DCB = f*v*(DB+DC)/2-g*v*FF+(1-e*v)*DC;
+	DCD = f*v*(DC+DD)/2-g*v*FI+(1-e*v)*DC;
+	DDC = f*v*(DC+DD)/2-g*v*FI+(1-e*v)*DD;
+	DDE = f*v*(DD+DE)/2-g*v*FH+(1-e*v)*DD;
+	DED = f*v*(DD+DE)/2-g*v*FH+(1-e*v)*DE;
+	DEF = f*v*(DE+DF)/2-g*v*FB+(1-e*v)*DE;
+	DFA = f*v*(DF+DA)/2-g*v*FA+(1-e*v)*DF;
+	DFE = f*v*(DE+DF)/2-g*v*FB+(1-e*v)*DF;
+	DAG = (1-v)*DA+v*CF;
+	DBG = (1-v)*DB+v*EF;
+	DCG = (1-v)*DC+v*AE;
+	DDG = (1-v)*DD+v*EG;
+	DEG = (1-v)*DE+v*BF;
+	DFG = (1-v)*DF+v*EE;
+	DAH = f*(DB+DF)/4-g*(FA+FD)/2+e*DA/8;
+	DBH = f*(DA+DC)/4-g*(FD+FF)/2+e*DB/8;
+	DCH = f*(DB+DD)/4-g*(FF+FI)/2+e*DC/8;
+	DDH = f*(DC+DE)/4-g*(FH+FI)/2+e*DD/8;
+	DEH = f*(DD+DF)/4-g*(FB+FH)/2+e*DE/8;
+	DFH = f*(DE+DA)/4-g*(FA+FB)/2+e*DF/8;
+
+	EEB = (1-v)*EE+v*BE;
+	EEC = (1-v)*EE+v*CE;
+	EED = (1-v)*EE+v*DF;
+	EFC = (1-v)*EF+v*CA;
+	EFA = (1-v)*EF+v*AD;
+	EFD = (1-v)*EF+v*DB;
+	EGA = (1-v)*EG+v*AF;
+	EGB = (1-v)*EG+v*BA;
+	EGD = (1-v)*EG+v*DD;
+	EHB = (1-v)*EH+v*BC;
+	EHA = (1-v)*EH+v*AB;
+	EHC = (1-v)*EH+v*CC;
+}
+
+void Hexadecagon()
+{
+	init();
+	transform3 t = rotate(one, -EA);
+	transform3 p = rotate(one, -FA);
+
+	stick(AAH--ABH--ACH--ADH--AEH--AFH, Red, t);
+	stick(AA--AAF--AAH--AAB, Red, t);
+	stick(AAB--AAH--ABH--ABA, Red, t);
+	stick(AB--ABA--ABH--ABC, Red, t);
+	stick(ABC--ABH--ACH--ACB, Red, t);
+	stick(AC--ACB--ACH--ACD, Red, t);
+	stick(ACD--ACH--ADH--ADC, Red, t);
+	stick(AD--ADC--ADH--ADE, Red, t);
+	stick(ADE--ADH--AEH--AED, Red, t);
+	stick(AE--AED--AEH--AEF, Red, t);
+	stick(AEF--AEH--AFH--AFE, Red, t);
+	stick(AF--AFE--AFH--AFA, Red, t);
+	stick(AFA--AFH--AAH--AAF, Red, t);
+
+	stick(GA--GB--GC--GD--GE, Red);
+	stick(GA--EHB--EH--EHC, Red);
+	stick(EHB--GA--GB--BCG, Red);
+	stick(BC--BCG--GB--BCD, Red);
+	stick(BCD--GB--GC--BDC, Red);
+	stick(BD--BDG--GC--BDC, Red);
+	stick(BDG--GC--GD--CDG, Red);
+	stick(CD--CDG--GD--CDC, Red);
+	stick(CDC--GD--GE--CCD, Red);
+	stick(CC--CCG--GE--CCD, Red);
+	stick(CCG--GE--GA--EHC, Red);
+
+	stick(HA--HB--HC--HD--HE, Red);
+	stick(EG--EGB--HA--EGD, Red);
+	stick(EGD--HA--HB--DDG, Red);
+	stick(DD--DDG--HB--DDE, Red);
+	stick(DDE--HB--HC--DED, Red);
+	stick(DE--DED--HC--DEG, Red);
+	stick(DEG--HC--HD--BFG, Red);
+	stick(BF--BFG--HD--BFA, Red);
+	stick(BFA--HD--HE--BAF, Red);
+	stick(BA--BAF--HE--BAG, Red);
+	stick(BAG--HE--HA--EGB, Red);
+
+	stick(IA--IB--IC--ID--IE, Red);
+	stick(EF--EFC--IA--EFD, Red);
+	stick(EFC--IA--IB--CAG, Red);
+	stick(CA--CAG--IB--CAF, Red);
+	stick(CAF--IB--IC--CFA, Red);
+	stick(CF--CFA--IC--CFG, Red, p);
+	stick(CFG--IC--ID--DAG, Red, p);
+	stick(DA--DAG--ID--DAB, Red, p);
+	stick(DAB--ID--IE--DBA, Red);
+	stick(DB--DBA--IE--DBG, Red);
+	stick(DBG--IE--IA--EFD, Red);
+
+	stick(BAH--BBH--BCH--BDH--BEH--BFH, Yellow);
+	stick(BA--BAF--BAH--BAB, Yellow);
+	stick(BAB--BAH--BBH--BBA, Yellow);
+	stick(BB--BBA--BBH--BBC, Yellow);
+	stick(BBC--BBH--BCH--BCB, Yellow);
+	stick(BC--BCB--BCH--BCD, Yellow);
+	stick(BCD--BCH--BDH--BDC, Yellow);
+	stick(BD--BDC--BDH--BDE, Yellow);
+	stick(BDE--BDH--BEH--BED, Yellow);
+	stick(BE--BED--BEH--BEF, Yellow);
+	stick(BEF--BEH--BFH--BFE, Yellow);
+	stick(BF--BFE--BFH--BFA, Yellow);
+	stick(BFA--BFH--BAH--BAF, Yellow);
+
+	stick(JA--JB--JC--JD--JE, Yellow, p);
+	stick(EE--EEC--JA--EED, Yellow, p);
+	stick(EED--JA--JB--DFG, Yellow, p);
+	stick(DF--DFG--JB--DFA, Yellow, p);
+	stick(DFA--JB--JC--DAF, Yellow, p);
+	stick(DA--DAF--JC--DAG, Yellow, p);
+	stick(DAG--JC--JD--CFG, Yellow, p);
+	stick(CF--CFG--JD--CFE, Yellow, p);
+	stick(CFE--JD--JE--CEF, Yellow, p);
+	stick(CE--CEF--JE--CEG, Yellow, p);
+	stick(CEG--JE--JA--EEC, Yellow, p);
+
+	stick(KA--KB--KC--KD--KE, Yellow);
+	stick(EH--EHA--KA--EHC, Yellow);
+	stick(EHC--KA--KB--CCG, Yellow);
+	stick(CC--CCG--KB--CCB, Yellow);
+	stick(CCB--KB--KC--CBC, Yellow);
+	stick(CB--CBC--KC--CBG, Yellow);
+	stick(CBG--KC--KD--ACG, Yellow);
+	stick(AC--ACG--KD--ACB, Yellow, t);
+	stick(ACB--KD--KE--ABC, Yellow, t);
+	stick(AB--ABC--KE--ABG, Yellow, t);
+	stick(ABG--KE--KA--EHA, Yellow);
+
+	stick(LA--LB--LC--LD--LE, Yellow);
+	stick(EG--EGA--LA--EGD, Yellow);
+	stick(EGA--LA--LB--AFG, Yellow);
+	stick(AF--AFG--LB--AFE, Yellow, t);
+	stick(AFE--LB--LC--AEF, Yellow, t);
+	stick(AE--AEF--LC--AEG, Yellow, t);
+	stick(AEG--LC--LD--DCG, Yellow);
+	stick(DC--DCG--LD--DCD, Yellow);
+	stick(DCD--LD--LE--DDC, Yellow);
+	stick(DD--DDC--LE--DDG, Yellow);
+	stick(DDG--LE--LA--EGD, Yellow);
+
+	stick(CAH--CBH--CCH--CDH--CEH--CFH, Green);
+	stick(CA--CAB--CAH--CAF, Green);
+	stick(CAB--CAH--CBH--CBA, Green);
+	stick(CB--CBA--CBH--CBC, Green);
+	stick(CBC--CBH--CCH--CCB, Green);
+	stick(CC--CCB--CCH--CCD, Green);
+	stick(CCD--CCH--CDH--CDC, Green);
+	stick(CD--CDC--CDH--CDE, Green);
+	stick(CDE--CDH--CEH--CED, Green);
+	stick(CE--CED--CEH--CEF, Green, p);
+	stick(CEF--CEH--CFH--CFE, Green, p);
+	stick(CF--CFE--CFH--CFA, Green, p);
+	stick(CFA--CFH--CAH--CAF, Green);
+
+	stick(MA--MB--MC--MD--ME, Green);
+	stick(EE--EED--MA--EEB, Green, p);
+	stick(EEB--MA--MB--BEG, Green);
+	stick(BE--BEG--MB--BEF, Green);
+	stick(BEF--MB--MC--BFE, Green);
+	stick(BF--BFE--MC--BFG, Green);
+	stick(BFG--MC--MD--DEG, Green);
+	stick(DE--DEG--MD--DEF, Green);
+	stick(DEF--MD--ME--DFE, Green);
+	stick(DF--DFE--ME--DFG, Green, p);
+	stick(DFG--ME--MA--EED, Green, p);
+
+	stick(NA--NB--NC--ND--NE, Green);
+	stick(EH--EHB--NA--EHA, Green);
+	stick(EHA--NA--NB--ABG, Green);
+	stick(AB--ABG--NB--ABA, Green, t);
+	stick(ABA--NB--NC--AAB, Green, t);
+	stick(AA--AAB--NC--AAG, Green, t);
+	stick(AAG--NC--ND--BBG, Green);
+	stick(BB--BBG--ND--BBC, Green);
+	stick(BBC--ND--NE--BCB, Green);
+	stick(BC--BCB--NE--BCG, Green);
+	stick(BCG--NE--NA--EHB, Green);
+
+	stick(OA--OB--OC--OD--OE, Green);
+	stick(EF--EFA--OA--EFD, Green);
+	stick(EFD--OA--OB--DBG, Green);
+	stick(DB--DBG--OB--DBC, Green);
+	stick(DBC--OB--OC--DCB, Green);
+	stick(DC--DCB--OC--DCG, Green);
+	stick(DCG--OC--OD--AEG, Green);
+	stick(AE--AEG--OD--AED, Green, t);
+	stick(AED--OD--OE--ADE, Green, t);
+	stick(AD--ADE--OE--ADG, Green, t);
+	stick(ADG--OE--OA--EFA, Green);
+
+	stick(DAH--DBH--DCH--DDH--DEH--DFH, Blue);
+	stick(DA--DAB--DAH--DAF, Blue, p);
+	stick(DAH--DAB--DBA--DBH, Blue);
+	stick(DB--DBA--DBH--DBC, Blue);
+	stick(DBC--DBH--DCH--DCB, Blue);
+	stick(DC--DCB--DCH--DCD, Blue);
+	stick(DCD--DCH--DDH--DDC, Blue);
+	stick(DD--DDC--DDH--DDE, Blue);
+	stick(DDH--DDE--DED--DEH, Blue);
+	stick(DE--DED--DEH--DEF, Blue);
+	stick(DEH--DEF--DFE--DFH, Blue);
+	stick(DF--DFE--DFH--DFA, Blue, p);
+	stick(DFH--DFA--DAF--DAH, Blue, p);
+
+	stick(PA--PB--PC--PD--PE, Blue);
+	stick(EE--EEB--PA--EEC, Blue, p);
+	stick(EEC--PA--PB--CEG, Blue, p);
+	stick(CE--CEG--PB--CED, Blue, p);
+	stick(CED--PB--PC--CDE, Blue);
+	stick(CD--CDE--PC--CDG, Blue);
+	stick(CDG--PC--PD--BDG, Blue);
+	stick(BD--BDG--PD--BDE, Blue);
+	stick(BDE--PD--PE--BED, Blue);
+	stick(BE--BED--PE--BEG, Blue);
+	stick(BEG--PE--PA--EEB, Blue);
+
+	stick(QA--QB--QC--QD--QE, Blue);
+	stick(EG--EGA--QA--EGB, Blue);
+	stick(EGB--QA--QB--BAG, Blue);
+	stick(BA--BAG--QB--BAB, Blue);
+	stick(BAB--QB--QC--BBA, Blue);
+	stick(BB--BBA--QC--BBG, Blue);
+	stick(BBG--QC--QD--AAG, Blue);
+	stick(AA--AAG--QD--AAF, Blue, t);
+	stick(AAF--QD--QE--AFA, Blue, t);
+	stick(AF--AFA--QE--AFG, Blue, t);
+	stick(AFG--QE--QA--EGA, Blue);
+
+	stick(RA--RB--RC--RD--RE, Blue);
+	stick(EF--EFA--RA--EFC, Blue);
+	stick(EFA--RA--RB--ADG, Blue);
+	stick(AD--ADG--RB--ADC, Blue, t);
+	stick(ADC--RB--RC--ACD, Blue, t);
+	stick(AC--ACD--RC--ACG, Blue, t);
+	stick(ACG--RC--RD--CBG, Blue);
+	stick(CB--CBG--RD--CBA, Blue);
+	stick(CBA--RD--RE--CAB, Blue);
+	stick(CA--CAB--RE--CAG, Blue);
+	stick(CAG--RE--RA--EFC, Blue);
+
+	polygon(KD--ACG--RC--RC+KD-ACG, Background);
+	polygon(RC+KD-ACG--RC--RB--RB+OE-ADG, Background);
+	polygon(RB--ADG--OE--RB+OE-ADG, Background);
+	polygon(RB+OE-ADG--OE--OD--OD+LC-AEG, Background);
+	polygon(OD--AEG--LC--OD+LC-AEG, Background);
+	polygon(OD+LC-AEG--LC--LB--LB+QE-AFG, Background);
+	polygon(LB--AFG--QE--LB+QE-AFG, Background);
+	polygon(LB+QE-AFG--QE--QD--QD+NC-AAG, Background);
+	polygon(QD--AAG--NC--QD+NC-AAG, Background);
+	polygon(QD+NC-AAG--NC--NB--NB+KE-ABG, Background);
+	polygon(NB--ABG--KE--NB+KE-ABG, Background);
+	polygon(NB+KE-ABG--KE--KD--RC+KD-ACG, Background);
+	polygon(KD--ACG--RC--RC+KD-ACG, Background, t);
+	polygon(RC+KD-ACG--RC--RB--RB+OE-ADG, Background, t);
+	polygon(RB--ADG--OE--RB+OE-ADG, Background, t);
+	polygon(RB+OE-ADG--OE--OD--OD+LC-AEG, Background, t);
+	polygon(OD--AEG--LC--OD+LC-AEG, Background, t);
+	polygon(OD+LC-AEG--LC--LB--LB+QE-AFG, Background, t);
+	polygon(LB--AFG--QE--LB+QE-AFG, Background, t);
+	polygon(LB+QE-AFG--QE--QD--QD+NC-AAG, Background, t);
+	polygon(QD--AAG--NC--QD+NC-AAG, Background, t);
+	polygon(QD+NC-AAG--NC--NB--NB+KE-ABG, Background, t);
+	polygon(NB--ABG--KE--NB+KE-ABG, Background, t);
+	polygon(NB+KE-ABG--KE--KD--RC+KD-ACG, Background, t);
+
+	polygon(IC--CFA--CFH--IC+CFH-CFA, Background);
+	polygon(IC+CFH-CFA--CFH--CEH--CEH+PB-CED, Background);
+	polygon(CEH--CED--PB--CEH+PB-CED, Background);
+	polygon(CEH+PB-CED--PB--PA--PA+MA-EEB, Background);
+	polygon(PA--EEB--MA--PA+MA-EEB, Background);
+	polygon(PA+MA-EEB--MA--ME--ME+DFH-DFE, Background);
+	polygon(ME--DFE--DFH--ME+DFH-DFE, Background);
+	polygon(ME+DFH-DFE--DFH--DAH--DAH+ID-DAB, Background);
+	polygon(DAH--DAB--ID--DAH+ID-DAB, Background);
+	polygon(DAH+ID-DAB--ID--IC--IC+CFH-CFA, Background);
+	polygon(IC--CFA--CFH--IC+CFH-CFA, Background, p);
+	polygon(IC+CFH-CFA--CFH--CEH--CEH+PB-CED, Background, p);
+	polygon(CEH--CED--PB--CEH+PB-CED, Background, p);
+	polygon(CEH+PB-CED--PB--PA--PA+MA-EEB, Background, p);
+	polygon(PA--EEB--MA--PA+MA-EEB, Background, p);
+	polygon(PA+MA-EEB--MA--ME--ME+DFH-DFE, Background, p);
+	polygon(ME--DFE--DFH--ME+DFH-DFE, Background, p);
+	polygon(ME+DFH-DFE--DFH--DAH--DAH+ID-DAB, Background, p);
+	polygon(DAH--DAB--ID--DAH+ID-DAB, Background, p);
+	polygon(DAH+ID-DAB--ID--IC--IC+CFH-CFA, Background, p);
+}

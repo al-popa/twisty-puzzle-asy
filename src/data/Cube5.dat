@@ -1,0 +1,359 @@
+triple AA, AB, AC, AD, AE, AF, AG, AH,
+
+BA5B, BA5C, BA5E, BB5A, BB5D, BB5F, BC5A, BC5D,
+BC5G, BD5B, BD5C, BD5H, BE5A, BE5F, BE5G, BF5B,
+BF5E, BF5H, BG5C, BG5E, BG5H, BH5D, BH5F, BH5G,
+
+BA5B2, BA5C2, BA5E2, BB5A2, BB5D2, BB5F2, BC5A2, BC5D2,
+BC5G2, BD5B2, BD5C2, BD5H2, BE5A2, BE5F2, BE5G2, BF5B2,
+BF5E2, BF5H2, BG5C2, BG5E2, BG5H2, BH5D2, BH5F2, BH5G2,
+
+CA5BC, CA5BE, CA5CE, CB5AD, CB5AF, CB5DF, CC5AD, CC5AG,
+CC5DG, CD5BC, CD5BH, CD5CH, CE5AF, CE5AG, CE5FG, CF5BE,
+CF5BH, CF5EH, CG5CE, CG5CH, CG5EH, CH5DF, CH5DG, CH5FG,
+
+CA5B2C, CA5B2E, CA5C2B, CA5C2E, CA5E2B, CA5E2C, CB5A2D, CB5A2F,
+CB5D2A, CB5D2F, CB5F2A, CB5F2D, CC5A2D, CC5A2G, CC5D2A, CC5D2G,
+CC5G2A, CC5G2D, CD5B2C, CD5B2H, CD5C2B, CD5C2H, CD5H2B, CD5H2C,
+CE5A2F, CE5A2G, CE5F2A, CE5F2G, CE5G2A, CE5G2F, CF5B2E, CF5B2H,
+CF5E2B, CF5E2H, CF5H2B, CF5H2E, CG5C2E, CG5C2H, CG5E2C, CG5E2H,
+CG5H2C, CG5H2E, CH5D2F, CH5D2G, CH5F2D, CH5F2G, CH5G2D, CH5G2F,
+
+CA5BC2, CA5BE2, CA5CE2, CB5AD2, CB5AF2, CB5DF2, CC5AD2, CC5AG2,
+CC5DG2, CD5BC2, CD5BH2, CD5CH2, CE5AF2, CE5AG2, CE5FG2, CF5BE2,
+CF5BH2, CF5EH2, CG5CE2, CG5CH2, CG5EH2, CH5DF2, CH5DG2, CH5FG2;
+
+void init()
+{
+	AA = X+Y+Z;
+	AB = X+Y-Z;
+	AC = X-Y+Z;
+	AD = X-Y-Z;
+	AE = -X+Y+Z;
+	AF = -X+Y-Z;
+	AG = -X-Y+Z;
+	AH = -X-Y-Z;
+
+	BA5B = (4*AA+AB)/5;
+	BA5C = (4*AA+AC)/5;
+	BA5E = (4*AA+AE)/5;
+	BB5A = (4*AB+AA)/5;
+	BB5D = (4*AB+AD)/5;
+	BB5F = (4*AB+AF)/5;
+	BC5A = (4*AC+AA)/5;
+	BC5D = (4*AC+AD)/5;
+	BC5G = (4*AC+AG)/5;
+	BD5B = (4*AD+AB)/5;
+	BD5C = (4*AD+AC)/5;
+	BD5H = (4*AD+AH)/5;
+	BE5A = (4*AE+AA)/5;
+	BE5F = (4*AE+AF)/5;
+	BE5G = (4*AE+AG)/5;
+	BF5B = (4*AF+AB)/5;
+	BF5E = (4*AF+AE)/5;
+	BF5H = (4*AF+AH)/5;
+	BG5C = (4*AG+AC)/5;
+	BG5E = (4*AG+AE)/5;
+	BG5H = (4*AG+AH)/5;
+	BH5D = (4*AH+AD)/5;
+	BH5F = (4*AH+AF)/5;
+	BH5G = (4*AH+AG)/5;
+
+	BA5B2 = (3*AA+2*AB)/5;
+	BA5C2 = (3*AA+2*AC)/5;
+	BA5E2 = (3*AA+2*AE)/5;
+	BB5A2 = (3*AB+2*AA)/5;
+	BB5D2 = (3*AB+2*AD)/5;
+	BB5F2 = (3*AB+2*AF)/5;
+	BC5A2 = (3*AC+2*AA)/5;
+	BC5D2 = (3*AC+2*AD)/5;
+	BC5G2 = (3*AC+2*AG)/5;
+	BD5B2 = (3*AD+2*AB)/5;
+	BD5C2 = (3*AD+2*AC)/5;
+	BD5H2 = (3*AD+2*AH)/5;
+	BE5A2 = (3*AE+2*AA)/5;
+	BE5F2 = (3*AE+2*AF)/5;
+	BE5G2 = (3*AE+2*AG)/5;
+	BF5B2 = (3*AF+2*AB)/5;
+	BF5E2 = (3*AF+2*AE)/5;
+	BF5H2 = (3*AF+2*AH)/5;
+	BG5C2 = (3*AG+2*AC)/5;
+	BG5E2 = (3*AG+2*AE)/5;
+	BG5H2 = (3*AG+2*AH)/5;
+	BH5D2 = (3*AH+2*AD)/5;
+	BH5F2 = (3*AH+2*AF)/5;
+	BH5G2 = (3*AH+2*AG)/5;
+
+	CA5BC = (3*AA+AB+AC)/5;
+	CA5BE = (3*AA+AB+AE)/5;
+	CA5CE = (3*AA+AC+AE)/5;
+	CB5AD = (3*AB+AA+AD)/5;
+	CB5AF = (3*AB+AA+AF)/5;
+	CB5DF = (3*AB+AD+AF)/5;
+	CC5AD = (3*AC+AA+AD)/5;
+	CC5AG = (3*AC+AA+AG)/5;
+	CC5DG = (3*AC+AD+AG)/5;
+	CD5BC = (3*AD+AB+AC)/5;
+	CD5BH = (3*AD+AB+AH)/5;
+	CD5CH = (3*AD+AC+AH)/5;
+	CE5AF = (3*AE+AA+AF)/5;
+	CE5AG = (3*AE+AA+AG)/5;
+	CE5FG = (3*AE+AF+AG)/5;
+	CF5BE = (3*AF+AB+AE)/5;
+	CF5BH = (3*AF+AB+AH)/5;
+	CF5EH = (3*AF+AE+AH)/5;
+	CG5CE = (3*AG+AC+AE)/5;
+	CG5CH = (3*AG+AC+AH)/5;
+	CG5EH = (3*AG+AE+AH)/5;
+	CH5DF = (3*AH+AD+AF)/5;
+	CH5DG = (3*AH+AD+AG)/5;
+	CH5FG = (3*AH+AF+AG)/5;
+
+	CA5B2C = (2*AA+2*AB+AC)/5;
+	CA5B2E = (2*AA+2*AB+AE)/5;
+	CA5C2B = (2*AA+2*AC+AB)/5;
+	CA5C2E = (2*AA+2*AC+AE)/5;
+	CA5E2B = (2*AA+2*AE+AB)/5;
+	CA5E2C = (2*AA+2*AE+AC)/5;
+	CB5A2D = (2*AB+2*AA+AD)/5;
+	CB5A2F = (2*AB+2*AA+AF)/5;
+	CB5D2A = (2*AB+2*AD+AA)/5;
+	CB5D2F = (2*AB+2*AD+AF)/5;
+	CB5F2A = (2*AB+2*AF+AA)/5;
+	CB5F2D = (2*AB+2*AF+AD)/5;
+	CC5A2D = (2*AC+2*AA+AD)/5;
+	CC5A2G = (2*AC+2*AA+AG)/5;
+	CC5D2A = (2*AC+2*AD+AA)/5;
+	CC5D2G = (2*AC+2*AD+AG)/5;
+	CC5G2A = (2*AC+2*AG+AA)/5;
+	CC5G2D = (2*AC+2*AG+AD)/5;
+	CD5B2C = (2*AD+2*AB+AC)/5;
+	CD5B2H = (2*AD+2*AB+AH)/5;
+	CD5C2B = (2*AD+2*AC+AB)/5;
+	CD5C2H = (2*AD+2*AC+AH)/5;
+	CD5H2B = (2*AD+2*AH+AB)/5;
+	CD5H2C = (2*AD+2*AH+AC)/5;
+	CE5A2F = (2*AE+2*AA+AF)/5;
+	CE5A2G = (2*AE+2*AA+AG)/5;
+	CE5F2A = (2*AE+2*AF+AA)/5;
+	CE5F2G = (2*AE+2*AF+AG)/5;
+	CE5G2A = (2*AE+2*AG+AA)/5;
+	CE5G2F = (2*AE+2*AG+AF)/5;
+	CF5B2E = (2*AF+2*AB+AE)/5;
+	CF5B2H = (2*AF+2*AB+AH)/5;
+	CF5E2B = (2*AF+2*AE+AB)/5;
+	CF5E2H = (2*AF+2*AE+AH)/5;
+	CF5H2B = (2*AF+2*AH+AB)/5;
+	CF5H2E = (2*AF+2*AH+AE)/5;
+	CG5C2E = (2*AG+2*AC+AE)/5;
+	CG5C2H = (2*AG+2*AC+AH)/5;
+	CG5E2C = (2*AG+2*AE+AC)/5;
+	CG5E2H = (2*AG+2*AE+AH)/5;
+	CG5H2C = (2*AG+2*AH+AC)/5;
+	CG5H2E = (2*AG+2*AH+AE)/5;
+	CH5D2F = (2*AH+2*AD+AF)/5;
+	CH5D2G = (2*AH+2*AD+AG)/5;
+	CH5F2D = (2*AH+2*AF+AD)/5;
+	CH5F2G = (2*AH+2*AF+AG)/5;
+	CH5G2D = (2*AH+2*AG+AD)/5;
+	CH5G2F = (2*AH+2*AG+AF)/5;
+
+	CA5BC2 = (AA+2*AB+2*AC)/5;
+	CA5BE2 = (AA+2*AB+2*AE)/5;
+	CA5CE2 = (AA+2*AC+2*AE)/5;
+	CB5AD2 = (AB+2*AA+2*AD)/5;
+	CB5AF2 = (AB+2*AA+2*AF)/5;
+	CB5DF2 = (AB+2*AD+2*AF)/5;
+	CC5AD2 = (AC+2*AA+2*AD)/5;
+	CC5AG2 = (AC+2*AA+2*AG)/5;
+	CC5DG2 = (AC+2*AD+2*AG)/5;
+	CD5BC2 = (AD+2*AB+2*AC)/5;
+	CD5BH2 = (AD+2*AB+2*AH)/5;
+	CD5CH2 = (AD+2*AC+2*AH)/5;
+	CE5AF2 = (AE+2*AA+2*AF)/5;
+	CE5AG2 = (AE+2*AA+2*AG)/5;
+	CE5FG2 = (AE+2*AF+2*AG)/5;
+	CF5BE2 = (AF+2*AB+2*AE)/5;
+	CF5BH2 = (AF+2*AB+2*AH)/5;
+	CF5EH2 = (AF+2*AE+2*AH)/5;
+	CG5CE2 = (AG+2*AC+2*AE)/5;
+	CG5CH2 = (AG+2*AC+2*AH)/5;
+	CG5EH2 = (AG+2*AE+2*AH)/5;
+	CH5DF2 = (AH+2*AD+2*AF)/5;
+	CH5DG2 = (AH+2*AD+2*AG)/5;
+	CH5FG2 = (AH+2*AF+2*AG)/5;
+}
+
+void Cube5()
+{
+	init();
+	transform3 t = rotate(two, -Z);
+	transform3 p = rotate(one, -Z);
+
+	//stick(AA--AB--AD--AC, Blue);
+	stick(AA--BA5B--CA5BC--BA5C, Blue, t);
+	stick(AB--BB5A--CB5AD--BB5D, Blue);
+	stick(AC--BC5A--CC5AD--BC5D, Blue, t);
+	stick(AD--BD5B--CD5BC--BD5C, Blue);
+	stick(BA5B--BA5B2--CA5B2C--CA5BC, Blue, p);
+	stick(BA5C--BA5C2--CA5C2B--CA5BC, Blue, t);
+	stick(BB5A--BB5A2--CB5A2D--CB5AD, Blue);
+	stick(BB5D--BB5D2--CB5D2A--CB5AD, Blue);
+	stick(BC5A--BC5A2--CC5A2D--CC5AD, Blue, t);
+	stick(BC5D--BC5D2--CC5D2A--CC5AD, Blue, p);
+	stick(BD5B--BD5B2--CD5B2C--CD5BC, Blue);
+	stick(BD5C--BD5C2--CD5C2B--CD5BC, Blue);
+	stick(CA5BC--CA5B2C--CA5BC2--CA5C2B, Blue, p);
+	stick(CB5AD--CB5A2D--CB5AD2--CB5D2A, Blue);
+	stick(CC5AD--CC5A2D--CC5AD2--CC5D2A, Blue, p);
+	stick(CD5BC--CD5B2C--CD5BC2--CD5C2B, Blue);
+	stick(BA5B2--CA5B2C--CB5A2D--BB5A2, Blue);
+	stick(BA5C2--CA5C2B--CC5A2D--BC5A2, Blue, t);
+	stick(BB5D2--CB5D2A--CD5B2C--BD5B2, Blue);
+	stick(BC5D2--CC5D2A--CD5C2B--BD5C2, Blue);
+	stick(CA5B2C--CA5BC2--CB5AD2--CB5A2D, Blue);
+	stick(CA5C2B--CA5BC2--CC5AD2--CC5A2D, Blue, p);
+	stick(CB5D2A--CB5AD2--CD5BC2--CD5B2C, Blue);
+	stick(CC5D2A--CC5AD2--CD5BC2--CD5C2B, Blue);
+	stick(CA5BC2--CB5AD2--CD5BC2--CC5AD2, Blue);
+
+	//stick(AA--AB--AF--AE, Orange);
+	stick(AA--BA5B--CA5BE--BA5E, Orange, t);
+	stick(AB--BB5A--CB5AF--BB5F, Orange);
+	stick(AE--BE5A--CE5AF--BE5F, Orange, t);
+	stick(AF--BF5B--CF5BE--BF5E, Orange);
+	stick(BA5B--BA5B2--CA5B2E--CA5BE, Orange, p);
+	stick(BA5E--BA5E2--CA5E2B--CA5BE, Orange, t);
+	stick(BB5A--BB5A2--CB5A2F--CB5AF, Orange);
+	stick(BB5F--BB5F2--CB5F2A--CB5AF, Orange);
+	stick(BE5A--BE5A2--CE5A2F--CE5AF, Orange, t);
+	stick(BE5F--BE5F2--CE5F2A--CE5AF, Orange, p);
+	stick(BF5B--BF5B2--CF5B2E--CF5BE, Orange);
+	stick(BF5E--BF5E2--CF5E2B--CF5BE, Orange);
+	stick(CA5BE--CA5B2E--CA5BE2--CA5E2B, Orange, p);
+	stick(CB5AF--CB5A2F--CB5AF2--CB5F2A, Orange);
+	stick(CE5AF--CE5A2F--CE5AF2--CE5F2A, Orange, p);
+	stick(CF5BE--CF5B2E--CF5BE2--CF5E2B, Orange);
+	stick(BA5B2--CA5B2E--CB5A2F--BB5A2, Orange);
+	stick(BA5E2--CA5E2B--CE5A2F--BE5A2, Orange, t);
+	stick(BB5F2--CB5F2A--CF5B2E--BF5B2, Orange);
+	stick(BE5F2--CE5F2A--CF5E2B--BF5E2, Orange);
+	stick(CA5B2E--CA5BE2--CB5AF2--CB5A2F, Orange);
+	stick(CA5E2B--CA5BE2--CE5AF2--CE5A2F, Orange, p);
+	stick(CB5F2A--CB5AF2--CF5BE2--CF5B2E, Orange);
+	stick(CE5F2A--CE5AF2--CF5BE2--CF5E2B, Orange);
+	stick(CA5BE2--CB5AF2--CF5BE2--CE5AF2, Orange);
+
+	//stick(AA--AC--AG--AE, White);
+	stick(AA--BA5C--CA5CE--BA5E, White, t);
+	stick(AC--BC5A--CC5AG--BC5G, White, t);
+	stick(AE--BE5A--CE5AG--BE5G, White, t);
+	stick(AG--BG5C--CG5CE--BG5E, White, t);
+	stick(BA5C--BA5C2--CA5C2E--CA5CE, White, t);
+	stick(BA5E--BA5E2--CA5E2C--CA5CE, White, t);
+	stick(BC5A--BC5A2--CC5A2G--CC5AG, White, t);
+	stick(BC5G--BC5G2--CC5G2A--CC5AG, White, t);
+	stick(BE5A--BE5A2--CE5A2G--CE5AG, White, t);
+	stick(BE5G--BE5G2--CE5G2A--CE5AG, White, t);
+	stick(BG5C--BG5C2--CG5C2E--CG5CE, White, t);
+	stick(BG5E--BG5E2--CG5E2C--CG5CE, White, t);
+	stick(CA5CE--CA5C2E--CA5CE2--CA5E2C, White, t);
+	stick(CC5AG--CC5A2G--CC5AG2--CC5G2A, White, t);
+	stick(CE5AG--CE5A2G--CE5AG2--CE5G2A, White, t);
+	stick(CG5CE--CG5C2E--CG5CE2--CG5E2C, White, t);
+	stick(BA5C2--CA5C2E--CC5A2G--BC5A2, White, t);
+	stick(BA5E2--CA5E2C--CE5A2G--BE5A2, White, t);
+	stick(BC5G2--CC5G2A--CG5C2E--BG5C2, White, t);
+	stick(BE5G2--CE5G2A--CG5E2C--BG5E2, White, t);
+	stick(CA5C2E--CA5CE2--CC5AG2--CC5A2G, White, t);
+	stick(CA5E2C--CA5CE2--CE5AG2--CE5A2G, White, t);
+	stick(CC5G2A--CC5AG2--CG5CE2--CG5C2E, White, t);
+	stick(CE5G2A--CE5AG2--CG5CE2--CG5E2C, White, t);
+	stick(CA5CE2--CC5AG2--CG5CE2--CE5AG2, White, t);
+
+	//stick(AB--AD--AH--AF, Yellow);
+	stick(AB--BB5D--CB5DF--BB5F, Yellow);
+	stick(AD--BD5B--CD5BH--BD5H, Yellow);
+	stick(AF--BF5B--CF5BH--BF5H, Yellow);
+	stick(AH--BH5D--CH5DF--BH5F, Yellow);
+	stick(BB5D--BB5D2--CB5D2F--CB5DF, Yellow);
+	stick(BB5F--BB5F2--CB5F2D--CB5DF, Yellow);
+	stick(BD5B--BD5B2--CD5B2H--CD5BH, Yellow);
+	stick(BD5H--BD5H2--CD5H2B--CD5BH, Yellow);
+	stick(BF5B--BF5B2--CF5B2H--CF5BH, Yellow);
+	stick(BF5H--BF5H2--CF5H2B--CF5BH, Yellow);
+	stick(BH5D--BH5D2--CH5D2F--CH5DF, Yellow);
+	stick(BH5F--BH5F2--CH5F2D--CH5DF, Yellow);
+	stick(CB5DF--CB5D2F--CB5DF2--CB5F2D, Yellow);
+	stick(CD5BH--CD5B2H--CD5BH2--CD5H2B, Yellow);
+	stick(CF5BH--CF5B2H--CF5BH2--CF5H2B, Yellow);
+	stick(CH5DF--CH5D2F--CH5DF2--CH5F2D, Yellow);
+	stick(BB5D2--CB5D2F--CD5B2H--BD5B2, Yellow);
+	stick(BB5F2--CB5F2D--CF5B2H--BF5B2, Yellow);
+	stick(BD5H2--CD5H2B--CH5D2F--BH5D2, Yellow);
+	stick(BF5H2--CF5H2B--CH5F2D--BH5F2, Yellow);
+	stick(CB5D2F--CB5DF2--CD5BH2--CD5B2H, Yellow);
+	stick(CB5F2D--CB5DF2--CF5BH2--CF5B2H, Yellow);
+	stick(CD5H2B--CD5BH2--CH5DF2--CH5D2F, Yellow);
+	stick(CF5H2B--CF5BH2--CH5DF2--CH5F2D, Yellow);
+	stick(CB5DF2--CD5BH2--CH5DF2--CF5BH2, Yellow);
+
+	//stick(AC--AD--AH--AG, Red);
+	stick(AC--BC5D--CC5DG--BC5G, Red, t);
+	stick(AD--BD5C--CD5CH--BD5H, Red);
+	stick(AG--BG5C--CG5CH--BG5H, Red, t);
+	stick(AH--BH5D--CH5DG--BH5G, Red);
+	stick(BC5D--BC5D2--CC5D2G--CC5DG, Red, p);
+	stick(BC5G--BC5G2--CC5G2D--CC5DG, Red, t);
+	stick(BD5C--BD5C2--CD5C2H--CD5CH, Red);
+	stick(BD5H--BD5H2--CD5H2C--CD5CH, Red);
+	stick(BG5C--BG5C2--CG5C2H--CG5CH, Red, t);
+	stick(BG5H--BG5H2--CG5H2C--CG5CH, Red, p);
+	stick(BH5D--BH5D2--CH5D2G--CH5DG, Red);
+	stick(BH5G--BH5G2--CH5G2D--CH5DG, Red);
+	stick(CC5DG--CC5D2G--CC5DG2--CC5G2D, Red, p);
+	stick(CD5CH--CD5C2H--CD5CH2--CD5H2C, Red);
+	stick(CG5CH--CG5C2H--CG5CH2--CG5H2C, Red, p);
+	stick(CH5DG--CH5D2G--CH5DG2--CH5G2D, Red);
+	stick(BC5D2--CC5D2G--CD5C2H--BD5C2, Red);
+	stick(BC5G2--CC5G2D--CG5C2H--BG5C2, Red, t);
+	stick(BD5H2--CD5H2C--CH5D2G--BH5D2, Red);
+	stick(BG5H2--CG5H2C--CH5G2D--BH5G2, Red);
+	stick(CC5D2G--CC5DG2--CD5CH2--CD5C2H, Red);
+	stick(CC5G2D--CC5DG2--CG5CH2--CG5C2H, Red, p);
+	stick(CD5H2C--CD5CH2--CH5DG2--CH5D2G, Red);
+	stick(CG5H2C--CG5CH2--CH5DG2--CH5G2D, Red);
+	stick(CC5DG2--CD5CH2--CH5DG2--CG5CH2, Red);
+
+	//stick(AE--AF--AH--AG, Green);
+	stick(AE--BE5F--CE5FG--BE5G, Green, t);
+	stick(AF--BF5E--CF5EH--BF5H, Green);
+	stick(AG--BG5E--CG5EH--BG5H, Green, t);
+	stick(AH--BH5F--CH5FG--BH5G, Green);
+	stick(BE5F--BE5F2--CE5F2G--CE5FG, Green, p);
+	stick(BE5G--BE5G2--CE5G2F--CE5FG, Green, t);
+	stick(BF5E--BF5E2--CF5E2H--CF5EH, Green);
+	stick(BF5H--BF5H2--CF5H2E--CF5EH, Green);
+	stick(BG5E--BG5E2--CG5E2H--CG5EH, Green, t);
+	stick(BG5H--BG5H2--CG5H2E--CG5EH, Green, p);
+	stick(BH5F--BH5F2--CH5F2G--CH5FG, Green);
+	stick(BH5G--BH5G2--CH5G2F--CH5FG, Green);
+	stick(CE5FG--CE5F2G--CE5FG2--CE5G2F, Green, p);
+	stick(CF5EH--CF5E2H--CF5EH2--CF5H2E, Green);
+	stick(CG5EH--CG5E2H--CG5EH2--CG5H2E, Green, p);
+	stick(CH5FG--CH5F2G--CH5FG2--CH5G2F, Green);
+	stick(BE5F2--CE5F2G--CF5E2H--BF5E2, Green);
+	stick(BE5G2--CE5G2F--CG5E2H--BG5E2, Green, t);
+	stick(BF5H2--CF5H2E--CH5F2G--BH5F2, Green);
+	stick(BG5H2--CG5H2E--CH5G2F--BH5G2, Green);
+	stick(CE5F2G--CE5FG2--CF5EH2--CF5E2H, Green);
+	stick(CE5G2F--CE5FG2--CG5EH2--CG5E2H, Green, p);
+	stick(CF5H2E--CF5EH2--CH5FG2--CH5F2G, Green);
+	stick(CG5H2E--CG5EH2--CH5FG2--CH5G2F, Green);
+	stick(CE5FG2--CF5EH2--CH5FG2--CG5EH2, Green);
+
+	polygon(BA5B2--BC5D2--BG5H2--BE5F2, Background);
+	polygon(BA5B2--BC5D2--BG5H2--BE5F2, Background, p);
+	polygon(BA5B--BC5D--BG5H--BE5F, Background, p);
+	polygon(BA5B--BC5D--BG5H--BE5F, Background, t);
+}

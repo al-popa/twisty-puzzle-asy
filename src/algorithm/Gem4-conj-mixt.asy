@@ -1,0 +1,32 @@
+include "algorithm.asyhdr";
+include "../data/Gem34.dat";
+
+setView(-55, -30, 0);
+
+figureBegin();
+Gem4();
+highline(JA--JB--BI);
+highline(JE--JF--EF);
+highline(GC--GD--CH);
+makeChange(JA--JB--BI, GC--GD--CH, 5*(-X-Y+Z)/6);
+makeChange(GC--GD--CH, JE--JF--EF, 5*ED/4);
+makeChange(JE--JF--EF, JA--JB--BI, 3*(-X+Y+Z)/5);
+figureLine();
+Gem4();
+makeMove(5*(-X+Y+Z)/12, -120, 0.8);
+label("$L^{-1}$", 1.4*Z);
+figureNext();
+Gem4();
+makeMove((X-Y+Z)/6, 120, 1.2);
+makeMove(5*(X-Y+Z)/12, 120, 0.8);
+label("$Rr$", 1.4*Z);
+figureNext();
+Gem4();
+makeMove(5*(-X+Y+Z)/12, 120, 0.8);
+label("$L$", 1.4*Z);
+figureNext();
+Gem4();
+makeMove((X-Y+Z)/6, -120, 1.2);
+makeMove(5*(X-Y+Z)/12, -120, 0.8);
+label("$R^{-1}r^{-1}$", 1.4*Z);
+figureEnd();

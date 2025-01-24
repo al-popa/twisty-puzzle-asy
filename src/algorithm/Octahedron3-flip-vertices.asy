@@ -1,0 +1,36 @@
+include "algorithm.asyhdr";
+include "../data/Octahedron3.dat";
+
+setView(-45, -35.2, 0);
+
+figureBegin();
+Octahedron3();
+highline(AE--BEB--BED);
+highline(AB--BBD--BBE);
+highline(AD--BDB--BDE);
+highline(AE--BEB--BEC);
+highline(AB--BBC--BBE);
+highline(AE--BEA--BED);
+highline(AD--BDA--BDE);
+highline(AB--BBD--BBF);
+highline(AD--BDB--BDF);
+makeChange(AB--BBD--BBF, AE--BEA--BED, 0.3*(BBE+BEB+5*CBDE));
+makeChange(AE--BEB--BEC, AD--BDB--BDF, 0.3*(BDE+BED+5*CBDE));
+makeChange(AD--BDB--BDE, AB--BBD--BBE, 0.3*(BBD+BDB+2*CBDE));
+figureLine();
+Octahedron3();
+makeMove(2*CBCE/3, -120, 0.8);
+label("$L^{-1}$", 1.15*AE);
+figureNext();
+Octahedron3();
+makeMove(2*CADE/3, 120, 0.8);
+label("$R$", 1.15*AE);
+figureNext();
+Octahedron3();
+makeMove(2*CBCE/3, 120, 0.8);
+label("$L$", 1.15*AE);
+figureNext();
+Octahedron3();
+makeMove(2*CADE/3, -120, 0.8);
+label("$R^{-1}$", 1.15*AE);
+figureEnd();

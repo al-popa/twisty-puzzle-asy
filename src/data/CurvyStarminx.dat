@@ -1,0 +1,382 @@
+real sf = sqrt(5); // Const
+real st = sqrt(3); // Const
+real u = (sf+1)/2; // Const
+real v = u-1; // Const
+real ratio = v/sf; // Const
+real offset = 0.854102228899345; // Measured
+real Radius = 0.936158820510997; // Measured
+real cutRelFirst = 0.1831; // Measured
+real cutRelSecond = 0.3835; // Measured
+real alphaMin = 58.3576409311452; // Measured
+real alphaMax = 116.565051177078; // Measured
+real phiMax = 36; // Const
+
+triple interpolate(triple start, triple stop, real parameter)
+{
+	return start*(1-parameter)+stop*parameter;
+}
+
+guide3 makeFullArc(guide3 face, triple center, int idx)
+{
+	return arc(2*center-point(face, (idx)%5),
+		interpolate(point(face, (idx-1)%5), point(face, (idx-2)%5), ratio),
+		interpolate(point(face, (idx+1)%5), point(face, (idx+2)%5), ratio));
+}
+
+path3[] computeArcs(guide3 face, triple center)
+{
+	path3[] result;
+	for (int i = 0; i < 5; ++i)
+	{
+		result.push(makeFullArc(face, center, i));
+	}
+	return result;
+}
+
+path3 cutArc(path3 path, real start, real stop)
+{
+	return subpath(path, reltime(path, start), reltime(path, stop));
+}
+
+path3 makeCenter(path3[] arcs)
+{
+	return cutArc(arcs[0], cutRelSecond, 1-cutRelSecond)
+		&cutArc(arcs[1], cutRelSecond, 1-cutRelSecond)
+		&cutArc(arcs[2], cutRelSecond, 1-cutRelSecond)
+		&cutArc(arcs[3], cutRelSecond, 1-cutRelSecond)
+		&cutArc(arcs[4], cutRelSecond, 1-cutRelSecond);
+}
+
+path3 makePetale(path3[] arcs, int idx)
+{
+	return cutArc(arcs[(idx + 1) % 5], cutRelFirst, cutRelSecond)
+		&cutArc(arcs[idx % 5], 1-cutRelSecond, cutRelSecond)
+		&cutArc(arcs[(idx - 1) % 5], 1-cutRelSecond, 1-cutRelFirst);
+}
+
+guide3 makeEdge(path3[] arcs, int idx)
+{
+	return cutArc(arcs[(idx + 1) % 5], 0, cutRelFirst)
+	&cutArc(arcs[(idx - 1) % 5], 1-cutRelFirst, 1-cutRelSecond)
+	&cutArc(arcs[idx % 5], cutRelSecond, cutRelFirst)
+	&cutArc(arcs[(idx - 2) % 5], 1-cutRelFirst, 1);
+}
+
+guide3 makeVertex(path3[] arcs, guide3 face, int idx)
+{
+	return point(face, idx % 5)--interpolate(point(face, idx % 5), point(face, (idx + 1) % 5), ratio)
+		&cutArc(arcs[(idx - 1) % 5], 1, 1-cutRelFirst)
+		&cutArc(arcs[(idx + 1) % 5], cutRelFirst, 0)
+		&interpolate(point(face, idx % 5), point(face, (idx - 1) % 5), ratio)--point(face, idx % 5);
+}
+
+typedef triple cutSphere(pair polar);
+
+cutSphere makeSphere(triple center, triple cut, triple face)
+{
+	triple first = unit(center);
+	triple fourth = unit(face);
+	triple fifth = unit(face-cut);
+	triple sixth = unit(cross(fourth, fifth));
+
+	real delta = aCos(-dot(first, fifth));
+	real beta = aTan(Tan(36) * Sin(delta));
+
+	return new triple(pair polar)
+	{
+		real r = Sin(polar.x);
+		real x = -Cos(polar.x) / Tan(delta);
+		real phiLevel = beta - aSin(x * Sin(beta) / r);
+		real phi = polar.y * phiLevel / phiMax;
+		return center + Radius * (fourth * Cos(polar.x)
+			+ fifth * Sin(polar.x) * Cos(phi)
+			+ sixth * Sin(polar.x) * Sin(phi));
+	};
+}
+
+triple
+AA, AB, AC, AD, AE, AF, AG, AH, AI, AJ, AK, AL, AM, AN, AO, AP, AQ, AR, AS, AT;
+
+void init()
+{
+	AA = (u*X+v*Y)/st;
+	AB = (u*X-v*Y)/st;
+	AC = (-u*X+v*Y)/st;
+	AD = (-u*X-v*Y)/st;
+	AE = (u*Y+v*Z)/st;
+	AF = (u*Y-v*Z)/st;
+	AG = (-u*Y+v*Z)/st;
+	AH = (-u*Y-v*Z)/st;
+	AI = (v*X+u*Z)/st;
+	AJ = (-v*X+u*Z)/st;
+	AK = (v*X-u*Z)/st;
+	AL = (-v*X-u*Z)/st;
+	AM = (X+Y+Z)/st;
+	AN = (X+Y-Z)/st;
+	AO = (X-Y+Z)/st;
+	AP = (X-Y-Z)/st;
+	AQ = (-X+Y+Z)/st;
+	AR = (-X+Y-Z)/st;
+	AS = (-X-Y+Z)/st;
+	AT = (-X-Y-Z)/st;
+}
+
+void CurvyStarminx()
+{
+	init();
+	guide3 faceBA = AC--AR--AL--AT--AD;
+	//stick(faceBA, Grey);
+	triple BA = findCenter(faceBA);
+	transform3 t = rotate(-20, BA);
+	path3[] arcsBA = computeArcs(faceBA, BA);
+	stick(makeCenter(arcsBA), Grey, t);
+	stick(makePetale(arcsBA, 0), Grey, t);
+	stick(makePetale(arcsBA, 1), Grey, t);
+	stick(makePetale(arcsBA, 2), Grey, t);
+	stick(makePetale(arcsBA, 3), Grey, t);
+	stick(makePetale(arcsBA, 4), Grey, t);
+	stick(makeEdge(arcsBA, 0), Grey, t);
+	stick(makeEdge(arcsBA, 1), Grey, t);
+	stick(makeEdge(arcsBA, 2), Grey, t);
+	stick(makeEdge(arcsBA, 3), Grey, t);
+	stick(makeEdge(arcsBA, 4), Grey, t);
+	stick(makeVertex(arcsBA, faceBA, 0), Grey, t);
+	stick(makeVertex(arcsBA, faceBA, 1), Grey, t);
+	stick(makeVertex(arcsBA, faceBA, 2), Grey, t);
+	stick(makeVertex(arcsBA, faceBA, 3), Grey, t);
+	stick(makeVertex(arcsBA, faceBA, 4), Grey, t);
+
+	guide3 faceBB = AC--AQ--AJ--AS--AD;
+	//stick(faceBB, LightBlue);
+	triple BB = findCenter(faceBB);
+	path3[] arcsBB = computeArcs(faceBB, BB);
+	stick(makeCenter(arcsBB), LightBlue, t);
+	stick(makePetale(arcsBB, 0), LightBlue, t);
+	stick(makePetale(arcsBB, 1), LightBlue, t);
+	stick(makePetale(arcsBB, 2), LightBlue);
+	stick(makePetale(arcsBB, 3), LightBlue, t);
+	stick(makePetale(arcsBB, 4), LightBlue, t);
+	stick(makeEdge(arcsBB, 0), LightBlue, t);
+	stick(makeEdge(arcsBB, 1), LightBlue, t);
+	stick(makeEdge(arcsBB, 2), LightBlue);
+	stick(makeEdge(arcsBB, 3), LightBlue);
+	stick(makeEdge(arcsBB, 4), LightBlue, t);
+	stick(makeVertex(arcsBB, faceBB, 0), LightBlue, t);
+	stick(makeVertex(arcsBB, faceBB, 1), LightBlue);
+	stick(makeVertex(arcsBB, faceBB, 2), LightBlue);
+	stick(makeVertex(arcsBB, faceBB, 3), LightBlue);
+	stick(makeVertex(arcsBB, faceBB, 4), LightBlue, t);
+
+	guide3 faceBC = AE--AQ--AC--AR--AF;
+	//stick(faceBC, Orange);
+	path3[] arcsBC = computeArcs(faceBC, findCenter(faceBC));
+	stick(makeCenter(arcsBC), Orange, t);
+	stick(makePetale(arcsBC, 0), Orange);
+	stick(makePetale(arcsBC, 1), Orange, t);
+	stick(makePetale(arcsBC, 2), Orange, t);
+	stick(makePetale(arcsBC, 3), Orange, t);
+	stick(makePetale(arcsBC, 4), Orange, t);
+	stick(makeEdge(arcsBC, 0), Orange);
+	stick(makeEdge(arcsBC, 1), Orange);
+	stick(makeEdge(arcsBC, 2), Orange, t);
+	stick(makeEdge(arcsBC, 3), Orange, t);
+	stick(makeEdge(arcsBC, 4), Orange, t);
+	stick(makeVertex(arcsBC, faceBC, 0), Orange);
+	stick(makeVertex(arcsBC, faceBC, 1), Orange);
+	stick(makeVertex(arcsBC, faceBC, 2), Orange, t);
+	stick(makeVertex(arcsBC, faceBC, 3), Orange, t);
+	stick(makeVertex(arcsBC, faceBC, 4), Orange);
+
+	guide3 faceBD = AK--AN--AF--AR--AL;
+	//stick(faceBD, LightGreen);
+	path3[] arcsBD = computeArcs(faceBD, findCenter(faceBD));
+	stick(makeCenter(arcsBD), LightGreen, t);
+	stick(makePetale(arcsBD, 0), LightGreen, t);
+	stick(makePetale(arcsBD, 1), LightGreen);
+	stick(makePetale(arcsBD, 2), LightGreen, t);
+	stick(makePetale(arcsBD, 3), LightGreen, t);
+	stick(makePetale(arcsBD, 4), LightGreen, t);
+	stick(makeEdge(arcsBD, 0), LightGreen, t);
+	stick(makeEdge(arcsBD, 1), LightGreen);
+	stick(makeEdge(arcsBD, 2), LightGreen);
+	stick(makeEdge(arcsBD, 3), LightGreen, t);
+	stick(makeEdge(arcsBD, 4), LightGreen, t);
+	stick(makeVertex(arcsBD, faceBD, 0), LightGreen);
+	stick(makeVertex(arcsBD, faceBD, 1), LightGreen);
+	stick(makeVertex(arcsBD, faceBD, 2), LightGreen);
+	stick(makeVertex(arcsBD, faceBD, 3), LightGreen, t);
+	stick(makeVertex(arcsBD, faceBD, 4), LightGreen, t);
+
+	guide3 faceBE = AK--AP--AH--AT--AL;
+	//stick(faceBE, Pink);
+	path3[] arcsBE = computeArcs(faceBE, findCenter(faceBE));
+	stick(makeCenter(arcsBE), Pink, t);
+	stick(makePetale(arcsBE, 0), Pink, t);
+	stick(makePetale(arcsBE, 1), Pink);
+	stick(makePetale(arcsBE, 2), Pink, t);
+	stick(makePetale(arcsBE, 3), Pink, t);
+	stick(makePetale(arcsBE, 4), Pink, t);
+	stick(makeEdge(arcsBE, 0), Pink, t);
+	stick(makeEdge(arcsBE, 1), Pink);
+	stick(makeEdge(arcsBE, 2), Pink);
+	stick(makeEdge(arcsBE, 3), Pink, t);
+	stick(makeEdge(arcsBE, 4), Pink, t);
+	stick(makeVertex(arcsBE, faceBE, 0), Pink);
+	stick(makeVertex(arcsBE, faceBE, 1), Pink);
+	stick(makeVertex(arcsBE, faceBE, 2), Pink);
+	stick(makeVertex(arcsBE, faceBE, 3), Pink, t);
+	stick(makeVertex(arcsBE, faceBE, 4), Pink, t);
+
+	guide3 faceBF = AG--AS--AD--AT--AH;
+	//stick(faceBF, Lime);
+	path3[] arcsBF = computeArcs(faceBF, findCenter(faceBF));
+	stick(makeCenter(arcsBF), Lime, t);
+	stick(makePetale(arcsBF, 0), Lime);
+	stick(makePetale(arcsBF, 1), Lime, t);
+	stick(makePetale(arcsBF, 2), Lime, t);
+	stick(makePetale(arcsBF, 3), Lime, t);
+	stick(makePetale(arcsBF, 4), Lime, t);
+	stick(makeEdge(arcsBF, 0), Lime);
+	stick(makeEdge(arcsBF, 1), Lime);
+	stick(makeEdge(arcsBF, 2), Lime, t);
+	stick(makeEdge(arcsBF, 3), Lime, t);
+	stick(makeEdge(arcsBF, 4), Lime, t);
+	stick(makeVertex(arcsBF, faceBF, 0), Lime);
+	stick(makeVertex(arcsBF, faceBF, 1), Lime);
+	stick(makeVertex(arcsBF, faceBF, 2), Lime, t);
+	stick(makeVertex(arcsBF, faceBF, 3), Lime, t);
+	stick(makeVertex(arcsBF, faceBF, 4), Lime);
+
+	guide3 faceBG = AI--AO--AG--AS--AJ;
+	//stick(faceBG, Green);
+	path3[] arcsBG = computeArcs(faceBG, findCenter(faceBG));
+	stick(makeCenter(arcsBG), Green);
+	stick(makePetale(arcsBG, 0), Green);
+	stick(makePetale(arcsBG, 1), Green);
+	stick(makePetale(arcsBG, 2), Green);
+	stick(makePetale(arcsBG, 3), Green);
+	stick(makePetale(arcsBG, 4), Green);
+	stick(makeEdge(arcsBG, 0), Green);
+	stick(makeEdge(arcsBG, 1), Green);
+	stick(makeEdge(arcsBG, 2), Green);
+	stick(makeEdge(arcsBG, 3), Green);
+	stick(makeEdge(arcsBG, 4), Green);
+	stick(makeVertex(arcsBG, faceBG, 0), Green);
+	stick(makeVertex(arcsBG, faceBG, 1), Green);
+	stick(makeVertex(arcsBG, faceBG, 2), Green);
+	stick(makeVertex(arcsBG, faceBG, 3), Green);
+	stick(makeVertex(arcsBG, faceBG, 4), Green);
+
+	guide3 faceBH = AG--AO--AB--AP--AH;
+	//stick(faceBH, Red);
+	path3[] arcsBH = computeArcs(faceBH, findCenter(AG--AO--AB--AP--AH));
+	stick(makeCenter(arcsBH), Red);
+	stick(makePetale(arcsBH, 0), Red);
+	stick(makePetale(arcsBH, 1), Red);
+	stick(makePetale(arcsBH, 2), Red);
+	stick(makePetale(arcsBH, 3), Red);
+	stick(makePetale(arcsBH, 4), Red);
+	stick(makeEdge(arcsBH, 0), Red);
+	stick(makeEdge(arcsBH, 1), Red);
+	stick(makeEdge(arcsBH, 2), Red);
+	stick(makeEdge(arcsBH, 3), Red);
+	stick(makeEdge(arcsBH, 4), Red);
+	stick(makeVertex(arcsBH, faceBH, 0), Red);
+	stick(makeVertex(arcsBH, faceBH, 1), Red);
+	stick(makeVertex(arcsBH, faceBH, 2), Red);
+	stick(makeVertex(arcsBH, faceBH, 3), Red);
+	stick(makeVertex(arcsBH, faceBH, 4), Red);
+
+	guide3 faceBI = AB--AP--AK--AN--AA;
+	//stick(faceBI, Blue);
+	path3[] arcsBI = computeArcs(faceBI, findCenter(faceBI));
+	stick(makeCenter(arcsBI), Blue);
+	stick(makePetale(arcsBI, 0), Blue);
+	stick(makePetale(arcsBI, 1), Blue);
+	stick(makePetale(arcsBI, 2), Blue);
+	stick(makePetale(arcsBI, 3), Blue);
+	stick(makePetale(arcsBI, 4), Blue);
+	stick(makeEdge(arcsBI, 0), Blue);
+	stick(makeEdge(arcsBI, 1), Blue);
+	stick(makeEdge(arcsBI, 2), Blue);
+	stick(makeEdge(arcsBI, 3), Blue);
+	stick(makeEdge(arcsBI, 4), Blue);
+	stick(makeVertex(arcsBI, faceBI, 0), Blue);
+	stick(makeVertex(arcsBI, faceBI, 1), Blue);
+	stick(makeVertex(arcsBI, faceBI, 2), Blue);
+	stick(makeVertex(arcsBI, faceBI, 3), Blue);
+	stick(makeVertex(arcsBI, faceBI, 4), Blue);
+
+	guide3 faceBJ = AE--AM--AA--AN--AF;
+	//stick(faceBJ, Yellow);
+	path3[] arcsBJ = computeArcs(faceBJ, findCenter(faceBJ));
+	stick(makeCenter(arcsBJ), Yellow);
+	stick(makePetale(arcsBJ, 0), Yellow);
+	stick(makePetale(arcsBJ, 1), Yellow);
+	stick(makePetale(arcsBJ, 2), Yellow);
+	stick(makePetale(arcsBJ, 3), Yellow);
+	stick(makePetale(arcsBJ, 4), Yellow);
+	stick(makeEdge(arcsBJ, 0), Yellow);
+	stick(makeEdge(arcsBJ, 1), Yellow);
+	stick(makeEdge(arcsBJ, 2), Yellow);
+	stick(makeEdge(arcsBJ, 3), Yellow);
+	stick(makeEdge(arcsBJ, 4), Yellow);
+	stick(makeVertex(arcsBJ, faceBJ, 0), Yellow);
+	stick(makeVertex(arcsBJ, faceBJ, 1), Yellow);
+	stick(makeVertex(arcsBJ, faceBJ, 2), Yellow);
+	stick(makeVertex(arcsBJ, faceBJ, 3), Yellow);
+	stick(makeVertex(arcsBJ, faceBJ, 4), Yellow);
+
+	guide3 faceBK = AI--AM--AE--AQ--AJ;
+	//stick(faceBK, Violet);
+	path3[] arcsBK = computeArcs(faceBK, findCenter(faceBK));
+	stick(makeCenter(arcsBK), Violet);
+	stick(makePetale(arcsBK, 0), Violet);
+	stick(makePetale(arcsBK, 1), Violet);
+	stick(makePetale(arcsBK, 2), Violet);
+	stick(makePetale(arcsBK, 3), Violet);
+	stick(makePetale(arcsBK, 4), Violet);
+	stick(makeEdge(arcsBK, 0), Violet);
+	stick(makeEdge(arcsBK, 1), Violet);
+	stick(makeEdge(arcsBK, 2), Violet);
+	stick(makeEdge(arcsBK, 3), Violet);
+	stick(makeEdge(arcsBK, 4), Violet);
+	stick(makeVertex(arcsBK, faceBK, 0), Violet);
+	stick(makeVertex(arcsBK, faceBK, 1), Violet);
+	stick(makeVertex(arcsBK, faceBK, 2), Violet);
+	stick(makeVertex(arcsBK, faceBK, 3), Violet);
+	stick(makeVertex(arcsBK, faceBK, 4), Violet);
+
+	guide3 faceBL = AB--AO--AI--AM--AA;
+	//stick(faceBL, White);
+	path3[] arcsBL = computeArcs(faceBL, findCenter(faceBL));
+	stick(makeCenter(arcsBL), White);
+	stick(makePetale(arcsBL, 0), White);
+	stick(makePetale(arcsBL, 1), White);
+	stick(makePetale(arcsBL, 2), White);
+	stick(makePetale(arcsBL, 3), White);
+	stick(makePetale(arcsBL, 4), White);
+	stick(makeEdge(arcsBL, 0), White);
+	stick(makeEdge(arcsBL, 1), White);
+	stick(makeEdge(arcsBL, 2), White);
+	stick(makeEdge(arcsBL, 3), White);
+	stick(makeEdge(arcsBL, 4), White);
+	stick(makeVertex(arcsBL, faceBL, 0), White);
+	stick(makeVertex(arcsBL, faceBL, 1), White);
+	stick(makeVertex(arcsBL, faceBL, 2), White);
+	stick(makeVertex(arcsBL, faceBL, 3), White);
+	stick(makeVertex(arcsBL, faceBL, 4), White);
+
+	surface sphere = surface(makeSphere(offset*BA, 2*BB-AJ, BB), (alphaMin, -phiMax), (alphaMax, phiMax));
+	draw(rotate(-144, BA)*sphere, Background);
+	draw(rotate(-72, BA)*sphere, Background);
+	draw(sphere, Background);
+	draw(rotate(72, BA)*sphere, Background);
+	draw(rotate(144, BA)*sphere, Background);
+	draw(t*rotate(-144, BA)*sphere, Background);
+	draw(t*rotate(-72, BA)*sphere, Background);
+	draw(t*sphere, Background);
+	draw(t*rotate(72, BA)*sphere, Background);
+	draw(t*rotate(144, BA)*sphere, Background);
+}
+

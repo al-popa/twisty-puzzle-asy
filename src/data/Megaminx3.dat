@@ -1,0 +1,345 @@
+triple
+AA, AB, AC, AD, AE, AF, AG, AH, AI, AJ, AK, AL, AM, AN, AO, AP, AQ, AR, AS, AT,
+BAB, BAM, BAN, BBA, BBO, BBP, BCD, BCQ, BCR, BDC, BDS, BDT,
+BEF, BEM, BEQ, BFE, BFN, BFR, BGH, BGO, BGS, BHG, BHP, BHT,
+BIJ, BIM, BIO, BJI, BJQ, BJS, BKL, BKN, BKP, BLK, BLR, BLT,
+BMA, BME, BMI, BNA, BNF, BNK, BOB, BOG, BOI, BPB, BPH, BPK,
+BQC, BQJ, BQE, BRC, BRF, BRL, BSD, BSG, BSJ, BTD, BTH, BTL,
+CA, CB, CI, CM, CO,
+DA, DB, DK, DN, DP,
+EA, EE, EF, EM, EN,
+FB, FG, FH, FO, FP,
+GC, GD, GL, GR, GT,
+HC, HD, HJ, HQ, HS,
+IC, IE, IF, IQ, IR,
+JD, JG, JH, JS, JT,
+KE, KI, KJ, KM, KQ,
+LF, LK, LL, LN, LR,
+MG, MI, MJ, MO, MS,
+NH, NK, NL, NP, NT;
+
+void init()
+{
+	real u = (sqrt(5)+1)/2;
+	real v = u-1;
+	real s = sqrt(3);
+
+	AA = (u*X+v*Y)/s;
+	AB = (u*X-v*Y)/s;
+	AC = (-u*X+v*Y)/s;
+	AD = (-u*X-v*Y)/s;
+	AE = (u*Y+v*Z)/s;
+	AF = (u*Y-v*Z)/s;
+	AG = (-u*Y+v*Z)/s;
+	AH = (-u*Y-v*Z)/s;
+	AI = (v*X+u*Z)/s;
+	AJ = (-v*X+u*Z)/s;
+	AK = (v*X-u*Z)/s;
+	AL = (-v*X-u*Z)/s;
+	AM = (X+Y+Z)/s;
+	AN = (X+Y-Z)/s;
+	AO = (X-Y+Z)/s;
+	AP = (X-Y-Z)/s;
+	AQ = (-X+Y+Z)/s;
+	AR = (-X+Y-Z)/s;
+	AS = (-X-Y+Z)/s;
+	AT = (-X-Y-Z)/s;
+
+	BAB = v*AA+(1-v)*AB;
+	BAM = v*AA+(1-v)*AM;
+	BAN = v*AA+(1-v)*AN;
+	BBA = v*AB+(1-v)*AA;
+	BBO = v*AB+(1-v)*AO;
+	BBP = v*AB+(1-v)*AP;
+	BCD = v*AC+(1-v)*AD;
+	BCQ = v*AC+(1-v)*AQ;
+	BCR = v*AC+(1-v)*AR;
+	BDC = v*AD+(1-v)*AC;
+	BDS = v*AD+(1-v)*AS;
+	BDT = v*AD+(1-v)*AT;
+	BEF = v*AE+(1-v)*AF;
+	BEM = v*AE+(1-v)*AM;
+	BEQ = v*AE+(1-v)*AQ;
+	BFE = v*AF+(1-v)*AE;
+	BFN = v*AF+(1-v)*AN;
+	BFR = v*AF+(1-v)*AR;
+	BGH = v*AG+(1-v)*AH;
+	BGO = v*AG+(1-v)*AO;
+	BGS = v*AG+(1-v)*AS;
+	BHG = v*AH+(1-v)*AG;
+	BHP = v*AH+(1-v)*AP;
+	BHT = v*AH+(1-v)*AT;
+	BIJ = v*AI+(1-v)*AJ;
+	BIM = v*AI+(1-v)*AM;
+	BIO = v*AI+(1-v)*AO;
+	BJI = v*AJ+(1-v)*AI;
+	BJQ = v*AJ+(1-v)*AQ;
+	BJS = v*AJ+(1-v)*AS;
+	BKL = v*AK+(1-v)*AL;
+	BKN = v*AK+(1-v)*AN;
+	BKP = v*AK+(1-v)*AP;
+	BLK = v*AL+(1-v)*AK;
+	BLR = v*AL+(1-v)*AR;
+	BLT = v*AL+(1-v)*AT;
+	BMA = v*AM+(1-v)*AA;
+	BME = v*AM+(1-v)*AE;
+	BMI = v*AM+(1-v)*AI;
+	BNA = v*AN+(1-v)*AA;
+	BNF = v*AN+(1-v)*AF;
+	BNK = v*AN+(1-v)*AK;
+	BOB = v*AO+(1-v)*AB;
+	BOG = v*AO+(1-v)*AG;
+	BOI = v*AO+(1-v)*AI;
+	BPB = v*AP+(1-v)*AB;
+	BPH = v*AP+(1-v)*AH;
+	BPK = v*AP+(1-v)*AK;
+	BQC = v*AQ+(1-v)*AC;
+	BQJ = v*AQ+(1-v)*AJ;
+	BQE = v*AQ+(1-v)*AE;
+	BRC = v*AR+(1-v)*AC;
+	BRF = v*AR+(1-v)*AF;
+	BRL = v*AR+(1-v)*AL;
+	BSD = v*AS+(1-v)*AD;
+	BSG = v*AS+(1-v)*AG;
+	BSJ = v*AS+(1-v)*AJ;
+	BTD = v*AT+(1-v)*AD;
+	BTH = v*AT+(1-v)*AH;
+	BTL = v*AT+(1-v)*AL;
+
+	CA = BAB+BAM-AA;
+	CB = BBA+BBO-AB;
+	CI = BIM+BIO-AI;
+	CM = BMA+BMI-AM;
+	CO = BOB+BOI-AO;
+
+	DA = BAB+BAN-AA;
+	DB = BBA+BBP-AB;
+	DK = BKN+BKP-AK;
+	DN = BNA+BNK-AN;
+	DP = BPB+BPK-AP;
+
+	EA = BAM+BAN-AA;
+	EE = BEF+BEM-AE;
+	EF = BFE+BFN-AF;
+	EM = BMA+BME-AM;
+	EN = BNA+BNF-AN;
+
+	FB = BBO+BBP-AB;
+	FG = BGH+BGO-AG;
+	FH = BHG+BHP-AH;
+	FO = BOB+BOG-AO;
+	FP = BPB+BPH-AP;
+
+	GC = BCD+BCR-AC;
+	GD = BDC+BDT-AD;
+	GL = BLR+BLT-AL;
+	GR = BRC+BRL-AR;
+	GT = BTD+BTL-AT;
+
+	HC = BCD+BCQ-AC;
+	HD = BDC+BDS-AD;
+	HJ = BJQ+BJS-AJ;
+	HQ = BQC+BQJ-AQ;
+	HS = BSD+BSJ-AS;
+
+	IC = BCQ+BCR-AC;
+	IE = BEF+BEQ-AE;
+	IF = BFE+BFR-AF;
+	IQ = BQC+BQE-AQ;
+	IR = BRC+BRF-AR;
+
+	JD = BDS+BDT-AD;
+	JG = BGH+BGS-AG;
+	JH = BHG+BHT-AH;
+	JS = BSD+BSG-AS;
+	JT = BTD+BTH-AT;
+
+	KE = BEM+BEQ-AE;
+	KI = BIJ+BIM-AI;
+	KJ = BJI+BJQ-AJ;
+	KM = BME+BMI-AM;
+	KQ = BQE+BQJ-AQ;
+
+	LF = BFN+BFR-AF;
+	LK = BKL+BKN-AK;
+	LL = BLK+BLR-AL;
+	LN = BNF+BNK-AN;
+	LR = BRF+BRL-AR;
+
+	MG = BGO+BGS-AG;
+	MI = BIJ+BIO-AI;
+	MJ = BJI+BJS-AJ;
+	MO = BOG+BOI-AO;
+	MS = BSG+BSJ-AS;
+
+	NH = BHP+BHT-AH;
+	NK = BKL+BKP-AK;
+	NL = BLK+BLT-AL;
+	NP = BPH+BPK-AP;
+	NT = BTH+BTL-AT;
+}
+
+void Megaminx3()
+{
+	init();
+	transform3 t = rotate(one, -(AC+AR+AL+AT+AD));
+
+	//stick(AC--AR--AL--AT--AD, Grey);
+	stick(GC--GR--GL--GT--GD, Grey, t);
+	stick(AC--BCD--GC--BCR, Grey, t);
+	stick(BCR--GC--GR--BRC, Grey, t);
+	stick(AR--BRC--GR--BRL, Grey, t);
+	stick(BRL--GR--GL--BLR, Grey, t);
+	stick(AL--BLR--GL--BLT, Grey, t);
+	stick(BLT--GL--GT--BTL, Grey, t);
+	stick(AT--BTD--GT--BTL, Grey, t);
+	stick(BTD--GT--GD--BDT, Grey, t);
+	stick(AD--BDC--GD--BDT, Grey, t);
+	stick(BCD--GC--GD--BDC, Grey, t);
+
+	//stick(AC--AQ--AJ--AS--AD, LightBlue);
+	stick(HC--HQ--HJ--HS--HD, LightBlue);
+	stick(AC--BCD--HC--BCQ, LightBlue, t);
+	stick(BCQ--HC--HQ--BQC, LightBlue);
+	stick(AQ--BQC--HQ--BQJ, LightBlue);
+	stick(BQJ--HQ--HJ--BJQ, LightBlue);
+	stick(AJ--BJQ--HJ--BJS, LightBlue);
+	stick(BJS--HJ--HS--BSJ, LightBlue);
+	stick(AS--BSD--HS--BSJ, LightBlue);
+	stick(BSD--HS--HD--BDS, LightBlue);
+	stick(AD--BDC--HD--BDS, LightBlue, t);
+	stick(BCD--HC--HD--BDC, LightBlue, t);
+
+	//stick(AE--AQ--AC--AR--AF, Orange);
+	stick(IE--IQ--IC--IR--IF, Orange);
+	stick(AE--BEF--IE--BEQ, Orange);
+	stick(BEQ--IE--IQ--BQE, Orange);
+	stick(AQ--BQC--IQ--BQE, Orange);
+	stick(BQC--IQ--IC--BCQ, Orange);
+	stick(AC--BCQ--IC--BCR, Orange, t);
+	stick(BCR--IC--IR--BRC, Orange, t);
+	stick(AR--BRC--IR--BRF, Orange, t);
+	stick(BRF--IR--IF--BFR, Orange);
+	stick(AF--BFE--IF--BFR, Orange);
+	stick(BEF--IE--IF--BFE, Orange);
+
+	//stick(AK--AN--AF--AR--AL, LightGreen);
+	stick(LK--LN--LF--LR--LL, LightGreen);
+	stick(AK--BKL--LK--BKN, LightGreen);
+	stick(BKN--LK--LN--BNK, LightGreen);
+	stick(AN--BNF--LN--BNK, LightGreen);
+	stick(BNF--LN--LF--BFN, LightGreen);
+	stick(AF--BFN--LF--BFR, LightGreen);
+	stick(BFR--LF--LR--BRF, LightGreen);
+	stick(AR--BRF--LR--BRL, LightGreen, t);
+	stick(BRL--LR--LL--BLR, LightGreen, t);
+	stick(AL--BLK--LL--BLR, LightGreen, t);
+	stick(BKL--LK--LL--BLK, LightGreen);
+
+	//stick(AK--AP--AH--AT--AL, Pink);
+	stick(NK--NP--NH--NT--NL, Pink);
+	stick(AK--BKL--NK--BKP, Pink);
+	stick(BKP--NK--NP--BPK, Pink);
+	stick(AP--BPH--NP--BPK, Pink);
+	stick(BPH--NP--NH--BHP, Pink);
+	stick(AH--BHP--NH--BHT, Pink);
+	stick(BHT--NH--NT--BTH, Pink);
+	stick(AT--BTH--NT--BTL, Pink, t);
+	stick(BTL--NT--NL--BLT, Pink, t);
+	stick(AL--BLK--NL--BLT, Pink, t);
+	stick(BKL--NK--NL--BLK, Pink);
+
+	//stick(AG--AS--AD--AT--AH, Lime);
+	stick(JG--JS--JD--JT--JH, Lime);
+	stick(AG--BGH--JG--BGS, Lime);
+	stick(BGS--JG--JS--BSG, Lime);
+	stick(AS--BSD--JS--BSG, Lime);
+	stick(BSD--JS--JD--BDS, Lime);
+	stick(AD--BDS--JD--BDT, Lime, t);
+	stick(BDT--JD--JT--BTD, Lime, t);
+	stick(AT--BTD--JT--BTH, Lime, t);
+	stick(BTH--JT--JH--BHT, Lime);
+	stick(AH--BHG--JH--BHT, Lime);
+	stick(BGH--JG--JH--BHG, Lime);
+
+	//stick(AI--AO--AG--AS--AJ, Green);
+	stick(MI--MO--MG--MS--MJ, Green);
+	stick(AI--BIJ--MI--BIO, Green);
+	stick(BIO--MI--MO--BOI, Green);
+	stick(AO--BOG--MO--BOI, Green);
+	stick(BOG--MO--MG--BGO, Green);
+	stick(AG--BGO--MG--BGS, Green);
+	stick(BGS--MG--MS--BSG, Green);
+	stick(AS--BSG--MS--BSJ, Green);
+	stick(BSJ--MS--MJ--BJS, Green);
+	stick(AJ--BJI--MJ--BJS, Green);
+	stick(BIJ--MI--MJ--BJI, Green);
+
+	//stick(AG--AO--AB--AP--AH, Red);
+	stick(FG--FO--FB--FP--FH, Red);
+	stick(AG--BGH--FG--BGO, Red);
+	stick(BGO--FG--FO--BOG, Red);
+	stick(AO--BOB--FO--BOG, Red);
+	stick(BOB--FO--FB--BBO, Red);
+	stick(AB--BBO--FB--BBP, Red);
+	stick(BBP--FB--FP--BPB, Red);
+	stick(AP--BPB--FP--BPH, Red);
+	stick(BPH--FP--FH--BHP, Red);
+	stick(AH--BHG--FH--BHP, Red);
+	stick(BGH--FG--FH--BHG, Red);
+
+	//stick(AB--AP--AK--AN--AA, Blue);
+	stick(DB--DP--DK--DN--DA, Blue);
+	stick(AB--BBA--DB--BBP, Blue);
+	stick(BBP--DB--DP--BPB, Blue);
+	stick(AP--BPB--DP--BPK, Blue);
+	stick(BPK--DP--DK--BKP, Blue);
+	stick(AK--BKN--DK--BKP, Blue);
+	stick(BKN--DK--DN--BNK, Blue);
+	stick(AN--BNA--DN--BNK, Blue);
+	stick(BNA--DN--DA--BAN, Blue);
+	stick(AA--BAB--DA--BAN, Blue);
+	stick(BAB--DA--DB--BBA, Blue);
+
+	//stick(AE--AM--AA--AN--AF, Yellow);
+	stick(EE--EM--EA--EN--EF, Yellow);
+	stick(AE--BEF--EE--BEM, Yellow);
+	stick(BEM--EE--EM--BME, Yellow);
+	stick(AM--BMA--EM--BME, Yellow);
+	stick(BMA--EM--EA--BAM, Yellow);
+	stick(AA--BAM--EA--BAN, Yellow);
+	stick(BAN--EA--EN--BNA, Yellow);
+	stick(AN--BNA--EN--BNF, Yellow);
+	stick(BNF--EN--EF--BFN, Yellow);
+	stick(AF--BFE--EF--BFN, Yellow);
+	stick(BEF--EE--EF--BFE, Yellow);
+
+	//stick(AI--AM--AE--AQ--AJ, Violet);
+	stick(KI--KM--KE--KQ--KJ, Violet);
+	stick(AI--BIJ--KI--BIM, Violet);
+	stick(BIM--KI--KM--BMI, Violet);
+	stick(AM--BME--KM--BMI, Violet);
+	stick(BME--KM--KE--BEM, Violet);
+	stick(AE--BEM--KE--BEQ, Violet);
+	stick(BEQ--KE--KQ--BQE, Violet);
+	stick(AQ--BQE--KQ--BQJ, Violet);
+	stick(BQJ--KQ--KJ--BJQ, Violet);
+	stick(AJ--BJI--KJ--BJQ, Violet);
+	stick(BIJ--KI--KJ--BJI, Violet);
+
+	//stick(AB--AO--AI--AM--AA, White);
+	stick(CB--CO--CI--CM--CA, White);
+	stick(AB--BBA--CB--BBO, White);
+	stick(BBO--CB--CO--BOB, White);
+	stick(AO--BOB--CO--BOI, White);
+	stick(BOI--CO--CI--BIO, White);
+	stick(AI--BIM--CI--BIO, White);
+	stick(BIM--CI--CM--BMI, White);
+	stick(AM--BMA--CM--BMI, White);
+	stick(BMA--CM--CA--BAM, White);
+	stick(AA--BAB--CA--BAM, White);
+	stick(BAB--CA--CB--BBA, White);
+
+	polygon(BCQ--BRF--BLK--BTH--BDS, Background);
+	polygon(BCQ--BRF--BLK--BTH--BDS, Background, t);
+}

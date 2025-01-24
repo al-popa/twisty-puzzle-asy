@@ -1,0 +1,48 @@
+include "algorithm.asyhdr";
+include "../data/Starminx.dat";
+
+setView(-90.4, 32.1, -143.84);
+
+init();
+triple fw = findCenter(AG--AS--AD--AT--AH);
+triple bw = findCenter(AK--AN--AF--AR--AL);
+triple lt = findCenter(AK--AP--AH--AT--AL);
+triple rt = findCenter(AC--AQ--AJ--AS--AD);
+triple up = findCenter(AC--AR--AL--AT--AD);
+triple br = findCenter(AI--AO--AG--AS--AJ);
+triple bbl = findCenter(JA--JB--JC--JD--JE);
+triple bbr = findCenter(DA--DB--DC--DD--DE);
+triple bwr = findCenter(AE--AQ--AC--AR--AF);
+
+figureBegin();
+Starminx();
+label("$\times 2$", 1.45*bw);
+highline(AD--BD--BE);
+highline(AG--GE--GA);
+highline(AJ--CB--CC);
+makeChange(AG--GE--GA, AD--BD--BE, 0.7*(fw+up+0.3*rt));
+makeChange(AJ--CB--CC, AG--GE--GA, 0.7*(fw+rt+0.3*br));
+makeChange(AD--BD--BE, AJ--CB--CC, 0.7*(up+rt+0.3*fw));
+figureLine();
+Starminx();
+makeMove(0.75*lt, 72, 0.79);
+makeMove(0.65*lt, -72, 0.81);
+makeMove(0.65*rt, -72, 0.81);
+makeMove(0.75*rt, 72, 0.79);
+label("$F_1$", 1.45*bw);
+figureNext();
+Starminx();
+makeMove(0.7*up, -72, 0.8);
+label("$C^{-1}$", 1.45*bw);
+figureNext();
+Starminx();
+makeMove(0.75*fw, -72, 0.79);
+makeMove(0.65*fw, 72, 0.81);
+makeMove(0.65*bbr, 72, 0.81);
+makeMove(0.75*bbr, -72, 0.79);
+label("$F_2^{-1}$", 1.45*bw);
+figureNext();
+Starminx();
+makeMove(0.7*up, 72, 0.8);
+label("$C$", 1.45*bw);
+figureEnd();

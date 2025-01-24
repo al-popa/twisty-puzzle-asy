@@ -1,0 +1,243 @@
+triple AA, AB, AC, AD, AE, AF, AG, AH,
+
+BA4B, BA4C, BA4E, BB4A, BB4D, BB4F, BC4A, BC4D, BC4G, BD4B, BD4C, BD4H,
+BE4A, BE4F, BE4G, BF4B, BF4E, BF4H, BG4C, BG4E, BG4H, BH4D, BH4F, BH4G,
+
+BA2B, BA2C, BA2E, BB2D, BB2F, BC2D, BC2G, BD2H, BE2F, BE2G, BF2H, BG2H,
+
+CA4BC, CA4BE, CA4CE, CB4AD, CB4AF, CB4DF, CC4AD, CC4AG,
+CC4DG, CD4BC, CD4BH, CD4CH, CE4AF, CE4AG, CE4FG, CF4BE,
+CF4BH, CF4EH, CG4CE, CG4CH, CG4EH, CH4DF, CH4DG, CH4FG,
+
+CA2B4CD, CA2C4BD, CB2D4AC, CC2D4AB, CA2B4EF, CA2E4BF, CB2F4AE, CE2F4AB,
+CA2C4EG, CA2E4CG, CC2G4AE, CE2G4AC, CB2D4FH, CB2F4DH, CD2H4BF, CF2H4BD,
+CC2D4GH, CC2G4DH, CD2H4CG, CG2H4CD, CE2F4GH, CE2G4FH, CF2H4EG, CG2H4EF,
+
+CABCD, CABEF, CACEG, CBDFH, CCDGH, CEFGH;
+
+void init()
+{
+	AA = X+Y+Z;
+	AB = X+Y-Z;
+	AC = X-Y+Z;
+	AD = X-Y-Z;
+	AE = -X+Y+Z;
+	AF = -X+Y-Z;
+	AG = -X-Y+Z;
+	AH = -X-Y-Z;
+
+	BA4B = (3*AA+AB)/4;
+	BA4C = (3*AA+AC)/4;
+	BA4E = (3*AA+AE)/4;
+	BB4A = (3*AB+AA)/4;
+	BB4D = (3*AB+AD)/4;
+	BB4F = (3*AB+AF)/4;
+	BC4A = (3*AC+AA)/4;
+	BC4D = (3*AC+AD)/4;
+	BC4G = (3*AC+AG)/4;
+	BD4B = (3*AD+AB)/4;
+	BD4C = (3*AD+AC)/4;
+	BD4H = (3*AD+AH)/4;
+	BE4A = (3*AE+AA)/4;
+	BE4F = (3*AE+AF)/4;
+	BE4G = (3*AE+AG)/4;
+	BF4B = (3*AF+AB)/4;
+	BF4E = (3*AF+AE)/4;
+	BF4H = (3*AF+AH)/4;
+	BG4C = (3*AG+AC)/4;
+	BG4E = (3*AG+AE)/4;
+	BG4H = (3*AG+AH)/4;
+	BH4D = (3*AH+AD)/4;
+	BH4F = (3*AH+AF)/4;
+	BH4G = (3*AH+AG)/4;
+
+	BA2B = (AA+AB)/2;
+	BA2C = (AA+AC)/2;
+	BA2E = (AA+AE)/2;
+	BB2D = (AB+AD)/2;
+	BB2F = (AB+AF)/2;
+	BC2D = (AC+AD)/2;
+	BC2G = (AC+AG)/2;
+	BD2H = (AD+AH)/2;
+	BE2F = (AE+AF)/2;
+	BE2G = (AE+AG)/2;
+	BF2H = (AF+AH)/2;
+	BG2H = (AG+AH)/2;
+
+	CA4BC = (2*AA+AB+AC)/4;
+	CA4BE = (2*AA+AB+AE)/4;
+	CA4CE = (2*AA+AC+AE)/4;
+	CB4AD = (2*AB+AA+AD)/4;
+	CB4AF = (2*AB+AA+AF)/4;
+	CB4DF = (2*AB+AD+AF)/4;
+	CC4AD = (2*AC+AA+AD)/4;
+	CC4AG = (2*AC+AA+AG)/4;
+	CC4DG = (2*AC+AD+AG)/4;
+	CD4BC = (2*AD+AB+AC)/4;
+	CD4BH = (2*AD+AB+AH)/4;
+	CD4CH = (2*AD+AC+AH)/4;
+	CE4AF = (2*AE+AA+AF)/4;
+	CE4AG = (2*AE+AA+AG)/4;
+	CE4FG = (2*AE+AF+AG)/4;
+	CF4BE = (2*AF+AB+AE)/4;
+	CF4BH = (2*AF+AB+AH)/4;
+	CF4EH = (2*AF+AE+AH)/4;
+	CG4CE = (2*AG+AC+AE)/4;
+	CG4CH = (2*AG+AC+AH)/4;
+	CG4EH = (2*AG+AE+AH)/4;
+	CH4DF = (2*AH+AD+AF)/4;
+	CH4DG = (2*AH+AD+AG)/4;
+	CH4FG = (2*AH+AF+AG)/4;
+
+	CA2B4CD = (3*(AA+AB)+AC+AD)/8;
+	CA2C4BD = (3*(AA+AC)+AB+AD)/8;
+	CB2D4AC = (3*(AB+AD)+AA+AC)/8;
+	CC2D4AB = (3*(AC+AD)+AA+AB)/8;
+	CA2B4EF = (3*(AA+AB)+AE+AF)/8;
+	CA2E4BF = (3*(AA+AE)+AB+AF)/8;
+	CB2F4AE = (3*(AB+AF)+AA+AE)/8;
+	CE2F4AB = (3*(AE+AF)+AA+AB)/8;
+	CA2C4EG = (3*(AA+AC)+AE+AG)/8;
+	CA2E4CG = (3*(AA+AE)+AC+AG)/8;
+	CC2G4AE = (3*(AC+AG)+AA+AE)/8;
+	CE2G4AC = (3*(AE+AG)+AA+AC)/8;
+	CB2D4FH = (3*(AB+AD)+AF+AH)/8;
+	CB2F4DH = (3*(AB+AF)+AD+AH)/8;
+	CD2H4BF = (3*(AD+AH)+AB+AF)/8;
+	CF2H4BD = (3*(AF+AH)+AB+AD)/8;
+	CC2D4GH = (3*(AC+AD)+AG+AH)/8;
+	CC2G4DH = (3*(AC+AG)+AD+AH)/8;
+	CD2H4CG = (3*(AD+AH)+AC+AG)/8;
+	CG2H4CD = (3*(AG+AH)+AC+AD)/8;
+	CE2F4GH = (3*(AE+AF)+AG+AH)/8;
+	CE2G4FH = (3*(AE+AG)+AF+AH)/8;
+	CF2H4EG = (3*(AF+AH)+AE+AG)/8;
+	CG2H4EF = (3*(AG+AH)+AE+AF)/8;
+
+	CABCD = (AA+AB+AC+AD)/4;
+	CABEF = (AA+AB+AE+AF)/4;
+	CACEG = (AA+AC+AE+AG)/4;
+	CBDFH = (AB+AD+AF+AH)/4;
+	CCDGH = (AC+AD+AG+AH)/4;
+	CEFGH = (AE+AF+AG+AH)/4;
+}
+
+void Cube4()
+{
+	init();
+	transform3 t = rotate(two, -Z);
+	transform3 p = rotate(one, -Z);
+
+	//stick(AA--AB--AD--AC, Blue);
+	stick(AA--BA4B--CA4BC--BA4C, Blue, t);
+	stick(AB--BB4A--CB4AD--BB4D, Blue);
+	stick(AC--BC4A--CC4AD--BC4D, Blue, t);
+	stick(AD--BD4B--CD4BC--BD4C, Blue);
+	stick(BA2B--BA4B--CA4BC--CA2B4CD, Blue, p);
+	stick(BA2B--BB4A--CB4AD--CA2B4CD, Blue);
+	stick(BA2C--BA4C--CA4BC--CA2C4BD, Blue, t);
+	stick(BA2C--BC4A--CC4AD--CA2C4BD, Blue, t);
+	stick(BB2D--BB4D--CB4AD--CB2D4AC, Blue);
+	stick(BB2D--BD4B--CD4BC--CB2D4AC, Blue);
+	stick(BC2D--BC4D--CC4AD--CC2D4AB, Blue, p);
+	stick(BC2D--BD4C--CD4BC--CC2D4AB, Blue);
+	stick(CA4BC--CA2B4CD--CABCD--CA2C4BD, Blue, p);
+	stick(CB4AD--CA2B4CD--CABCD--CB2D4AC, Blue);
+	stick(CC4AD--CA2C4BD--CABCD--CC2D4AB, Blue, p);
+	stick(CD4BC--CB2D4AC--CABCD--CC2D4AB, Blue);
+
+	//stick(AA--AB--AF--AE, Orange);
+	stick(AA--BA4B--CA4BE--BA4E, Orange, t);
+	stick(AB--BB4A--CB4AF--BB4F, Orange);
+	stick(AE--BE4A--CE4AF--BE4F, Orange, t);
+	stick(AF--BF4B--CF4BE--BF4E, Orange);
+	stick(BA2B--BA4B--CA4BE--CA2B4EF, Orange, p);
+	stick(BA2B--BB4A--CB4AF--CA2B4EF, Orange);
+	stick(BA2E--BA4E--CA4BE--CA2E4BF, Orange, t);
+	stick(BA2E--BE4A--CE4AF--CA2E4BF, Orange, t);
+	stick(BB2F--BB4F--CB4AF--CB2F4AE, Orange);
+	stick(BB2F--BF4B--CF4BE--CB2F4AE, Orange);
+	stick(BE2F--BE4F--CE4AF--CE2F4AB, Orange, p);
+	stick(BE2F--BF4E--CF4BE--CE2F4AB, Orange);
+	stick(CA4BE--CA2B4EF--CABEF--CA2E4BF, Orange, p);
+	stick(CB4AF--CA2B4EF--CABEF--CB2F4AE, Orange);
+	stick(CE4AF--CA2E4BF--CABEF--CE2F4AB, Orange, p);
+	stick(CF4BE--CB2F4AE--CABEF--CE2F4AB, Orange);
+
+	//stick(AA--AC--AG--AE, White);
+	stick(AA--BA4C--CA4CE--BA4E, White, t);
+	stick(AC--BC4A--CC4AG--BC4G, White, t);
+	stick(AE--BE4A--CE4AG--BE4G, White, t);
+	stick(AG--BG4C--CG4CE--BG4E, White, t);
+	stick(BA2C--BA4C--CA4CE--CA2C4EG, White, t);
+	stick(BA2C--BC4A--CC4AG--CA2C4EG, White, t);
+	stick(BA2E--BA4E--CA4CE--CA2E4CG, White, t);
+	stick(BA2E--BE4A--CE4AG--CA2E4CG, White, t);
+	stick(BC2G--BC4G--CC4AG--CC2G4AE, White, t);
+	stick(BC2G--BG4C--CG4CE--CC2G4AE, White, t);
+	stick(BE2G--BE4G--CE4AG--CE2G4AC, White, t);
+	stick(BE2G--BG4E--CG4CE--CE2G4AC, White, t);
+	stick(CA4CE--CA2C4EG--CACEG--CA2E4CG, White, t);
+	stick(CC4AG--CA2C4EG--CACEG--CC2G4AE, White, t);
+	stick(CE4AG--CA2E4CG--CACEG--CE2G4AC, White, t);
+	stick(CG4CE--CC2G4AE--CACEG--CE2G4AC, White, t);
+
+	//stick(AB--AD--AH--AF, Yellow);
+	stick(AB--BB4D--CB4DF--BB4F, Yellow);
+	stick(AD--BD4B--CD4BH--BD4H, Yellow);
+	stick(AF--BF4B--CF4BH--BF4H, Yellow);
+	stick(AH--BH4D--CH4DF--BH4F, Yellow);
+	stick(BB2D--BB4D--CB4DF--CB2D4FH, Yellow);
+	stick(BB2D--BD4B--CD4BH--CB2D4FH, Yellow);
+	stick(BB2F--BB4F--CB4DF--CB2F4DH, Yellow);
+	stick(BB2F--BF4B--CF4BH--CB2F4DH, Yellow);
+	stick(BD2H--BD4H--CD4BH--CD2H4BF, Yellow);
+	stick(BD2H--BH4D--CH4DF--CD2H4BF, Yellow);
+	stick(BF2H--BF4H--CF4BH--CF2H4BD, Yellow);
+	stick(BF2H--BH4F--CH4DF--CF2H4BD, Yellow);
+	stick(CB4DF--CB2D4FH--CBDFH--CB2F4DH, Yellow);
+	stick(CD4BH--CB2D4FH--CBDFH--CD2H4BF, Yellow);
+	stick(CF4BH--CB2F4DH--CBDFH--CF2H4BD, Yellow);
+	stick(CH4DF--CD2H4BF--CBDFH--CF2H4BD, Yellow);
+
+	//stick(AC--AD--AH--AG, Red);
+	stick(AC--BC4D--CC4DG--BC4G, Red, t);
+	stick(AD--BD4C--CD4CH--BD4H, Red);
+	stick(AG--BG4C--CG4CH--BG4H, Red, t);
+	stick(AH--BH4D--CH4DG--BH4G, Red);
+	stick(BC2D--BC4D--CC4DG--CC2D4GH, Red, p);
+	stick(BC2D--BD4C--CD4CH--CC2D4GH, Red);
+	stick(BC2G--BC4G--CC4DG--CC2G4DH, Red, t);
+	stick(BC2G--BG4C--CG4CH--CC2G4DH, Red, t);
+	stick(BD2H--BD4H--CD4CH--CD2H4CG, Red);
+	stick(BD2H--BH4D--CH4DG--CD2H4CG, Red);
+	stick(BG2H--BG4H--CG4CH--CG2H4CD, Red, p);
+	stick(BG2H--BH4G--CH4DG--CG2H4CD, Red);
+	stick(CC4DG--CC2D4GH--CCDGH--CC2G4DH, Red, p);
+	stick(CD4CH--CC2D4GH--CCDGH--CD2H4CG, Red);
+	stick(CG4CH--CC2G4DH--CCDGH--CG2H4CD, Red, p);
+	stick(CH4DG--CD2H4CG--CCDGH--CG2H4CD, Red);
+
+	//stick(AE--AF--AH--AG, Green);
+	stick(AE--BE4F--CE4FG--BE4G, Green, t);
+	stick(AF--BF4E--CF4EH--BF4H, Green);
+	stick(AG--BG4E--CG4EH--BG4H, Green, t);
+	stick(AH--BH4F--CH4FG--BH4G, Green);
+	stick(BE2F--BE4F--CE4FG--CE2F4GH, Green, p);
+	stick(BE2F--BF4E--CF4EH--CE2F4GH, Green);
+	stick(BE2G--BE4G--CE4FG--CE2G4FH, Green, t);
+	stick(BE2G--BG4E--CG4EH--CE2G4FH, Green, t);
+	stick(BF2H--BF4H--CF4EH--CF2H4EG, Green);
+	stick(BF2H--BH4F--CH4FG--CF2H4EG, Green);
+	stick(BG2H--BG4H--CG4EH--CG2H4EF, Green, p);
+	stick(BG2H--BH4G--CH4FG--CG2H4EF, Green);
+	stick(CE4FG--CE2F4GH--CEFGH--CE2G4FH, Green, p);
+	stick(CF4EH--CE2F4GH--CEFGH--CF2H4EG, Green);
+	stick(CG4EH--CE2G4FH--CEFGH--CG2H4EF, Green, p);
+	stick(CH4FG--CF2H4EG--CEFGH--CG2H4EF, Green);
+
+	polygon(BA2B--BC2D--BG2H--BE2F, Background);
+	polygon(BA2B--BC2D--BG2H--BE2F, Background, p);
+	polygon(BA4B--BC4D--BG4H--BE4F, Background, p);
+	polygon(BA4B--BC4D--BG4H--BE4F, Background, t);
+}

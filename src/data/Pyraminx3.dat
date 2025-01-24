@@ -1,0 +1,85 @@
+triple AA, AB, AC, AD,
+BAB, BAC, BAD, BBA, BBC, BBD, BCA, BCB, BCD, BDA, BDB, BDC,
+CABC, CABD, CACD, CBCD;
+
+void init()
+{
+	AA = -X-Y-Z;
+	AB = X+Y-Z;
+	AC = X-Y+Z;
+	AD = -X+Y+Z;
+
+	BAB = (2*AA+AB)/3;
+	BAC = (2*AA+AC)/3;
+	BAD = (2*AA+AD)/3;
+	BBA = (2*AB+AA)/3;
+	BBC = (2*AB+AC)/3;
+	BBD = (2*AB+AD)/3;
+	BCA = (2*AC+AA)/3;
+	BCB = (2*AC+AB)/3;
+	BCD = (2*AC+AD)/3;
+	BDA = (2*AD+AA)/3;
+	BDB = (2*AD+AB)/3;
+	BDC = (2*AD+AC)/3;
+
+	CABC = (AA+AB+AC)/3;
+	CABD = (AA+AB+AD)/3;
+	CACD = (AA+AC+AD)/3;
+	CBCD = (AB+AC+AD)/3;
+}
+
+void Pyraminx3()
+{
+	init();
+	transform3 p = rotate(one, X+Y+Z);
+	transform3 t = rotate(back, X+Y+Z);
+
+	//stick(AA--AB--AC, Blue);
+	stick(AA--BAB--BAC, Blue, p);
+	stick(AB--BBA--BBC, Blue, t);
+	stick(AC--BCA--BCB, Blue, t);
+	stick(BAB--BAC--CABC, Blue);
+	stick(BBA--BBC--CABC, Blue, t);
+	stick(BCA--BCB--CABC, Blue, t);
+	stick(BAB--BBA--CABC, Blue);
+	stick(BAC--BCA--CABC, Blue);
+	stick(BBC--BCB--CABC, Blue, t);
+
+	//stick(AA--AB--AD, Green);
+	stick(AA--BAB--BAD, Green, p);
+	stick(AB--BBA--BBD, Green, t);
+	stick(AD--BDA--BDB, Green, t);
+	stick(BAB--BAD--CABD, Green);
+	stick(BBA--BBD--CABD, Green, t);
+	stick(BDA--BDB--CABD, Green, t);
+	stick(BAB--BBA--CABD, Green);
+	stick(BAD--BDA--CABD, Green);
+	stick(BBD--BDB--CABD, Green, t);
+
+	//stick(AA--AC--AD, Yellow);
+	stick(AA--BAC--BAD, Yellow, p);
+	stick(AC--BCA--BCD, Yellow, t);
+	stick(AD--BDA--BDC, Yellow, t);
+	stick(BAC--BAD--CACD, Yellow);
+	stick(BCA--BCD--CACD, Yellow, t);
+	stick(BDA--BDC--CACD, Yellow, t);
+	stick(BAC--BCA--CACD, Yellow);
+	stick(BAD--BDA--CACD, Yellow);
+	stick(BCD--BDC--CACD, Yellow, t);
+
+	//stick(AB--AC--AD, Red);
+	stick(AB--BBC--BBD, Red, t);
+	stick(AC--BCB--BCD, Red, t);
+	stick(AD--BDB--BDC, Red, t);
+	stick(BBC--BBD--CBCD, Red, t);
+	stick(BCB--BCD--CBCD, Red, t);
+	stick(BDB--BDC--CBCD, Red, t);
+	stick(BBC--BCB--CBCD, Red, t);
+	stick(BBD--BDB--CBCD, Red, t);
+	stick(BCD--BDC--CBCD, Red, t);
+
+	polygon(BAB--BAC--BAD, Background);
+	polygon(BAB--BAC--BAD, Background, p);
+	polygon(BBA--BCA--BDA, Background);
+	polygon(BBA--BCA--BDA, Background, t);
+}

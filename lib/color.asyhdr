@@ -1,0 +1,54 @@
+//
+pen Black = RGB(0, 0, 0);
+pen Grey = RGB(127, 127, 127);
+pen White = RGB(255, 250, 250);
+pen Brown = RGB(128, 70, 32);
+pen Tan = RGB(204, 173, 153);
+
+pen Red = RGB(204, 51, 51);
+pen Cerry = RGB(166, 41, 41);
+pen BrickRed = RGB(204, 102, 102);
+pen Crimson = RGB(204, 51, 112);
+
+pen Orange = RGB(255, 140, 0);
+//pen Orange = RGB(255, 166, 0);
+pen Yellow = RGB(255, 204, 51);
+pen Lime = RGB(230, 242, 140);
+
+pen Green = RGB(41, 166, 41);
+pen LightGreen = RGB(51, 204, 112);
+pen Turquoise = RGB(41, 166, 142);
+pen AquaGreen = RGB(102, 204, 185);
+
+pen Blue = RGB(51, 51, 204);
+pen LightBlue = RGB(51, 179, 255);
+//pen LightBlue = RGB(102, 185, 204);
+pen SkyBlue = RGB(153, 194, 204);
+//pen SkyBlue = RGB(173, 216, 230);
+pen MarineBlue = RGB(51, 112, 204);
+pen Navi = RGB(41, 142, 166);
+
+//pen Pink = RGB(255, 20, 147);
+pen Pink = RGB(255, 102, 166);
+//pen Pink = RGB(204, 51, 175);
+pen Violet = RGB(175, 51, 204); // Purple
+pen Plum = RGB(142, 102, 204);
+//pen Lilac = RGB(204, 153, 255); // Orchid
+pen Lilac = RGB(173, 153, 204);
+
+pen Garnet = RGB(128, 32, 32);
+pen Ruby = RGB(166, 41, 91);
+pen Amber = RGB(255, 126, 0);
+pen Emerald = RGB(70, 128, 32);
+pen Chrysolite = RGB(112, 204, 51);
+pen Coral = RGB(204, 153, 173);
+pen Sapphire = RGB(204, 102, 185);
+pen Ametist = RGB(112, 51, 204);
+
+pen Platina = RGB(128, 121, 96);
+pen Titan = RGB(32, 70, 128);
+pen Chrome = RGB(96, 96, 128);
+pen Iron = RGB(124, 141, 166);
+
+pen Background = Black;
+

@@ -1,0 +1,28 @@
+include "algorithm.asyhdr";
+include "../data/MasterSkewb.dat";
+
+figureBegin();
+MasterSkewb();
+highline(BGH--BHG--GD);
+highline(BCG--BGC--GB);
+highline(BCD--BDC--GA);
+makeChange(BGH--BHG--HD, BCG--BGC--GB, 0.36*(2*BGH+BHG));
+makeChange(BCG--BGC--GB, BCD--BDC--CD, 0.36*(2*BCD+BDC));
+makeChange(BCD--BDC--GA, BGH--BHG--GD, 0.55*(GA+GD+0.4*GC));
+figureLine();
+MasterSkewb();
+makeMove(AG/2, -120, 1.4);
+label("$L^{-1}$", 1.5*Z);
+figureNext();
+MasterSkewb();
+makeMove(AC/2, 120, 1.4);
+label("$R$", 1.5*Z);
+figureNext();
+MasterSkewb();
+makeMove(AG/2, 120, 1.4);
+label("$L$", 1.5*Z);
+figureNext();
+MasterSkewb();
+makeMove(AC/2, -120, 1.4);
+label("$R^{-1}$", 1.5*Z);
+figureEnd();

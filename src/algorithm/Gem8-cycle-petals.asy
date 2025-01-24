@@ -1,0 +1,31 @@
+include "algorithm.asyhdr";
+include "../data/Gem8.dat";
+
+setView(0, 0, -45);
+
+figureBegin();
+Gem8();
+highline(AF--FD--GD);
+highline(CD--HE--FE);
+highline(AD--EC--FC);
+makeChange(AF--FD--GD, AD--EC--FC, AB-0.05*(X+Y+Z));
+makeChange(CD--HE--FE, AF--FD--GD, 2*(-X-Y+Z)/5);
+makeChange(AD--EC--FC, CD--HE--FE, FA+0.1*(X-Y-Z));
+label("$\times 5$", 1.15*DE);
+figureLine();
+Gem8();
+makeMove((-X-Y-Z)/2, -120, 0.6);
+label("$L^{-1}$", 1.15*DE);
+figureNext();
+Gem8();
+makeMove((-X-Y+Z)/4, 120, 1);
+label("$U$", 1.15*DE);
+figureNext();
+Gem8();
+makeMove((-X-Y-Z)/2, 120, 0.6);
+label("$L$", 1.15*DE);
+figureNext();
+Gem8();
+makeMove((-X-Y+Z)/4, -120, 1);
+label("$U^{-1}$", 1.15*DE);
+figureEnd();

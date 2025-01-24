@@ -1,0 +1,47 @@
+include "algorithm.asyhdr";
+include "../data/Cube4.dat";
+
+setView(135, -35.2, 0);
+
+figureBegin();
+Cube4();
+highline(CA4CE--CA2C4EG--CACEG--CA2E4CG);
+highline(CC4AG--CA2C4EG--CACEG--CC2G4AE);
+highline(CC4AD--CA2C4BD--CABCD--CC2D4AB);
+makeChange(CC4AG--CA2C4EG--CACEG--CC2G4AE, CA4CE--CA2C4EG--CACEG--CA2E4CG, X/4+1.1*Z);
+makeChange(CA4CE--CA2C4EG--CACEG--CA2E4CG, CC4AD--CA2C4BD--CABCD--CC2D4AB, X+Z);
+makeChange(CC4AD--CA2C4BD--CABCD--CC2D4AB, CC4AG--CA2C4EG--CACEG--CC2G4AE, X-Y/4+Z);
+figureLine();
+Cube4();
+makeMove(X/4, 90, 1.5);
+label("$l$", 1.7*Z);
+figureNext();
+Cube4();
+makeMove(Z/4, -90, 1.5);
+label("$u^{-1}$", 1.7*Z);
+figureNext();
+Cube4();
+makeMove(X/4, -90, 1.5);
+label("$l^{-1}$", 1.7*Z);
+figureNext();
+Cube4();
+makeMove(3*Z/4, 90, 1.5);
+label("$U$ ($U^2$, $U^3$)", 1.7*Z);
+figureLine();
+Cube4();
+makeMove(X/4, 90, 1.5);
+label("$l$", 1.7*Z);
+figureNext();
+Cube4();
+makeMove(Z/4, 90, 1.5);
+label("$u$", 1.7*Z);
+figureNext();
+Cube4();
+makeMove(X/4, -90, 1.5);
+label("$l^{-1}$", 1.7*Z);
+figureNext();
+Cube4();
+makeMove(3*Z/4, -90, 1.5);
+label("$U^{-1}$ ($U^{-2}$, $U^{-3}$)", 1.7*Z);
+figureEnd();
+

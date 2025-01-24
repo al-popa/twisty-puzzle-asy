@@ -1,0 +1,31 @@
+include "algorithm.asyhdr";
+include "../data/Gem34.dat";
+
+setView(45, 0, 0);
+
+figureBegin();
+Gem3();
+label("$\times 5$", 1.1*BG);
+highline(LC--LD--CF);
+highline(LE--LF--FI);
+highline(KC--KD--CG);
+makeChange(LC--LD--CF, KC--KD--CG, 1.05*CB);
+makeChange(KC--KD--CG, LE--LF--FI, 1.0*PG+0.2*KF);
+makeChange(LE--LF--FI, LC--LD--CF, 0.4*(2*PG+BG));
+figureLine();
+Gem3();
+makeMove(-7*Y/8, -90, 0.7);
+label("$L^{-1}$", 1.1*BG);
+figureNext();
+Gem3();
+makeMove(5*(X-Y+Z)/12, 120, 0.8);
+label("$U$", 1.1*BG);
+figureNext();
+Gem3();
+makeMove(-7*Y/8, 90, 0.7);
+label("$L$", 1.1*BG);
+figureNext();
+Gem3();
+makeMove(5*(X-Y+Z)/12, -120, 0.8);
+label("$U^{-1}$", 1.1*BG);
+figureEnd();

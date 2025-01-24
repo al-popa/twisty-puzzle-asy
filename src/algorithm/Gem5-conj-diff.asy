@@ -1,0 +1,33 @@
+include "algorithm.asyhdr";
+include "../data/Gem5.dat";
+
+setView(0, 0, 45);
+
+figureBegin();
+Gem5();
+highline(JA--ED--DB);
+highline(HA--DD--FD);
+highline(HC--DA--AC);
+highline(AC--AF--DE--DA);
+highline(DB--DE--EE--ED);
+highline(DD--DF--FF--FD);
+makeChange(AC--AF--DE--DA, DB--DE--EE--ED, (3*DE+AF+EE)/4);
+makeChange(DB--DE--EE--ED, DD--DF--FF--FD, DC/5+3*(DE+DF)/4);
+makeChange(DD--DF--FF--FD, AC--AF--DE--DA, (DE+DF+3*(DA+DD))/5);
+figureLine();
+Gem5();
+makeMove((HA+HB+HC)/4, 120, 0.95);
+label("$R$", (AF+DE+EE)/2);
+figureNext();
+Gem5();
+makeMove((AF+DE+EE)/6, -120, 1.0);
+label("$U^{-1}$", (AF+DE+EE)/2);
+figureNext();
+label("$R^{-1}$", (AF+DE+EE)/2);
+Gem5();
+makeMove((HA+HB+HC)/4, -120, 0.95);
+figureNext();
+Gem5();
+makeMove((AF+DE+EE)/6, 120, 1.0);
+label("$U$", (AF+DE+EE)/2);
+figureEnd();

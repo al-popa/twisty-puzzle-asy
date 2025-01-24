@@ -1,0 +1,33 @@
+include "algorithm.asyhdr";
+include "../data/Tuttminx.dat";
+
+setView(32, 0, -18);
+
+figureBegin();
+Tuttminx();
+highline(EDBH--BB2D--EBDH);
+highline(EBDG--BB2D--EDBG);
+highline(EGBD--BB2G--EBGD);
+highline(EBGI--BB2G--EGBI);
+highline(EIBG--BB2I--EBIG);
+highline(EBIK--BB2I--EIBK);
+makeChange(EBDG--BB2D--EDBG, EGBD--BB2G--EBGD, 0.52*(EDBG+EGBD));
+makeChange(EBGI--BB2G--EGBI, EIBG--BB2I--EBIG, 0.52*(EGBI+EIBG));
+makeChange(EBIK--BB2I--EIBK, EBDG--BB2D--EDBG, 1.1*DBG+0.1*DBH);
+figureLine();
+Tuttminx();
+makeMove(0.47*(EDBG+EGBD), -120, 0.5);
+label("$L^{-1}$", AG);
+figureNext();
+Tuttminx();
+makeMove(0.47*(EGBI+EIBG), 120, 0.5);
+label("$R$", AG);
+figureNext();
+Tuttminx();
+makeMove(0.47*(EDBG+EGBD), 120, 0.5);
+label("$L$", AG);
+figureNext();
+Tuttminx();
+makeMove(0.47*(EGBI+EIBG), -120, 0.5);
+label("$R^{-1}$", AG);
+figureEnd();

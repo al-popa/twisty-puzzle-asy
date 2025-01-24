@@ -1,0 +1,34 @@
+include "algorithm.asyhdr";
+include "../data/Pyraminx4.dat";
+
+setView(-15, -15, -46.8);
+
+figureBegin();
+Pyraminx4();
+highline(CACD--CCAD--CDAC);
+highline(CABC--CBAC--CCAB);
+highline(BA2C--CACD--CCAD);
+highline(BA2D--CACD--CDAC);
+highline(BC2D--CCAD--CDAC);
+highline(BA2C--CABC--CCAB);
+makeChange(CACD--CCAD--CDAC, CABC--CBAC--CCAB, 1.1*(-Y+(X+Z)/6));
+makeChange(BC2D--CCAD--CDAC, BA2D--CACD--CDAC, 0.34*(-2*X-Y+2*Z));
+makeChange(BA2D--CACD--CDAC, BA2C--CABC--CCAB, -1.1*Y);
+makeChange(BA2C--CACD--CCAD, BC2D--CCBD--CDBC, 1.1*Z);
+figureLine();
+Pyraminx4();
+makeMove((-X-Y-Z)/12, 120, 1.2);
+label("$l$", 1.1*(-X+Y+Z));
+figureNext();
+Pyraminx4();
+makeMove((X-Y+Z)/12, -120, 1.2);
+label("$r^{-1}$", 1.1*(-X+Y+Z));
+figureNext();
+Pyraminx4();
+makeMove((-X-Y-Z)/12, -120, 1.2);
+label("$l^{-1}$", 1.1*(-X+Y+Z));
+figureNext();
+Pyraminx4();
+makeMove((X-Y+Z)/12, 120, 1.2);
+label("$r$", 1.1*(-X+Y+Z));
+figureEnd();
