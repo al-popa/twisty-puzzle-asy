@@ -20,7 +20,7 @@ The library code is located in `lib` folder and consist of:
 * `sun/config` - different face configurations of sun twisty puzzles,
 * `sun/sticker` - examples of stickers design for sun twisty puzzles.
 
-`out` folder contains PDF and PNG output all these examples, its structure resembles that of `src` folder. When model is 3D, the PDF output is prepared as document containing 3D model, which can be interactively previewed in recent Adobe Acrobat Reader.
+`out` folder contains PDF and PNG output of all these examples, its structure resembles that of `src` folder. When model is 3D, the PDF output is prepared as document containing 3D model, which can be interactively previewed in recent Adobe Acrobat Reader.
 
 Asymptote supports output in more formats. Consult `lib/Makefile` for options.
 
@@ -31,7 +31,7 @@ The easiest way to start creating with Twisty Puzzle Asy is to copy and modify a
 * `make-pdf-3D.sh <file>.asy` to create PDF page with embedded 3D model.
 
 ## Creation of sketches
-![DaYan Hexadecagon](out/model/png/Hexadecagon.png)
+<p align="center"><img src="out/model/png/Hexadecagon.png" width="70%" alt="DaYan Hexadecagon"/></p>
 
 ### Vertex declaration
 Asymptote uses Cartesian coordinate system to represent points. Type `pair` is used for 2D, `triple` for for 3D:
@@ -55,17 +55,17 @@ triple B = -0.2 * X + 1.5 * Y - 2.7 * Z;
 Asymptote uses types `transform` and `transform3` for transformation of `pair`s and `triple`s. However, for twisty puzzles moves only rotations are useful:
 ```
 transform rotationIn2D = rotate(A, 45); // Rotation by 45 degree counter-clockwice with the center in pair A
-transform3 rotationIn3D = rotate(B, -120); // Rotation by -120 degree counter-clockwice with axes O - B toward camera
+transform3 rotationIn3D = rotate(B, -120); // Rotation by 120 degree clockwice with axis O--B toward camera
 ```
 
 `rubiks.asyhdr` defines function `setView` to specify camera orientation:
 ```
-setView(-65, 25, 75); // Degree rotation with axes X, Y and Z.
+setView(-65, 25, 75); // Angle of rotation expressed in degrees with axes X, Y and Z.
 ```
 This function affects values of `X`, `Y` and `Z`. If all the vertices are defined using them, all geometry is transformed.
 
 ### Polygons and stickers
-Asymptote defines paths as points connected with different operators. For twisty puzzles needs, polygonal path are most often used. They can be created using `--` operator. `rubiks.asyhdr` defines functions `polygon` to construct colored polygon, or `stick` to construct a polygon and put a colorful sticker on it. Optionally, you can specify the transform in last parameter:
+Asymptote defines paths as points connected using different operators. For twisty puzzles needs, polygonal paths are most often used. They can be created using `--` operator. `rubiks.asyhdr` defines functions `polygon` to construct colored polygon, or `stick` to construct a polygon and put a colorful sticker on it. Optionally, you can specify the transform in their last parameter:
 ```
 polygon(X--Y--(X+Y), Navi);
 stick(O--X--Y, Turquoise, rotationIn3D);
@@ -77,42 +77,147 @@ stick(O--X--Y, Black); // Black sticker on White body
 ```
 
 ## Algorithm sequences
-![Simple algorithm of DaYan Gem VII](out/algorithm/png/Gem7-petals.png)
+<p align="denter"><img src="out/algorithm/png/Gem7-petals.png" width="100%" alt="Simple algorithm of DaYan Gem VII"></p>
+
 `algorithm.asyhdr` redefines function `stick` to always use grey color. This is done to permit reusing of existing functions for model creation. When some sticker needs to be highlighted (with darker shade of grey), you can use `highline` instead of or after `stick`:
 ```
 highline(O--X--Y);
 ```
 
-To start a sequence of images, use `figureBegin` without arguments. Use `figureNext` to move to a new image next to existing, `figureLine` to start new line below existing and `figureEnd` at the end:
+To start a sequence of images, use `figureBegin` without arguments. Use `figureNext` to move to a new image next to existing, `figureLine` to start new line below existing and `figureEnd` to finish a sequence:
 ```
 figureBegin();
 // Draw something in the 1st image
 figureNext();
-// Draw something right to the 1st image
+// Draw something next to the 1st image
 figureNext();
-// Draw something right to the 2nd image
+// Draw something next to the 2nd image
 figureLine()
 // Draw something down to the 1st line
 figureNext();
-// Draw something right to previous image at the 2nd line
+// Draw something next to previous image at the 2nd line
 figureEnd();
 ```
-The number of lines is not limited as well as the number of images in line.
+The number of rows is not limited as well as the number of images in a row.
 
-Additionally to functions to layout the sequence of images, `algorithm.asyhdr` defines several drawing functions: `makeChange(<begin-sticker>, <end-sticker>)` to draw blue arrow indicating the initial and final position of some sticker after applying some algorithm, `makeMove(<center>, <angle>)` to draw blue round arrow of a twist and `makeTurn(<angle>)` to draw black round arrow of whole puzzle turn. These functions allow also optional arguments, see examples under `src/algorithm` for details.
+Additionally to functions to layout the sequence of images, `algorithm.asyhdr` defines several drawing functions: `makeChange(<begin-sticker>, <end-sticker>)` draws blue arrow indicating the position of some sticker before and after applying some algorithm. This arrow is sensible to sticker orientation. `makeMove(<center>, <angle>)` function draws blue round arrow of a twist, `makeTurn(<angle>)` draws black round arrow of turn of whole puzzle. These functions allow also optional arguments, see examples under `src/algorithm` for details.
 
 ## Face configuration for sun twisty puzzles
 `sticker.asyhdr` and `sun.asyhdr` modules deal with sun twisty puzzles. To describe a face of a such puzzle, an array of boolean values is used. The length of this array corresponds to order of twist axis, each `true` value corresponds to a vertex stop, `false` corresponds to an edge stop:
 ```
-bool[] conf = new bool[] {true, false, true, true, false, true, false, true, true, false}; // 10-fold face of Sky Eyes rhombic face
+bool[] conf = new bool[] {true, false, true, true, false, true, false, true, true, false}; // 10-fold rhomb face of Sky Eyes
 ```
 
 ### Creation of sticker configurations and designs for sun twisty puzzles
-`sticker.asyhdr` module defines functions `drawStickerConfiguration(<configuration>)` to sketch the face configuration:
-![Face configuration of Sky Eyes](out/sun/config/png/10-2a.png)
+`sticker.asyhdr` module defines function `drawStickerConfiguration(<configuration>)` to sketch the face configuration:
+<p align="center"><img src="out/sun/config/png/10-2a.png" width="50%" alt="Face configuration of Sky Eyes"></p>
 
-Additionally `drawFaceStickers(<configuration>, <color>)` and `drawVertexStickers(<axis-order>, <color>)` functions are defined to prepare stickers layout of a face and cluster of 4 vertices to be used by cutter plotter. Unfortunately, the scaling factor is quite imprecise, so optional parameters are introduced to tune the output for real needs. See `src/sun/sticker` for examples
-![Face stickers for Galactic Eyes](out/sun/sticker/pdf/sun-face.pdf).
+Additionally `drawFaceStickers(<configuration>, <color>)` and `drawVertexStickers(<axis-order>, <color>)` functions are defined to prepare stickers layout of a face and cluster of 4 vertices to be used by cutter plotter. Unfortunately, the scaling and tolerance factors are quite imprecise, so optional parameters are introduced to tune the output for real needs. See `src/sun/sticker` for examples: ![face stickers for Galactic Eyes](out/sun/sticker/pdf/sun-face.pdf), ![vertex stickers for Galactic Eyes](out/sun/sticker/pdf/sun-4-vertex.pdf).
 
 ## Creation of sketches of sun twisty puzzles
-![Sun Pentagonal Hexecontahedron in right configuration](out/sun/model/png/Pentagonal-Hexecontahedron-R.png)
+<p align="center"><img src="out/sun/model/png/Pentagonal-Hexecontahedron-R.png" width="80%" alt="Sun Pentagonal Hexecontahedron in right configuration"></p>
+
+`sun.asyhdr` defines several structures for sun puzzles needs:
+* `face` to represent puzzle faces,
+* `vertex4` to represent clusters of 4 vertices,
+* `vertex5` to represent clusters of 5 vertices (this type of vertices is more like a 5-fold face, it it not yet realized in any produced sun puzzle).
+
+A `face` contains all the stickers of some face, which usually have the same color. To construct a `face` call `constructFace`, to draw it call `drawFace`:
+```
+bool[] conf = new bool[] {true, false, true, true, false, true, false, true, true, false};
+face f = constructFace(X+Y, X+Y+Z, conf); // Constructs a face with center in X+Y and initial stop at X+Y+Z
+drawFace(f, Blue); // Draws face f with Blue color
+```
+
+It is also possible to draw a face whose some or all stickers are in mid-turn. For this, function `drawFace` accepts optional arguments:
+```
+drawFace(f, Blue, rotate(-20, X+Y)); // Draws face f rotated by 20 degrees clockwise with axis O--(X+Y) and Blue color
+drawFace(f, Blue, rotate(-20, X-Z), 1); // Draws face f whose elements near the 1st stop of configuration are rotated
+```
+Besides drawing actual face, `drawFace` draws also internal surfaces otherwise hidden in case optional arguments are used, so there is no need to manually create them.
+
+Before creating or drawing of clusters of vertices, the faces need to be _glued_. This is necessary, because almost all such puzzles are [fudged](https://twistypuzzles.com/twistypedia/index.php/Fudging), or have imprecise geometry, and their vertices do not always match. To do so, call `glueFaces`, which accepts 2 adjacent faces or 3 faces with common 3-vertex:
+```
+glueFaces(a, b);
+glueFaces(a, c, c);
+```
+These functions try to detect matching vertices of these faces and change their coordinates by their average position. This is done up to expected precision, which for sun sticker condiguration is considered 1/10 of smallest sticker side. This expected precision is computed and returned by both variants of function. Additionally, new precision can be passed to both variants of function as the last optional argument. In this case it is not computed. It may happen that real precision for faces glueing in not sufficient. In this case try to pass a larger value as precision to `glueFaces`:
+```
+real precision = 5 * glueFaces(a, b); // Consider real precision 5x of expected precision
+glueFaces(b, c, precision); // Use new precision
+glueFaces(c, d, precision); // Use new precision
+```
+Even if the expected precision is sufficient for faces glueing, it is better to pass it to each `glueFaces` call starting from the 2nd. In this case it is not computed again and again.
+
+After glueing the faces it is possible to construct and draw clusters of 4 vertices:
+```
+vertex4 v4 = constructVertex4(a, b, c, d); // Constructs a cluster of 4 vertices
+drawVertex4(v4, Tan); // Draws cluster of 4 vertices with Tan color
+```
+The faces passed to `constructVertex4` should be glued (`a-b`, `b-c`, `c-d` and `d-a`) and their order should be counter-clockwise when looking at this vertex cluster.
+
+Like in case of faces, `drawVertex4` accepts optional arguments for transform and index. In this case, 2 vertices out of 4 are drawn rotated. These 2 vertices belong to the face whose position in `constructVertex4` equals to parameter passed to `drawVertex4` (starting with 0):
+```
+vertex4 v4 = constructVertex4(a, b, c, d); // Constructs a cluster of 4 vertices
+drawVertex4(v4, Tan, <transform>, 2); // Draws rotated the vertices belonging to c whose index in argument list is 2
+```
+
+Like drawing faces, when optional arguments are passed to `drawVertex4`, the function takes care of all otherwise hidden surfaces to be drawn.
+
+Clusters of 5 vertices (presented in Tan color at the image above) are constructed and drawn in similar manner:
+```
+vertex5 v5 = constructVertex5(a, b, c, d, e);
+drawVertex5(v5, Tan);
+```
+
+Unlike cluster of 4 vertices containing only vertex parts, cluster of 5 vertices besides vertex parts contains intermittent parts, which can be vertices or edges. The 3rd optional boolean argument passed to `drawVertex5` indicates which configuration to use:
+```
+drawVertex5(v5, Tan, true); // Default, use vertices in between
+drawVertex5(v5, Tan, false); // Use edges in between
+```
+
+Finally, 2 more arguments can be passed to `drawVertex5` to transform 2 out of 5 vertices, similar to `drawVertex4`:
+```
+vertex5 v5 = constructVertex5(a, b, c, d, e);
+drawVertex5(v5, Tan, true, <transform>, 2); // Draws rotated the vertices belonging to c whose index in argument list is 2
+```
+As before, in case of passing the last 2 arguments to `drawVertex5`, it takes case of drawing  surfaces otherwise hidden.
+
+## Manually embed 3D models in (La)TeX documents
+BASH script `lib/make-pdf-3D.sh` creates one PDF page with embedded 3D model out of Asy source code. The contents of this page is very specific, and often is not what you want. You can use this script as a code snippet to manually embed 3D models produced by this library into your PDF documents. For this, you need `media9` (La)TeX package.
+
+You can define the following macro in preambula of your TeX documents:
+```
+\usepackage[xetex, 3Dtoolbar, 3Dmenu]{media9} % This is for using xetex processor, for pdflatex use latex instead
+...
+\newcommand{\includemodel}[1]{
+\begin{center}
+\includemedia[3Droo = 500, width = 0.8\textwidth]{
+\includegraphics[width = 0.8\textwidth]{#1.pdf}
+}{#1.prc}
+```
+
+Then you need `<model>.pdf` image. It is used to preview your model when 3D mode is inactive:
+```
+asy -f "pdf" <model>.asy
+```
+Also, you need `<model>.prc` in actual 3D format. To produce it, use:
+```
+asy -f "prc" <model>.asy
+```
+It is a good idea to _not modify_ your Asy code between producing PDF and PRC files.
+
+Next, somewhere in your TeX document you can inclde your `<model>` as:
+```
+\includemodel{<model>}
+```
+Of course, the model can be included inside a `figure` environment:
+```
+\begin{figure}[ht!]
+\includemodel{<model>}
+\caption{Some fancy 3D model.}\label{some-fancy-model}
+\end{figure}
+```
+
+## Disclamer
+I created this library for my own needs. I share it in a hope to be useful also for others. I have no plan to actively develop or support this project further. Still, I am open to obvious bug reporting (and especially fixing), suggesions and other improvements. You can reach me (Alexandru Popa) by email address alpopa at gmail dot com.
