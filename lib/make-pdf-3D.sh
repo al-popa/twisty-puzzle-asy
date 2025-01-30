@@ -14,7 +14,6 @@ mv $f.pdf view.pdf
 
 echo '\documentclass[a4paper, 12pt]{article}' > $f.tex
 echo '\usepackage{fontspec}' >> $f.tex
-echo '\setmainfont{Linux Libertine O}' >> $f.tex
 echo '\usepackage[margin = 2cm]{geometry}' >> $f.tex
 echo '\usepackage{graphicx}' >> $f.tex
 echo '\usepackage[xetex, 3Dtoolbar, 3Dmenu]{media9}' >> $f.tex

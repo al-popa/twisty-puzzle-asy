@@ -32,6 +32,17 @@ struct vertex5
 	transform3[] T;
 };
 
+struct move
+{
+	transform3 tr;
+	int idx;
+	void operator init(transform3 tr, int idx)
+	{
+		this.tr = tr;
+		this.idx = idx;
+	}
+};
+
 real computeCurvatureExtent(real k, real r, real l)
 {
 	real result = 0;
@@ -164,14 +175,33 @@ face constructFace(triple Center, triple First, bool[] conf, real k = 0, triple 
 	return result;
 }
 
-void drawFace(face f, pen color, transform3 t = identity4, int tridx = -1)
+transform3 matchMove(move[] mv ... int[] idx)
+{
+	transform3 result = identity4;
+	bool found = false;
+	for (int i = 0; !found && i < mv.length; ++i)
+	{
+		for (int j = 0; !found && j < idx.length; ++j)
+		{
+			if (mv[i].idx == idx[j])
+			{
+				result = mv[i].tr;
+				found = true;
+			}
+		}
+	}
+	return result;
+}
+
+void drawFace(face f, pen color ... move[] mv)
 {
 	path3 center = nullpath3;
-	transform3 tr;
+	transform3 tr = identity4;
+	int tridx = -1;
 	for (int i = 0; i < f.conf.length; ++i)
 	{
+		tr = matchMove(mv, -1, (i - 1) % f.conf.length, i, (i + 1) % f.conf.length);
 		center = center--f.P[i];
-		tr = tridx == -1 || (i - 1) % f.conf.length == tridx || i == tridx || (i + 1) % f.conf.length == tridx ? t : identity4;
 		if (f.conf[i])
 		{
 			stick(f.E[i - 1]--f.R[i - 1]--f.E[i]--f.V[i], color, tr);
@@ -180,34 +210,50 @@ void drawFace(face f, pen color, transform3 t = identity4, int tridx = -1)
 		{
 			stick(f.E[i - 1]--f.R[i - 1]--f.E[i], color, tr);
 		}
-		tr = tridx == -1 || i == tridx || (i + 1) % f.conf.length == tridx ? t : identity4;
+		tr = matchMove(mv, -1, i, (i + 1) % f.conf.length);
 		stick(f.R[i - 1]--f.P[i]--f.R[i]--f.E[i], color, tr);
-		tr = tridx == -1 || i == tridx ? t : identity4;
+		tr = matchMove(mv, -1, i);
 		stick(f.P[i - 1]--f.P[i]--f.R[i - 1], color, tr);
 	}
-	tr = tridx == -1 ? t : identity4;
-	stick(center, color, tr);
+	stick(center, color, matchMove(mv, -1));
 
-	if (t != identity4 && tridx >= 0)
+	for (int i = 0; i < mv.length; ++i)
 	{
-		triple A = rotate(120, f.core, f.V[tridx - 1]) * f.R[tridx - 2];
-		triple D = rotate(-120, f.core, f.V[tridx + 1]) * f.R[tridx];
-		triple B = f.R[tridx - 2]+A-f.E[tridx - 2];
-		triple C = f.R[tridx]+D-f.E[tridx + 1];
-		polygon(f.R[tridx - 2]--f.E[tridx - 2]--A--B, Background);
-		polygon(f.R[tridx - 2]--f.E[tridx - 2]--A--B, Background, t);
-		polygon(f.R[tridx]--f.E[tridx + 1]--D--C, Background);
-		polygon(f.R[tridx]--f.E[tridx + 1]--D--C, Background, t);
-		A = B;
-		B = f.P[tridx - 1]+A-f.R[tridx - 2];
-		D = C;
-		C = f.P[tridx]+D-f.R[tridx];
-		polygon(f.P[tridx - 1]--f.R[tridx - 2]--A--B, Background);
-		polygon(f.P[tridx - 1]--f.R[tridx - 2]--A--B, Background, t);
-		polygon(f.P[tridx]--f.R[tridx]--D--C, Background);
-		polygon(f.P[tridx]--f.R[tridx]--D--C, Background, t);
-		polygon(f.P[tridx - 1]--B--C--f.P[tridx], Background);
-		polygon(f.P[tridx - 1]--B--C--f.P[tridx], Background, t);
+		if (mv[i].idx != -1)
+		{
+			tr = mv[i].tr;
+			tridx = mv[i].idx;
+			triple A = rotate(120, f.core, f.V[tridx - 1]) * f.R[tridx - 2];
+			triple D = rotate(-120, f.core, f.V[tridx + 1]) * f.R[tridx];
+			triple B = f.R[tridx - 2]+A-f.E[tridx - 2];
+			triple C = f.R[tridx]+D-f.E[tridx + 1];
+			polygon(f.R[tridx - 2]--f.E[tridx - 2]--A--B, Background);
+			polygon(f.R[tridx - 2]--f.E[tridx - 2]--A--B, Background, tr);
+			polygon(f.R[tridx]--f.E[tridx + 1]--D--C, Background);
+			polygon(f.R[tridx]--f.E[tridx + 1]--D--C, Background, tr);
+			A = B;
+			B = f.P[tridx - 1]+A-f.R[tridx - 2];
+			D = C;
+			C = f.P[tridx]+D-f.R[tridx];
+			polygon(f.P[tridx - 1]--f.R[tridx - 2]--A--B, Background);
+			polygon(f.P[tridx - 1]--f.R[tridx - 2]--A--B, Background, tr);
+			polygon(f.P[tridx]--f.R[tridx]--D--C, Background);
+			polygon(f.P[tridx]--f.R[tridx]--D--C, Background, tr);
+			polygon(f.P[tridx - 1]--B--C--f.P[tridx], Background);
+			polygon(f.P[tridx - 1]--B--C--f.P[tridx], Background, tr);
+		}
+	}
+}
+
+void drawFace(face f, pen color, transform3 t, int tridx = -1)
+{
+	if (t == identity4)
+	{
+		drawFace(f, color);
+	}
+	else
+	{
+		drawFace(f, color, move(t, tridx));
 	}
 }
 
@@ -344,26 +390,44 @@ vertex4 constructVertex4(face a, face b, face c, face d)
 	return result;
 }
 
-void drawVertex4(vertex4 v, pen color, transform3 t = identity4, int tridx = -1)
+void drawVertex4(vertex4 v, pen color ... move[] mv)
 {
-	transform3 tr;
+	transform3 tr = identity4;
+	int tridx = -1;
 	for (int i = 0; i < v.E.length; ++i)
 	{
-		tr = i == tridx || (i + 1) % v.E.length == tridx ? t : identity4;
+		tr = matchMove(mv, i, (i + 1) % v.E.length);
 		stick(v.center--v.E[i]--v.V[i]--v.E[i + 1], color, tr);
 	}
-	if (t != identity4 && tridx != -1)
+	for (int i = 0; i < mv.length; ++i)
 	{
-		triple A = rotate(-120, v.core[tridx], v.V[tridx]) * v.center;
-		triple B = v.center+A-v.E[tridx + 1];
-		triple C = rotate(120, v.core[tridx - 1], v.V[tridx - 1]) * v.center;
-		triple D = v.center+C-v.E[tridx - 1];
-		polygon(v.center--v.E[tridx + 1]--A--B, Background);
-		polygon(v.center--v.E[tridx + 1]--A--B, Background, t);
-		polygon(v.center--v.E[tridx - 1]--C--D, Background);
-		polygon(v.center--v.E[tridx - 1]--C--D, Background, t);
-		polygon(v.center--B--D, Background);
-		polygon(v.center--B--D, Background, t);
+		if (mv[i].idx != -1)
+		{
+			tr = mv[i].tr;
+			tridx = mv[i].idx;
+			triple A = rotate(-120, v.core[tridx], v.V[tridx]) * v.center;
+			triple B = v.center+A-v.E[tridx + 1];
+			triple C = rotate(120, v.core[tridx - 1], v.V[tridx - 1]) * v.center;
+			triple D = v.center+C-v.E[tridx - 1];
+			polygon(v.center--v.E[tridx + 1]--A--B, Background);
+			polygon(v.center--v.E[tridx + 1]--A--B, Background, tr);
+			polygon(v.center--v.E[tridx - 1]--C--D, Background);
+			polygon(v.center--v.E[tridx - 1]--C--D, Background, tr);
+			polygon(v.center--B--D, Background);
+			polygon(v.center--B--D, Background, tr);
+		}
+	}
+}
+
+void drawVertex4(vertex4 v, pen color, transform3 t, int tridx = -1)
+{
+	if (t == identity4)
+	{
+		drawVertex4(v, color);
+	}
+	else
+	{
+		drawVertex4(v, color, move(t, tridx));
 	}
 }
 
@@ -485,38 +549,35 @@ vertex5 constructVertex5(face a, face b, face c, face d, face e)
 	return result;
 }
 
-void drawVertex5(vertex5 v, pen color, bool conf = true, transform3 t = identity4, int tridx = -1)
+void drawVertex5(vertex5 v, pen color, bool conf = true ... move[] mv)
 {
-	if (tridx != -1)
-	{
-		tridx = 2 * tridx + 1;
-	}
+	transform3 tr = identity4;
+	int tridx = -1;
 	int idx;
-	transform3 tr;
 	for (int i = 0; i < 10; ++i)
 	{
 		if (i % 2 == 0)
 		{
-			tr = (i - 1) % v.V.length == tridx || (i + 1) % v.V.length == tridx ? t : identity4;
+			tr = matchMove(mv, (int) ((i - 1) % v.V.length / 2), (int) ((i + 1) % v.V.length / 2));
 			stick(v.V[i]--v.E[i - 1]--v.R[i]--v.E[i], color, tr);
 		}
 		else if (conf)
 		{
 			idx = (int) (i / 2);
-			tr = i == tridx ? t : identity4;
+			tr = matchMove(mv, idx);
 			stick(v.V[i]--v.E[i - 1]--v.R[i - 1]--v.B[idx], color, tr);
 			stick(v.V[i]--v.E[i]--v.R[i + 1]--v.B[idx], color, tr);
 			polygon(v.R[i - 1]--v.R[i + 1]--v.B[idx], Background, tr);
 		}
 		else
 		{
-			tr = i == tridx ? t : identity4;
+			tr = matchMove(mv, (int) (i / 2));
 			stick(v.E[i - 1]--v.R[i]--v.E[i], color, tr);
 			stick(v.P[i - 1]--v.R[i]--v.P[i], color, tr);
 		}
 		if (!conf)
 		{
-			tr = i == tridx || (i + 1) % v.R.length == tridx ? t : identity4;
+			tr = matchMove(mv, (int) (i / 2));
 			stick(v.E[i]--v.R[i]--v.P[i]--v.R[i + 1], color, tr);
 		}
 	}
@@ -529,34 +590,50 @@ void drawVertex5(vertex5 v, pen color, bool conf = true, transform3 t = identity
 		stick(v.R[0]--v.P[0]--v.P[1]--v.R[2]--v.P[2]--v.P[3]--v.R[4]--v.P[4] //
 		--v.P[5]--v.R[6]--v.P[6]--v.P[7]--v.R[8]--v.P[8]--v.P[9], color);
 	}
-	if (t != identity4 && tridx != -1)
+	for (int i = 0; i < mv.length; ++i)
 	{
-		triple A = v.T[tridx - 1] * v.R[tridx - 1];
-		triple B = v.R[tridx - 1] + A - v.E[tridx - 2];
-		triple D = v.T[tridx] * v.R[tridx + 1];
-		triple C = v.R[tridx + 1] + D - v.E[tridx + 1];
-		polygon(v.R[tridx - 1]--v.E[tridx - 2]--A--B, Background);
-		polygon(v.R[tridx - 1]--v.E[tridx - 2]--A--B, Background, t);
-		polygon(v.R[tridx + 1]--v.E[tridx + 1]--D--C, Background);
-		polygon(v.R[tridx + 1]--v.E[tridx + 1]--D--C, Background, t);
-		if (conf)
+		tr = mv[i].tr;
+		tridx = 2 * mv[i].idx + 1;
+		if (tridx != -1)
 		{
-			polygon(v.R[tridx - 1]--B--C--v.R[tridx + 1], Background);
-			polygon(v.R[tridx - 1]--B--C--v.R[tridx + 1], Background, t);
-		}
-		else
-		{
-			A = B;
-			D = C;
-			B = v.P[tridx - 1] + A - v.R[tridx - 1];
-			C = v.P[tridx] + D - v.R[tridx + 1];
-			polygon(v.P[tridx - 1]--v.R[tridx - 1]--A--B, Background);
-			polygon(v.P[tridx - 1]--v.R[tridx - 1]--A--B, Background, t);
-			polygon(v.P[tridx]--v.R[tridx + 1]--D--C, Background);
-			polygon(v.P[tridx]--v.R[tridx + 1]--D--C, Background, t);
-			polygon(v.P[tridx - 1]--B--C--v.P[tridx], Background);
-			polygon(v.P[tridx - 1]--B--C--v.P[tridx], Background, t);
+			triple A = v.T[tridx - 1] * v.R[tridx - 1];
+			triple B = v.R[tridx - 1] + A - v.E[tridx - 2];
+			triple D = v.T[tridx] * v.R[tridx + 1];
+			triple C = v.R[tridx + 1] + D - v.E[tridx + 1];
+			polygon(v.R[tridx - 1]--v.E[tridx - 2]--A--B, Background);
+			polygon(v.R[tridx - 1]--v.E[tridx - 2]--A--B, Background, tr);
+			polygon(v.R[tridx + 1]--v.E[tridx + 1]--D--C, Background);
+			polygon(v.R[tridx + 1]--v.E[tridx + 1]--D--C, Background, tr);
+			if (conf)
+			{
+				polygon(v.R[tridx - 1]--B--C--v.R[tridx + 1], Background);
+				polygon(v.R[tridx - 1]--B--C--v.R[tridx + 1], Background, tr);
+			}
+			else
+			{
+				A = B;
+				D = C;
+				B = v.P[tridx - 1] + A - v.R[tridx - 1];
+				C = v.P[tridx] + D - v.R[tridx + 1];
+				polygon(v.P[tridx - 1]--v.R[tridx - 1]--A--B, Background);
+				polygon(v.P[tridx - 1]--v.R[tridx - 1]--A--B, Background, tr);
+				polygon(v.P[tridx]--v.R[tridx + 1]--D--C, Background);
+				polygon(v.P[tridx]--v.R[tridx + 1]--D--C, Background, tr);
+				polygon(v.P[tridx - 1]--B--C--v.P[tridx], Background);
+				polygon(v.P[tridx - 1]--B--C--v.P[tridx], Background, tr);
+			}
 		}
 	}
 }
 
+void drawVertex5(vertex5 v, pen color, bool conf = true, transform3 t, int tridx = -1)
+{
+	if (t == identity4)
+	{
+		drawVertex5(v, color);
+	}
+	else
+	{
+		drawVertex5(v, color, move(t, tridx));
+	}
+}

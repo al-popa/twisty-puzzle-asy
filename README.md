@@ -120,7 +120,8 @@ Additionally `drawFaceStickers(<configuration>, <color>)` and `drawVertexSticker
 `sun.asyhdr` defines several structures for sun puzzles needs:
 * `face` to represent puzzle faces,
 * `vertex4` to represent clusters of 4 vertices,
-* `vertex5` to represent clusters of 5 vertices (this type of vertices is more like a 5-fold face, it it not yet realized in any produced sun puzzle).
+* `vertex5` to represent clusters of 5 vertices (this type of vertices is more like a 5-fold face, it it not yet realized in any produced sun puzzle),
+* `move` to represent rotation of a face or a vertex cluster.
 
 A `face` contains all the stickers of some face, which usually have the same color. To construct a `face` call `constructFace`, to draw it call `drawFace`:
 ```
@@ -134,6 +135,12 @@ It is also possible to draw a face whose some or all stickers are in mid-turn. F
 drawFace(f, Blue, rotate(-20, X+Y)); // Draws face f rotated by 20 degrees clockwise with axis O--(X+Y) and Blue color
 drawFace(f, Blue, rotate(-20, X-Z), 1); // Draws face f whose rotated elements are near the stop of configuration with index 1
 ```
+
+When some face is involved in more than one move, you can pass any number of `move` arguments instead:
+```
+drawFace(f, Blue, move(rotate(-20, X-Z), 1), move(rotate(20, Y-Z), 4)); // Draws face f whose elements near edge 1 and 4 are rotated
+```
+
 Besides drawing actual face, `drawFace` draws also internal surfaces otherwise hidden in case optional arguments are used, so there is no need to manually create them.
 
 Before creating or drawing of clusters of vertices, the faces need to be _glued_. This is necessary, because almost all such puzzles are [fudged](https://twistypuzzles.com/twistypedia/index.php/Fudging), or have imprecise geometry, and their vertices do not always match. To do so, call `glueFaces`, which accepts 2 adjacent faces or 3 faces with common 3-vertex:
@@ -160,6 +167,7 @@ Like in case of faces, `drawVertex4` accepts optional arguments for transform an
 ```
 vertex4 v4 = constructVertex4(a, b, c, d); // Constructs a cluster of 4 vertices
 drawVertex4(v4, Tan, <transform>, 2); // Draws rotated the vertices belonging to c whose index in argument list is 2
+drawVertex4(v4, Tan, move(<transform1>, <idx1>), move(<transform2>, <idx2>), ...); // Draws vertex cluster with multiple rotations
 ```
 
 Like drawing faces, when optional arguments are passed to `drawVertex4`, the function takes care of all otherwise hidden surfaces to be drawn.
@@ -180,6 +188,7 @@ Finally, 2 more arguments can be passed to `drawVertex5` to transform 2 out of 5
 ```
 vertex5 v5 = constructVertex5(a, b, c, d, e);
 drawVertex5(v5, Tan, true, <transform>, 2); // Draws rotated the vertices belonging to c whose index in argument list is 2
+drawVertex5(v5, Tan, move(<transform1>, <idx1>), move(<transform2>, <idx2>), ...); // Draws vertex cluster with multiple rotations
 ```
 As before, in case of passing the last 2 arguments to `drawVertex5`, it takes care of drawing  surfaces otherwise hidden.
 
@@ -188,7 +197,7 @@ BASH script `lib/make-pdf-3D.sh` creates one PDF page with embedded 3D model out
 
 You can define a macro similar to the following in preamble of your TeX documents:
 ```
-\usepackage[xetex, 3Dtoolbar, 3Dmenu]{media9} % xetex option is for using xetex processor, omit it for pdflatex
+\usepackage[xetex, 3Dtoolbar, 3Dmenu]{media9} % This is for using xetex processor, omit it for pdflatex
 ...
 \newcommand{\includemodel}[1]{
 \begin{center}
