@@ -1,49 +1,7 @@
 //
 include "rubiks.asyhdr";
 
-struct face
-{
-	triple core;
-	triple center;
-	triple radius;
-	triple perp;
-	triple[] V;
-	triple[] E;
-	triple[] R;
-	triple[] P;
-	bool[] conf;
-};
-
-struct vertex4
-{
-	triple center;
-	triple[] E;
-	triple[] V;
-	triple[] core;
-};
-
-struct vertex5
-{
-	triple[] V;
-	triple[] E;
-	triple[] R;
-	triple[] P;
-	triple[] B;
-	transform3[] T;
-};
-
-struct move
-{
-	transform3 tr;
-	int idx;
-	void operator init(transform3 tr, int idx)
-	{
-		this.tr = tr;
-		this.idx = idx;
-	}
-};
-
-real computeCurvatureExtent(real k, real r, real l)
+private real computeCurvatureExtent(real k, real r, real l)
 {
 	real result = 0;
 	if (k != 0)
@@ -59,7 +17,7 @@ real computeCurvatureExtent(real k, real r, real l)
 	return result;
 }
 
-triple computeFirstIntersectionPoint(path3 left, path3 right, triple axis)
+private triple computeFirstIntersectionPoint(path3 left, path3 right, triple axis)
 {
 	triple result;
 	surface s = makeSurface((shift(-axis) * right)--(shift(axis) * reverse(right)));
@@ -71,111 +29,23 @@ triple computeFirstIntersectionPoint(path3 left, path3 right, triple axis)
 	return result;
 }
 
-face constructFace(triple Center, triple First, bool[] conf, real k = 0, triple Core = O)
+private bool incident(triple a, triple b, real d)
 {
-	face result;
-	result.core = Core;
-	result.center = Center;
-	if (conf[0] == false)
-	{
-		First = Center + (First - Center) / Cos(360 / conf.length);
-	}
-	result.radius = First - Center;
-	real r = length(result.radius);
-	result.radius /= r;
-	if (k != 0 && 1 / abs(k) < r)
-	{
-		k = 0;
-	}
-	result.perp = unit(cross(Center, result.radius));
-	result.conf = conf;
-	int n = conf.length;
-	triple[] A = new triple[n];
-	A.cyclic = true;
-	result.V = new triple[n];
-	result.E = new triple[n];
-	result.R = new triple[n];
-	result.P = new triple[n];
-	result.V.cyclic = true;
-	result.E.cyclic = true;
-	result.R.cyclic = true;
-	result.P.cyclic = true;
-	result.conf.cyclic = true;
-	triple axis = unit(Center - Core);
-
-	for (int i = 0; i < n; ++i)
-	{
-		result.V[i] = Center + r * (result.radius * Cos(i * 360 / n) + result.perp * Sin(i * 360 / n));
-	}
-	for(int i = 0; i < n; ++i)
-	{
-		result.E[i] = computeFirstIntersectionPoint(result.V[i]--result.V[i + 2], result.V[i - 1]--result.V[i + 1], axis);
-	}
-	for(int i = 0; i < n; ++i)
-	{
-		if (n < 8)
-		{
-			A[i] = computeFirstIntersectionPoint(result.V[i - 1]--(result.V[i - 1] + 3 * (result.V[i - 3] - result.V[i - 1])), //
-				result.V[i + 1]--(result.V[i + 1] + 3 * (result.V[i + 3] - result.V[i + 1])), axis);
-		}
-		else if (n > 8)
-		{
-			A[i] = computeFirstIntersectionPoint((result.V[i - 3] + 4 * (result.V[i - 1] - result.V[i - 3]))--result.V[i - 3], //
-				(result.V[i + 3] + 4 * (result.V[i + 1] - result.V[i + 3]))--result.V[i + 3], axis);
-		}
-	}
-	for (int i = 0; i < n; ++i)
-	{
-		if (n == 8)
-		{
-			result.R[i] = computeFirstIntersectionPoint(result.E[i]--result.E[i + 3], result.E[i - 2]--result.E[i + 1], axis);
-		}
-		else
-		{
-			result.R[i] = computeFirstIntersectionPoint(A[i - 0]--(A[i - 0] + 2 * (result.E[i] - A[i - 0])), //
-				A[i + 2]--(A[i + 2] + 2 * (result.E[i + 1] - A[i + 2])), axis);
-		}
-	}
-	for (int i = 0; i < n; ++i)
-	{
-		if (n == 8)
-		{
-			result.P[i] = computeFirstIntersectionPoint(result.R[i - 2]--result.R[i], Center--result.E[i], axis);
-		}
-		else if (n > 8)
-		{
-			result.P[i] = computeFirstIntersectionPoint(arc(A[i], result.R[i - 2], result.R[i]), Center--result.E[i], axis);
-		}
-		else
-		{
-			result.P[i] = computeFirstIntersectionPoint(arc(A[i], result.R[i], result.R[i - 2]), Center--result.E[i], axis);
-		}
-	}
-	real ee, er, ep;
-	for(int i = 0; i < n; ++i)
-	{
-		if (k != 0 && i == 0)
-		{
-			ee = computeCurvatureExtent(k, r, length(result.E[i] - Center));
-			er = computeCurvatureExtent(k, r, length(result.R[i] - Center));
-			ep = computeCurvatureExtent(k, r, length(result.P[i] - Center));
-		}
-		if (ee != 0 && er != 0 && ep != 0)
-		{
-			/*
-			result.E[i] += ee * axis;
-			result.R[i] += er * axis;
-			result.P[i] += ep * axis;
-			*/
-			result.E[i] = result.core + (ee + 1) * (result.E[i] - result.core);
-			result.R[i] = result.core + (er + 1) * (result.R[i] - result.core);
-			result.P[i] = result.core + (ep + 1) * (result.P[i] - result.core);
-		}
-	}
-	return result;
+	return abs(xpart(a) - xpart(b)) < d && abs(ypart(a) - ypart(b)) < d && abs(zpart(a) - zpart(b)) < d;
 }
 
-transform3 matchMove(move[] mv ... int[] idx)
+struct move
+{
+	transform3 tr;
+	int idx;
+	void operator init(transform3 tr, int idx)
+	{
+		this.tr = tr;
+		this.idx = idx;
+	}
+};
+
+private transform3 matchMove(move[] mv ... int[] idx)
 {
 	transform3 result = identity4;
 	bool found = false;
@@ -193,73 +63,203 @@ transform3 matchMove(move[] mv ... int[] idx)
 	return result;
 }
 
-void drawFace(face f, pen color ... move[] mv)
+struct face
 {
-	path3 center = nullpath3;
-	transform3 tr = identity4;
-	int tridx = -1;
-	for (int i = 0; i < f.conf.length; ++i)
+	triple core;
+	triple center;
+	triple radius;
+	triple perp;
+	triple[] V;
+	triple[] E;
+	triple[] R;
+	triple[] P;
+	bool[] conf;
+
+	void operator init(triple Center, triple First, bool[] conf, real k = 0, triple Core = O)
 	{
-		tr = matchMove(mv, -1, (i - 1) % f.conf.length, i, (i + 1) % f.conf.length);
-		center = center--f.P[i];
-		if (f.conf[i])
+		this.core = Core;
+		this.center = Center;
+		if (conf[0] == false)
 		{
-			stick(f.E[i - 1]--f.R[i - 1]--f.E[i]--f.V[i], color, tr);
+			First = Center + (First - Center) / Cos(360 / conf.length);
+		}
+		this.radius = First - Center;
+		real r = length(this.radius);
+		this.radius /= r;
+		if (k != 0 && 1 / abs(k) < r)
+		{
+			k = 0;
+		}
+		this.perp = unit(cross(Center, this.radius));
+		this.conf = conf;
+		int n = conf.length;
+		triple[] A = new triple[n];
+		A.cyclic = true;
+		this.V = new triple[n];
+		this.E = new triple[n];
+		this.R = new triple[n];
+		this.P = new triple[n];
+		this.V.cyclic = true;
+		this.E.cyclic = true;
+		this.R.cyclic = true;
+		this.P.cyclic = true;
+		this.conf.cyclic = true;
+		triple axis = unit(Center - Core);
+
+		for (int i = 0; i < n; ++i)
+		{
+			this.V[i] = Center + r * (this.radius * Cos(i * 360 / n) + this.perp * Sin(i * 360 / n));
+		}
+		for(int i = 0; i < n; ++i)
+		{
+			this.E[i] = computeFirstIntersectionPoint(this.V[i]--this.V[i + 2], this.V[i - 1]--this.V[i + 1], axis);
+		}
+		for(int i = 0; i < n; ++i)
+		{
+			if (n < 8)
+			{
+				A[i] = computeFirstIntersectionPoint(this.V[i - 1]--(this.V[i - 1] + 3 * (this.V[i - 3] - this.V[i - 1])), //
+					this.V[i + 1]--(this.V[i + 1] + 3 * (this.V[i + 3] - this.V[i + 1])), axis);
+			}
+			else if (n > 8)
+			{
+				A[i] = computeFirstIntersectionPoint((this.V[i - 3] + 4 * (this.V[i - 1] - this.V[i - 3]))--this.V[i - 3], //
+					(this.V[i + 3] + 4 * (this.V[i + 1] - this.V[i + 3]))--this.V[i + 3], axis);
+			}
+		}
+		for (int i = 0; i < n; ++i)
+		{
+			if (n == 8)
+			{
+				this.R[i] = computeFirstIntersectionPoint(this.E[i]--this.E[i + 3], this.E[i - 2]--this.E[i + 1], axis);
+			}
+			else
+			{
+				this.R[i] = computeFirstIntersectionPoint(A[i - 0]--(A[i - 0] + 2 * (this.E[i] - A[i - 0])), //
+					A[i + 2]--(A[i + 2] + 2 * (this.E[i + 1] - A[i + 2])), axis);
+			}
+		}
+		for (int i = 0; i < n; ++i)
+		{
+			if (n == 8)
+			{
+				this.P[i] = computeFirstIntersectionPoint(this.R[i - 2]--this.R[i], Center--this.E[i], axis);
+			}
+			else if (n > 8)
+			{
+				this.P[i] = computeFirstIntersectionPoint(arc(A[i], this.R[i - 2], this.R[i]), Center--this.E[i], axis);
+			}
+			else
+			{
+				this.P[i] = computeFirstIntersectionPoint(arc(A[i], this.R[i], this.R[i - 2]), Center--this.E[i], axis);
+			}
+		}
+		real ee, er, ep;
+		for(int i = 0; i < n; ++i)
+		{
+			if (k != 0 && i == 0)
+			{
+				ee = computeCurvatureExtent(k, r, length(this.E[i] - Center));
+				er = computeCurvatureExtent(k, r, length(this.R[i] - Center));
+				ep = computeCurvatureExtent(k, r, length(this.P[i] - Center));
+			}
+			if (ee != 0 && er != 0 && ep != 0)
+			{
+				/*
+				this.E[i] += ee * axis;
+				this.R[i] += er * axis;
+				this.P[i] += ep * axis;
+				*/
+				this.E[i] = this.core + (ee + 1) * (this.E[i] - this.core);
+				this.R[i] = this.core + (er + 1) * (this.R[i] - this.core);
+				this.P[i] = this.core + (ep + 1) * (this.P[i] - this.core);
+			}
+		}
+	}
+
+	void drawInternal(pen color, move[] mv)
+	{
+		path3 center = nullpath3;
+		transform3 tr = identity4;
+		int tridx = -1;
+		for (int i = 0; i < this.conf.length; ++i)
+		{
+			tr = matchMove(mv, -1, (i - 1) % this.conf.length, i, (i + 1) % this.conf.length);
+			center = center--this.P[i];
+			if (this.conf[i])
+			{
+				stick(this.E[i - 1]--this.R[i - 1]--this.E[i]--this.V[i], color, tr);
+			}
+			else
+			{
+				stick(this.E[i - 1]--this.R[i - 1]--this.E[i], color, tr);
+			}
+			tr = matchMove(mv, -1, i, (i + 1) % this.conf.length);
+			stick(this.R[i - 1]--this.P[i]--this.R[i]--this.E[i], color, tr);
+			tr = matchMove(mv, -1, i);
+			stick(this.P[i - 1]--this.P[i]--this.R[i - 1], color, tr);
+		}
+		stick(center, color, matchMove(mv, -1));
+
+		for (int i = 0; i < mv.length; ++i)
+		{
+			if (mv[i].idx != -1)
+			{
+				tr = mv[i].tr;
+				tridx = mv[i].idx;
+				triple A = rotate(120, this.core, this.V[tridx - 1]) * this.R[tridx - 2];
+				triple D = rotate(-120, this.core, this.V[tridx + 1]) * this.R[tridx];
+				triple B = this.R[tridx - 2]+A-this.E[tridx - 2];
+				triple C = this.R[tridx]+D-this.E[tridx + 1];
+				polygon(this.R[tridx - 2]--this.E[tridx - 2]--A--B, Background);
+				polygon(this.R[tridx - 2]--this.E[tridx - 2]--A--B, Background, tr);
+				polygon(this.R[tridx]--this.E[tridx + 1]--D--C, Background);
+				polygon(this.R[tridx]--this.E[tridx + 1]--D--C, Background, tr);
+				A = B;
+				B = this.P[tridx - 1]+A-this.R[tridx - 2];
+				D = C;
+				C = this.P[tridx]+D-this.R[tridx];
+				polygon(this.P[tridx - 1]--this.R[tridx - 2]--A--B, Background);
+				polygon(this.P[tridx - 1]--this.R[tridx - 2]--A--B, Background, tr);
+				polygon(this.P[tridx]--this.R[tridx]--D--C, Background);
+				polygon(this.P[tridx]--this.R[tridx]--D--C, Background, tr);
+				polygon(this.P[tridx - 1]--B--C--this.P[tridx], Background);
+				polygon(this.P[tridx - 1]--B--C--this.P[tridx], Background, tr);
+			}
+		}
+	}
+
+	void draw(pen color ... move[] mv)
+	{
+		drawInternal(color, mv);
+	}
+
+	void draw(pen color, transform3 t, int tridx = -1)
+	{
+		if (t == identity4)
+		{
+			this.draw(color);
 		}
 		else
 		{
-			stick(f.E[i - 1]--f.R[i - 1]--f.E[i], color, tr);
+			this.draw(color, move(t, tridx));
 		}
-		tr = matchMove(mv, -1, i, (i + 1) % f.conf.length);
-		stick(f.R[i - 1]--f.P[i]--f.R[i]--f.E[i], color, tr);
-		tr = matchMove(mv, -1, i);
-		stick(f.P[i - 1]--f.P[i]--f.R[i - 1], color, tr);
 	}
-	stick(center, color, matchMove(mv, -1));
+};
 
-	for (int i = 0; i < mv.length; ++i)
-	{
-		if (mv[i].idx != -1)
-		{
-			tr = mv[i].tr;
-			tridx = mv[i].idx;
-			triple A = rotate(120, f.core, f.V[tridx - 1]) * f.R[tridx - 2];
-			triple D = rotate(-120, f.core, f.V[tridx + 1]) * f.R[tridx];
-			triple B = f.R[tridx - 2]+A-f.E[tridx - 2];
-			triple C = f.R[tridx]+D-f.E[tridx + 1];
-			polygon(f.R[tridx - 2]--f.E[tridx - 2]--A--B, Background);
-			polygon(f.R[tridx - 2]--f.E[tridx - 2]--A--B, Background, tr);
-			polygon(f.R[tridx]--f.E[tridx + 1]--D--C, Background);
-			polygon(f.R[tridx]--f.E[tridx + 1]--D--C, Background, tr);
-			A = B;
-			B = f.P[tridx - 1]+A-f.R[tridx - 2];
-			D = C;
-			C = f.P[tridx]+D-f.R[tridx];
-			polygon(f.P[tridx - 1]--f.R[tridx - 2]--A--B, Background);
-			polygon(f.P[tridx - 1]--f.R[tridx - 2]--A--B, Background, tr);
-			polygon(f.P[tridx]--f.R[tridx]--D--C, Background);
-			polygon(f.P[tridx]--f.R[tridx]--D--C, Background, tr);
-			polygon(f.P[tridx - 1]--B--C--f.P[tridx], Background);
-			polygon(f.P[tridx - 1]--B--C--f.P[tridx], Background, tr);
-		}
-	}
+face constructFace(triple Center, triple First, bool[] conf, real k = 0, triple Core = O)
+{
+	return face(Center, First, conf, k, Core);
+}
+
+void drawFace(face f, pen color ... move[] mv)
+{
+	f.drawInternal(color, mv);
 }
 
 void drawFace(face f, pen color, transform3 t, int tridx = -1)
 {
-	if (t == identity4)
-	{
-		drawFace(f, color);
-	}
-	else
-	{
-		drawFace(f, color, move(t, tridx));
-	}
-}
-
-bool incident(triple a, triple b, real d)
-{
-	return abs(xpart(a) - xpart(b)) < d && abs(ypart(a) - ypart(b)) < d && abs(zpart(a) - zpart(b)) < d;
+	f.draw(color, t, tridx);
 }
 
 real glueFaces(face a, face b, real d = 0)
@@ -328,312 +328,373 @@ real glueFaces(face a, face b, face c, real d = 0)
 	return d;
 }
 
-vertex4 constructVertex4(face a, face b, face c, face d)
+private transform3 edgeRotation(face f, int idx) // TODO It may be useful outside
 {
-	vertex4 result;
-	result.E = new triple[4];
-	result.V = new triple[4];
-	result.core = new triple[4];
-	result.E.cyclic = true;
-	result.V.cyclic = true;
-	result.core.cyclic = true;
-	result.center = O;
-	bool found = false;
-	for (int i = 0; !found && i < a.V.length; ++i)
+	return rotate(180, f.core, (f.E[idx - 1] + f.E[idx]) / 2);
+}
+
+private triple vertexRotation(face f1, int idx1, face f2, int idx2) // TODO It may be useful outside
+{
+	return (rotate(-120, f1.core, f1.V[idx1]) * f1.R[idx1 - 1]
+		+ rotate(120, f2.core, f2.V[idx2]) * f2.R[idx2 - 1]) / 2;
+}
+
+struct vertex4
+{
+	triple center;
+	triple[] E;
+	triple[] V;
+	triple[] core;
+
+	void operator init(face a, face b, face c, face d)
 	{
-		for (int j = 0; !found && j < b.V.length; ++j)
+		this.E = new triple[4];
+		this.V = new triple[4];
+		this.core = new triple[4];
+		this.E.cyclic = true;
+		this.V.cyclic = true;
+		this.core.cyclic = true;
+		this.center = O;
+		bool found = false;
+		for (int i = 0; !found && i < a.V.length; ++i)
 		{
-			if (a.V[i] == b.V[j])
+			for (int j = 0; !found && j < b.V.length; ++j)
 			{
-				for (int k = 0; !found && k < c.V.length; ++k)
+				if (a.V[i] == b.V[j])
 				{
-					if (b.V[j - 1] == c.V[k])
+					for (int k = 0; !found && k < c.V.length; ++k)
 					{
-						result.V[0] = a.V[i];
-						result.V[1] = b.V[j - 1];
-						result.V[2] = c.V[k - 1];
-						result.V[3] = a.V[i + 1];
-						result.E[0] = a.E[i];
-						result.E[1] = b.E[j - 1];
-						result.E[2] = c.E[k - 1];
-						result.center = (
-							rotate(120, a.core, result.V[3]) * a.R[i] +
-							rotate(-120, a.core, result.V[0]) * a.R[i - 1] +
-							rotate(120, b.core, result.V[0]) * b.R[j - 1] +
-							rotate(-120, b.core, result.V[1]) * b.R[j - 2] +
-							rotate(120, c.core, result.V[1]) * c.R[k - 1] +
-							rotate(-120, c.core, result.V[2]) * c.R[k - 2]
-						) / 8;
-						found = true;
+						if (b.V[j - 1] == c.V[k])
+						{
+							this.V[0] = a.V[i];
+							this.V[1] = b.V[j - 1];
+							this.V[2] = c.V[k - 1];
+							this.V[3] = a.V[i + 1];
+							this.E[0] = a.E[i];
+							this.E[1] = b.E[j - 1];
+							this.E[2] = c.E[k - 1];
+							this.center = ( // TODO Use vertexRotation(...) here
+								rotate(120, a.core, this.V[3]) * a.R[i] +
+								rotate(-120, a.core, this.V[0]) * a.R[i - 1] +
+								rotate(120, b.core, this.V[0]) * b.R[j - 1] +
+								rotate(-120, b.core, this.V[1]) * b.R[j - 2] +
+								rotate(120, c.core, this.V[1]) * c.R[k - 1] +
+								rotate(-120, c.core, this.V[2]) * c.R[k - 2]
+							) / 8;
+							found = true;
+						}
 					}
 				}
 			}
 		}
-	}
-	found = false;
-	for (int i = 0; !found && i < d.V.length; ++i)
-	{
-		if (result.V[3] == d.V[i])
+		found = false;
+		for (int i = 0; !found && i < d.V.length; ++i)
 		{
-			result.E[3] = d.E[i];
-			result.center += (
-				rotate(-120, d.core, result.V[3]) * d.R[i - 1] +
-				rotate(120, d.core, result.V[2]) * d.R[i]
-			) / 8;
-			found = true;
+			if (this.V[3] == d.V[i])
+			{
+				this.E[3] = d.E[i];
+				this.center += ( // TODO Use vertexRotation(...) here
+					rotate(-120, d.core, this.V[3]) * d.R[i - 1] +
+					rotate(120, d.core, this.V[2]) * d.R[i]
+				) / 8;
+				found = true;
+			}
+		}
+		this.core[0] = (a.core + b.core) / 2;
+		this.core[1] = (b.core + c.core) / 2;
+		this.core[2] = (c.core + d.core) / 2;
+		this.core[3] = (d.core + a.core) / 2;
+	}
+
+	void drawInternal(pen color, move[] mv)
+	{
+		transform3 tr = identity4;
+		int tridx = -1;
+		for (int i = 0; i < this.E.length; ++i)
+		{
+			tr = matchMove(mv, i, (i + 1) % this.E.length);
+			stick(this.center--this.E[i]--this.V[i]--this.E[i + 1], color, tr);
+		}
+		for (int i = 0; i < mv.length; ++i)
+		{
+			if (mv[i].idx != -1)
+			{
+				tr = mv[i].tr;
+				tridx = mv[i].idx;
+				triple A = rotate(-120, this.core[tridx], this.V[tridx]) * this.center;
+				triple B = this.center+A-this.E[tridx + 1];
+				triple C = rotate(120, this.core[tridx - 1], this.V[tridx - 1]) * this.center;
+				triple D = this.center+C-this.E[tridx - 1];
+				polygon(this.center--this.E[tridx + 1]--A--B, Background);
+				polygon(this.center--this.E[tridx + 1]--A--B, Background, tr);
+				polygon(this.center--this.E[tridx - 1]--C--D, Background);
+				polygon(this.center--this.E[tridx - 1]--C--D, Background, tr);
+				polygon(this.center--B--D, Background);
+				polygon(this.center--B--D, Background, tr);
+			}
 		}
 	}
-	result.core[0] = (a.core + b.core) / 2;
-	result.core[1] = (b.core + c.core) / 2;
-	result.core[2] = (c.core + d.core) / 2;
-	result.core[3] = (d.core + a.core) / 2;
-	return result;
+
+	void draw(pen color ... move[] mv)
+	{
+		drawInternal(color, mv);
+	}
+
+	void draw(pen color, transform3 t, int tridx = -1)
+	{
+		if (t == identity4)
+		{
+			this.draw(color);
+		}
+		else
+		{
+			this.draw(color, move(t, tridx));
+		}
+	}
+};
+
+vertex4 constructVertex4(face a, face b, face c, face d)
+{
+	return vertex4(a, b, c, d);
 }
 
 void drawVertex4(vertex4 v, pen color ... move[] mv)
 {
-	transform3 tr = identity4;
-	int tridx = -1;
-	for (int i = 0; i < v.E.length; ++i)
-	{
-		tr = matchMove(mv, i, (i + 1) % v.E.length);
-		stick(v.center--v.E[i]--v.V[i]--v.E[i + 1], color, tr);
-	}
-	for (int i = 0; i < mv.length; ++i)
-	{
-		if (mv[i].idx != -1)
-		{
-			tr = mv[i].tr;
-			tridx = mv[i].idx;
-			triple A = rotate(-120, v.core[tridx], v.V[tridx]) * v.center;
-			triple B = v.center+A-v.E[tridx + 1];
-			triple C = rotate(120, v.core[tridx - 1], v.V[tridx - 1]) * v.center;
-			triple D = v.center+C-v.E[tridx - 1];
-			polygon(v.center--v.E[tridx + 1]--A--B, Background);
-			polygon(v.center--v.E[tridx + 1]--A--B, Background, tr);
-			polygon(v.center--v.E[tridx - 1]--C--D, Background);
-			polygon(v.center--v.E[tridx - 1]--C--D, Background, tr);
-			polygon(v.center--B--D, Background);
-			polygon(v.center--B--D, Background, tr);
-		}
-	}
+	v.drawInternal(color, mv);
 }
 
 void drawVertex4(vertex4 v, pen color, transform3 t, int tridx = -1)
 {
-	if (t == identity4)
-	{
-		drawVertex4(v, color);
-	}
-	else
-	{
-		drawVertex4(v, color, move(t, tridx));
-	}
+	v.draw(color, t, tridx);
 }
 
-transform3 edgeRotation(face f, int idx)
+struct vertex5
 {
-	return rotate(180, f.core, (f.V[idx - 1] + f.V[idx + 1]) / 2);
-}
+	triple[] V;
+	triple[] E;
+	triple[] R;
+	triple[] P;
+	triple[] B;
+	transform3[] T;
 
-vertex5 constructVertex5(face a, face b, face c, face d, face e)
-{
-	vertex5 result;
-	result.V = new triple[10];
-	result.E = new triple[10];
-	result.R = new triple[10];
-	result.P = new triple[10];
-	result.B = new triple[5];
-	result.T = new transform3[10];
-	result.V.cyclic = true;
-	result.E.cyclic = true;
-	result.R.cyclic = true;
-	result.P.cyclic = true;
-	result.B.cyclic = true;
-	result.T.cyclic = true;
-	int ai, bi, ci, di, ei;
-	bool found1 = false, found2 = false;
-	for (int i = 0; !found1 && i < a.V.length; ++i)
+	void operator init(face a, face b, face c, face d, face e)
 	{
-		for (int j = 0; !found1 && j < b.V.length; ++j)
+		this.V = new triple[10];
+		this.E = new triple[10];
+		this.R = new triple[10];
+		this.P = new triple[10];
+		this.B = new triple[5];
+		this.T = new transform3[10];
+		this.V.cyclic = true;
+		this.E.cyclic = true;
+		this.R.cyclic = true;
+		this.P.cyclic = true;
+		this.B.cyclic = true;
+		this.T.cyclic = true;
+		int ai, bi, ci, di, ei;
+		bool found1 = false, found2 = false;
+		for (int i = 0; !found1 && i < a.V.length; ++i)
 		{
-			if (a.V[i] == b.V[j])
+			for (int j = 0; !found1 && j < b.V.length; ++j)
 			{
-				for (int k = 0; !found1 && k < c.V.length; ++k)
+				if (a.V[i] == b.V[j])
 				{
-					if (b.V[j - 2] == c.V[k])
+					for (int k = 0; !found1 && k < c.V.length; ++k)
 					{
-						ai = i + 1;
-						bi = j - 1;
-						ci = k - 1;
-						found1 = true;
+						if (b.V[j - 2] == c.V[k])
+						{
+							ai = i + 1;
+							bi = j - 1;
+							ci = k - 1;
+							found1 = true;
+						}
 					}
 				}
 			}
 		}
+		found1 = false;
+		for (int i = 0; !(found1 && found2) && i < d.V.length; ++i)
+		{
+			if (!found1 && c.V[ci - 1] == d.V[i])
+			{
+				di = i - 1;
+				found1 = true;
+			}
+			if (!found2 && a.V[ai + 1] == e.V[i])
+			{
+				ei = i + 1;
+				found2 = true;
+			}
+		}
+		this.V[0] = a.V[ai + 1];
+		this.V[1] = a.V[ai];
+		this.V[2] = b.V[bi + 1];
+		this.V[3] = b.V[bi];
+		this.V[4] = c.V[ci + 1];
+		this.V[5] = c.V[ci];
+		this.V[6] = d.V[di + 1];
+		this.V[7] = d.V[di];
+		this.V[8] = e.V[ei + 1];
+		this.V[9] = e.V[ei];
+		this.E[0] = a.E[ai];
+		this.E[1] = a.E[ai - 1];
+		this.E[2] = b.E[bi];
+		this.E[3] = b.E[bi - 1];
+		this.E[4] = c.E[ci];
+		this.E[5] = c.E[ci - 1];
+		this.E[6] = d.E[di];
+		this.E[7] = d.E[di - 1];
+		this.E[8] = e.E[ei];
+		this.E[9] = e.E[ei - 1];
+		transform3 ar = edgeRotation(a, ai);
+		transform3 br = edgeRotation(b, bi);
+		transform3 cr = edgeRotation(c, ci);
+		transform3 dr = edgeRotation(d, di);
+		transform3 er = edgeRotation(e, ei);
+		this.R[0] = (er * e.R[ei] + ar * a.R[ai - 2]) / 2;
+		this.R[1] = ar * a.R[ai - 1];
+		this.R[2] = (ar * a.R[ai] + br * b.R[bi - 2]) / 2;
+		this.R[3] = br * b.R[bi - 1];
+		this.R[4] = (br * b.R[bi] + cr * c.R[ci - 2]) / 2;
+		this.R[5] = cr * c.R[ci - 1];
+		this.R[6] = (cr * c.R[ci] + dr * d.R[di - 2]) / 2;
+		this.R[7] = dr * d.R[di - 1];
+		this.R[8] = (dr * d.R[di] + er * e.R[ei - 2]) / 2;
+		this.R[9] = er * e.R[ei - 1];
+		this.P[0] = ar * a.P[ai - 1];
+		this.P[1] = ar * a.P[ai];
+		this.P[2] = br * b.P[bi - 1];
+		this.P[3] = br * b.P[bi];
+		this.P[4] = cr * c.P[ci - 1];
+		this.P[5] = cr * c.P[ci];
+		this.P[6] = dr * d.P[di - 1];
+		this.P[7] = dr * d.P[di];
+		this.P[8] = er * e.P[ei - 1];
+		this.P[9] = er * e.P[ei];
+		this.B[0] = rotate(-120, a.core, a.V[ai]) * a.E[ai]; // TODO Use vertexRotation(...) here
+		this.B[1] = rotate(-120, b.core, b.V[bi]) * b.E[bi]; // TODO Use vertexRotation(...) here
+		this.B[2] = rotate(-120, c.core, c.V[ci]) * c.E[ci]; // TODO Use vertexRotation(...) here
+		this.B[3] = rotate(-120, d.core, d.V[di]) * d.E[di]; // TODO Use vertexRotation(...) here
+		this.B[4] = rotate(-120, e.core, e.V[ei]) * e.E[ei]; // TODO Use vertexRotation(...) here
+		this.T[0] = rotate(360 / a.V.length, a.core, a.center);
+		this.T[1] = rotate(-360 / a.V.length, a.core, a.center);
+		this.T[2] = rotate(360 / b.V.length, b.core, b.center);
+		this.T[3] = rotate(-360 / b.V.length, b.core, b.center);
+		this.T[4] = rotate(360 / c.V.length, c.core, c.center);
+		this.T[5] = rotate(-360 / c.V.length, c.core, c.center);
+		this.T[6] = rotate(360 / d.V.length, d.core, d.center);
+		this.T[7] = rotate(-360 / d.V.length, d.core, d.center);
+		this.T[8] = rotate(360 / e.V.length, e.core, e.center);
+		this.T[9] = rotate(-360 / e.V.length, e.core, e.center);
 	}
-	found1 = false;
-	for (int i = 0; !(found1 && found2) && i < d.V.length; ++i)
+
+	void drawInternal(pen color, bool conf = true, move[] mv) // TODO Remove conf, make it uniform
 	{
-		if (!found1 && c.V[ci - 1] == d.V[i])
+		transform3 tr = identity4;
+		int tridx = -1;
+		int idx;
+		for (int i = 0; i < 10; ++i)
 		{
-			di = i - 1;
-			found1 = true;
+			if (i % 2 == 0)
+			{
+				tr = matchMove(mv, (int) ((i - 1) % this.V.length / 2), (int) ((i + 1) % this.V.length / 2));
+				stick(this.V[i]--this.E[i - 1]--this.R[i]--this.E[i], color, tr);
+			}
+			else if (conf)
+			{
+				idx = (int) (i / 2);
+				tr = matchMove(mv, idx);
+				stick(this.V[i]--this.E[i - 1]--this.R[i - 1]--this.B[idx], color, tr);
+				stick(this.V[i]--this.E[i]--this.R[i + 1]--this.B[idx], color, tr);
+				polygon(this.R[i - 1]--this.R[i + 1]--this.B[idx], Background, tr);
+			}
+			else
+			{
+				tr = matchMove(mv, (int) (i / 2));
+				stick(this.E[i - 1]--this.R[i]--this.E[i], color, tr);
+				stick(this.P[i - 1]--this.R[i]--this.P[i], color, tr);
+			}
+			if (!conf)
+			{
+				tr = matchMove(mv, (int) (i / 2));
+				stick(this.E[i]--this.R[i]--this.P[i]--this.R[i + 1], color, tr);
+			}
 		}
-		if (!found2 && a.V[ai + 1] == e.V[i])
+		if (conf)
 		{
-			ei = i + 1;
-			found2 = true;
+			stick(this.R[0]--this.R[2]--this.R[4]--this.R[6]--this.R[8], color);
+		}
+		else
+		{
+			stick(this.R[0]--this.P[0]--this.P[1]--this.R[2]--this.P[2]--this.P[3]--this.R[4]--this.P[4] //
+			--this.P[5]--this.R[6]--this.P[6]--this.P[7]--this.R[8]--this.P[8]--this.P[9], color);
+		}
+		for (int i = 0; i < mv.length; ++i)
+		{
+			tr = mv[i].tr;
+			tridx = 2 * mv[i].idx + 1;
+			if (tridx != -1)
+			{
+				triple A = this.T[tridx - 1] * this.R[tridx - 1];
+				triple B = this.R[tridx - 1] + A - this.E[tridx - 2];
+				triple D = this.T[tridx] * this.R[tridx + 1];
+				triple C = this.R[tridx + 1] + D - this.E[tridx + 1];
+				polygon(this.R[tridx - 1]--this.E[tridx - 2]--A--B, Background);
+				polygon(this.R[tridx - 1]--this.E[tridx - 2]--A--B, Background, tr);
+				polygon(this.R[tridx + 1]--this.E[tridx + 1]--D--C, Background);
+				polygon(this.R[tridx + 1]--this.E[tridx + 1]--D--C, Background, tr);
+				if (conf)
+				{
+					polygon(this.R[tridx - 1]--B--C--this.R[tridx + 1], Background);
+					polygon(this.R[tridx - 1]--B--C--this.R[tridx + 1], Background, tr);
+				}
+				else
+				{
+					A = B;
+					D = C;
+					B = this.P[tridx - 1] + A - this.R[tridx - 1];
+					C = this.P[tridx] + D - this.R[tridx + 1];
+					polygon(this.P[tridx - 1]--this.R[tridx - 1]--A--B, Background);
+					polygon(this.P[tridx - 1]--this.R[tridx - 1]--A--B, Background, tr);
+					polygon(this.P[tridx]--this.R[tridx + 1]--D--C, Background);
+					polygon(this.P[tridx]--this.R[tridx + 1]--D--C, Background, tr);
+					polygon(this.P[tridx - 1]--B--C--this.P[tridx], Background);
+					polygon(this.P[tridx - 1]--B--C--this.P[tridx], Background, tr);
+				}
+			}
 		}
 	}
-	result.V[0] = a.V[ai + 1];
-	result.V[1] = a.V[ai];
-	result.V[2] = b.V[bi + 1];
-	result.V[3] = b.V[bi];
-	result.V[4] = c.V[ci + 1];
-	result.V[5] = c.V[ci];
-	result.V[6] = d.V[di + 1];
-	result.V[7] = d.V[di];
-	result.V[8] = e.V[ei + 1];
-	result.V[9] = e.V[ei];
-	result.E[0] = a.E[ai];
-	result.E[1] = a.E[ai - 1];
-	result.E[2] = b.E[bi];
-	result.E[3] = b.E[bi - 1];
-	result.E[4] = c.E[ci];
-	result.E[5] = c.E[ci - 1];
-	result.E[6] = d.E[di];
-	result.E[7] = d.E[di - 1];
-	result.E[8] = e.E[ei];
-	result.E[9] = e.E[ei - 1];
-	transform3 ar = edgeRotation(a, ai);
-	transform3 br = edgeRotation(b, bi);
-	transform3 cr = edgeRotation(c, ci);
-	transform3 dr = edgeRotation(d, di);
-	transform3 er = edgeRotation(e, ei);
-	result.R[0] = (er * e.R[ei] + ar * a.R[ai - 2]) / 2;
-	result.R[1] = ar * a.R[ai - 1];
-	result.R[2] = (ar * a.R[ai] + br * b.R[bi - 2]) / 2;
-	result.R[3] = br * b.R[bi - 1];
-	result.R[4] = (br * b.R[bi] + cr * c.R[ci - 2]) / 2;
-	result.R[5] = cr * c.R[ci - 1];
-	result.R[6] = (cr * c.R[ci] + dr * d.R[di - 2]) / 2;
-	result.R[7] = dr * d.R[di - 1];
-	result.R[8] = (dr * d.R[di] + er * e.R[ei - 2]) / 2;
-	result.R[9] = er * e.R[ei - 1];
-	result.P[0] = ar * a.P[ai - 1];
-	result.P[1] = ar * a.P[ai];
-	result.P[2] = br * b.P[bi - 1];
-	result.P[3] = br * b.P[bi];
-	result.P[4] = cr * c.P[ci - 1];
-	result.P[5] = cr * c.P[ci];
-	result.P[6] = dr * d.P[di - 1];
-	result.P[7] = dr * d.P[di];
-	result.P[8] = er * e.P[ei - 1];
-	result.P[9] = er * e.P[ei];
-	result.B[0] = rotate(-120, a.core, a.V[ai]) * a.E[ai];
-	result.B[1] = rotate(-120, b.core, b.V[bi]) * b.E[bi];
-	result.B[2] = rotate(-120, c.core, c.V[ci]) * c.E[ci];
-	result.B[3] = rotate(-120, d.core, d.V[di]) * d.E[di];
-	result.B[4] = rotate(-120, e.core, e.V[ei]) * e.E[ei];
-	result.T[0] = rotate(360 / a.V.length, a.core, a.center);
-	result.T[1] = rotate(-360 / a.V.length, a.core, a.center);
-	result.T[2] = rotate(360 / b.V.length, b.core, b.center);
-	result.T[3] = rotate(-360 / b.V.length, b.core, b.center);
-	result.T[4] = rotate(360 / c.V.length, c.core, c.center);
-	result.T[5] = rotate(-360 / c.V.length, c.core, c.center);
-	result.T[6] = rotate(360 / d.V.length, d.core, d.center);
-	result.T[7] = rotate(-360 / d.V.length, d.core, d.center);
-	result.T[8] = rotate(360 / e.V.length, e.core, e.center);
-	result.T[9] = rotate(-360 / e.V.length, e.core, e.center);
-	return result;
+
+	void draw(pen color, bool conf = true ... move[] mv)
+	{
+		drawInternal(color, conf, mv);
+	}
+
+	void draw(pen color, bool conf = true, transform3 t, int tridx = -1)
+	{
+		if (t == identity4)
+		{
+			this.draw(color);
+		}
+		else
+		{
+			this.draw(color, move(t, tridx));
+		}
+	}
+};
+
+vertex5 constructVertex5(face a, face b, face c, face d, face e)
+{
+	return vertex5(a, b, c, d, e);
 }
 
 void drawVertex5(vertex5 v, pen color, bool conf = true ... move[] mv)
 {
-	transform3 tr = identity4;
-	int tridx = -1;
-	int idx;
-	for (int i = 0; i < 10; ++i)
-	{
-		if (i % 2 == 0)
-		{
-			tr = matchMove(mv, (int) ((i - 1) % v.V.length / 2), (int) ((i + 1) % v.V.length / 2));
-			stick(v.V[i]--v.E[i - 1]--v.R[i]--v.E[i], color, tr);
-		}
-		else if (conf)
-		{
-			idx = (int) (i / 2);
-			tr = matchMove(mv, idx);
-			stick(v.V[i]--v.E[i - 1]--v.R[i - 1]--v.B[idx], color, tr);
-			stick(v.V[i]--v.E[i]--v.R[i + 1]--v.B[idx], color, tr);
-			polygon(v.R[i - 1]--v.R[i + 1]--v.B[idx], Background, tr);
-		}
-		else
-		{
-			tr = matchMove(mv, (int) (i / 2));
-			stick(v.E[i - 1]--v.R[i]--v.E[i], color, tr);
-			stick(v.P[i - 1]--v.R[i]--v.P[i], color, tr);
-		}
-		if (!conf)
-		{
-			tr = matchMove(mv, (int) (i / 2));
-			stick(v.E[i]--v.R[i]--v.P[i]--v.R[i + 1], color, tr);
-		}
-	}
-	if (conf)
-	{
-		stick(v.R[0]--v.R[2]--v.R[4]--v.R[6]--v.R[8], color);
-	}
-	else
-	{
-		stick(v.R[0]--v.P[0]--v.P[1]--v.R[2]--v.P[2]--v.P[3]--v.R[4]--v.P[4] //
-		--v.P[5]--v.R[6]--v.P[6]--v.P[7]--v.R[8]--v.P[8]--v.P[9], color);
-	}
-	for (int i = 0; i < mv.length; ++i)
-	{
-		tr = mv[i].tr;
-		tridx = 2 * mv[i].idx + 1;
-		if (tridx != -1)
-		{
-			triple A = v.T[tridx - 1] * v.R[tridx - 1];
-			triple B = v.R[tridx - 1] + A - v.E[tridx - 2];
-			triple D = v.T[tridx] * v.R[tridx + 1];
-			triple C = v.R[tridx + 1] + D - v.E[tridx + 1];
-			polygon(v.R[tridx - 1]--v.E[tridx - 2]--A--B, Background);
-			polygon(v.R[tridx - 1]--v.E[tridx - 2]--A--B, Background, tr);
-			polygon(v.R[tridx + 1]--v.E[tridx + 1]--D--C, Background);
-			polygon(v.R[tridx + 1]--v.E[tridx + 1]--D--C, Background, tr);
-			if (conf)
-			{
-				polygon(v.R[tridx - 1]--B--C--v.R[tridx + 1], Background);
-				polygon(v.R[tridx - 1]--B--C--v.R[tridx + 1], Background, tr);
-			}
-			else
-			{
-				A = B;
-				D = C;
-				B = v.P[tridx - 1] + A - v.R[tridx - 1];
-				C = v.P[tridx] + D - v.R[tridx + 1];
-				polygon(v.P[tridx - 1]--v.R[tridx - 1]--A--B, Background);
-				polygon(v.P[tridx - 1]--v.R[tridx - 1]--A--B, Background, tr);
-				polygon(v.P[tridx]--v.R[tridx + 1]--D--C, Background);
-				polygon(v.P[tridx]--v.R[tridx + 1]--D--C, Background, tr);
-				polygon(v.P[tridx - 1]--B--C--v.P[tridx], Background);
-				polygon(v.P[tridx - 1]--B--C--v.P[tridx], Background, tr);
-			}
-		}
-	}
+	v.drawInternal(color, conf, mv);
 }
 
 void drawVertex5(vertex5 v, pen color, bool conf = true, transform3 t, int tridx = -1)
 {
-	if (t == identity4)
-	{
-		drawVertex5(v, color);
-	}
-	else
-	{
-		drawVertex5(v, color, move(t, tridx));
-	}
+	v.draw(color, conf, t, tridx);
 }
+

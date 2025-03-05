@@ -123,22 +123,31 @@ Additionally `drawFaceStickers(<configuration>, <color>)` and `drawVertexSticker
 * `vertex5` to represent clusters of 5 vertices (this type of vertices is more like a 5-fold face, it it not yet realized in any produced sun puzzle),
 * `move` to represent rotation of a face or a vertex cluster.
 
-A `face` contains all the stickers of some face, which usually have the same color. To construct a `face` call `constructFace`, to draw it call `drawFace`:
+A `face` contains all the stickers of some face, which usually have the same color. To construct a `face` call constructor or `constructFace` function, to draw it call `draw` method or `drawFace` function:
+```
+bool[] conf = new bool[] {true, false, true, true, false, true, false, true, true, false};
+face f = face(X+Y, X+Y+Z, conf); // Constructs a face with center in X+Y and initial stop at X+Y+Z
+f.draw(Blue); // Draws face f with Blue color
+```
+or:
 ```
 bool[] conf = new bool[] {true, false, true, true, false, true, false, true, true, false};
 face f = constructFace(X+Y, X+Y+Z, conf); // Constructs a face with center in X+Y and initial stop at X+Y+Z
 drawFace(f, Blue); // Draws face f with Blue color
 ```
 
-It is also possible to draw a face whose some or all stickers are in mid-turn. For this, function `drawFace` accepts optional arguments:
+It is also possible to draw a face whose some or all stickers are in mid-turn. For this, method `draw` and function `drawFace` accepts optional arguments:
 ```
-drawFace(f, Blue, rotate(-20, X+Y)); // Draws face f rotated by 20 degrees clockwise with axis O--(X+Y) and Blue color
-drawFace(f, Blue, rotate(-20, X-Z), 1); // Draws face f whose rotated elements are near the stop of configuration with index 1
+f.drawFace(Blue, rotate(-20, X+Y)); // Draws face f rotated by 20 degrees clockwise with axis O--(X+Y) and Blue color
+drawFace(f, Blue, rotate(-20, X+Y)); // Same as above
+f.drawFace(Blue, rotate(-20, X-Z), 1); // Draws face f whose rotated elements are near the stop of configuration with index 1
+drawFace(f, Blue, rotate(-20, X-Z), 1); // Same as above
 ```
 
 When some face is involved in more than one move, you can pass any number of `move` arguments instead:
 ```
-drawFace(f, Blue, move(rotate(-20, X-Z), 1), move(rotate(20, Y-Z), 4)); // Draws face f whose elements near edge 1 and 4 are rotated
+f.draw(Blue, move(rotate(-20, X-Z), 1), move(rotate(20, Y-Z), 4)); // Draws face f whose elements near edge 1 and 4 are rotated
+drawFace(f, Blue, move(rotate(-20, X-Z), 1), move(rotate(20, Y-Z), 4)); // Same as above
 ```
 
 Besides drawing actual face, `drawFace` draws also internal surfaces otherwise hidden in case optional arguments are used, so there is no need to manually create them.
@@ -158,12 +167,23 @@ Even if the expected precision is sufficient for faces gluing, it is better to p
 
 After gluing the faces it is possible to construct and draw clusters of 4 vertices:
 ```
+vertex4 v4 = vertex4(a, b, c, d); // Constructs a cluster of 4 vertices
+v4.draw(Tan); // Draws cluster of 4 vertices with Tan color
+```
+or:
+```
 vertex4 v4 = constructVertex4(a, b, c, d); // Constructs a cluster of 4 vertices
 drawVertex4(v4, Tan); // Draws cluster of 4 vertices with Tan color
 ```
-The faces passed to `constructVertex4` should be glued (`a-b`, `b-c`, `c-d` and `d-a`) and their order should be counter-clockwise when looking at this vertex cluster.
+The faces passed to constructor or `constructVertex4` should be glued (`a-b`, `b-c`, `c-d` and `d-a`) and their order should be counter-clockwise when looking at this vertex cluster.
 
-Like in case of faces, `drawVertex4` accepts optional arguments for transform and index. In this case, 2 vertices out of 4 are drawn rotated. These 2 vertices belong to the face whose position in `constructVertex4` equals to index passed to `drawVertex4` (starting with 0):
+Like in case of faces, `draw` method and `drawVertex4` function accepts optional arguments for transform and index. In this case, 2 vertices out of 4 are drawn rotated. These 2 vertices belong to the face whose position in constructor or `constructVertex4` function equals to index passed to `draw` method or `drawVertex4` function (starting with 0):
+```
+vertex4 v4 = vertex4(a, b, c, d); // Constructs a cluster of 4 vertices
+v4.draw(Tan, <transform>, 2); // Draws rotated the vertices belonging to c whose index in argument list is 2
+v4.draw(Tan, move(<transform1>, <idx1>), move(<transform2>, <idx2>), ...); // Draws vertex cluster with multiple rotations
+```
+or:
 ```
 vertex4 v4 = constructVertex4(a, b, c, d); // Constructs a cluster of 4 vertices
 drawVertex4(v4, Tan, <transform>, 2); // Draws rotated the vertices belonging to c whose index in argument list is 2
@@ -174,23 +194,36 @@ Like drawing faces, when optional arguments are passed to `drawVertex4`, the fun
 
 Clusters of 5 vertices (presented in Tan color at the image above) are constructed and drawn in similar manner:
 ```
+vertex5 v5 = vertex5(a, b, c, d, e);
+v5.draw(Tan);
+```
+or:
+```
 vertex5 v5 = constructVertex5(a, b, c, d, e);
 drawVertex5(v5, Tan);
 ```
 
-Unlike cluster of 4 vertices containing only vertex parts, cluster of 5 vertices besides vertex parts contains intermittent parts, which can be vertices or edges. The 3rd optional boolean argument passed to `drawVertex5` indicates which configuration to use:
+Unlike cluster of 4 vertices containing only vertex parts, cluster of 5 vertices besides vertex parts contains intermittent parts, which can be vertices or edges. The 3rd optional boolean argument passed to `draw` method and `drawVertex5` function indicates which configuration to use:
 ```
-drawVertex5(v5, Tan, true); // Default, use vertices in between
-drawVertex5(v5, Tan, false); // Use edges in between
+v5.draw(Tan, true); // Default, use vertices in between
+drawVertex5(v5, Tan, true); // Same as above
+v5.draw(Tan, false); // Use edges in between
+drawVertex5(v5, Tan, false); // Same as above
 ```
 
-Finally, 2 more arguments can be passed to `drawVertex5` to transform 2 out of 5 vertices, similar to `drawVertex4`:
+Finally, 2 more arguments can be passed to `draw` method or `drawVertex5` function to transform 2 out of 5 vertices, similar to such method of `vertex4` struct or `drawVertex4` function:
+```
+vertex5 v5 = vertex5(a, b, c, d, e);
+v5.draw(Tan, true, <transform>, 2); // Draws rotated the vertices belonging to c whose index in argument list is 2
+v5.draw(Tan, move(<transform1>, <idx1>), move(<transform2>, <idx2>), ...); // Draws vertex cluster with multiple rotations
+```
+or:
 ```
 vertex5 v5 = constructVertex5(a, b, c, d, e);
 drawVertex5(v5, Tan, true, <transform>, 2); // Draws rotated the vertices belonging to c whose index in argument list is 2
 drawVertex5(v5, Tan, move(<transform1>, <idx1>), move(<transform2>, <idx2>), ...); // Draws vertex cluster with multiple rotations
 ```
-As before, in case of passing the last 2 arguments to `drawVertex5`, it takes care of drawing  surfaces otherwise hidden.
+As before, in case of passing the last 2 arguments to `draw` method or `drawVertex5` function, it takes care of drawing  surfaces otherwise hidden.
 
 ## Manually embed 3D models in (La)TeX documents
 BASH script `lib/make-pdf-3D.sh` creates one PDF page with embedded 3D model out of Asy source code. The contents of this page is very specific, and often is not what you want. You can use this script as a code snippet to manually embed 3D models produced by this library into your PDF documents. For this, you need `media9` (La)TeX package.
